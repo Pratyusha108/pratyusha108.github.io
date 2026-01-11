@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>About Me - Data Scientist</title>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+
+<body>
+
+  <!-- Header Section -->
+  <header>
+    <h1>About Me</h1>
+    <nav>
+      <a href="index.html">Home</a> |
+      <a href="about.html">About</a> |
+      <a href="projects.html">Projects</a> |
+      <a href="contact.html">Contact</a> |
+      <a href="https://drive.google.com/file/d/1OW8rf1p6glkDIZWrz_QliNmNXKOoP6Z_/view?usp=sharing"
+        target="_blank">Resume</a>
+    </nav>
+    <button id="dark-mode-toggle" class="dark-mode-toggle">
+      <span class="toggle-icon">🌙</span>
+    </button>
+  </header>
+
+  <section class="about-section">
+    <div class="about-content">
+      <h2>My Journey in Data Science</h2>
+      <p>
+        I'm a passionate Data Scientist with a strong foundation in statistics and machine learning.
+        My journey began with a degree in Computer Science, followed by specialized training in data
+        science and artificial intelligence.
+      </p>
+
+      <h3>Education</h3>
+      <ul>
+        <li>M.S. in Data Analytics — Webster University (Aug 2023 – May 2026)</li>
+        <li>MBA in Technology Management — Osmania University (Dec 2022)</li>
+        <li>B.Tech in Electrical & Electronics Engineering — Osmania University (Nov 2020)</li>
+      </ul>
+
+      <h3>Work Experience</h3>
+      <div class="experience-item">
+        <h4>Graduate Research Assistant — Osmania University</h4>
+        <p class="date">Jan 2022 – Dec 2022 | Hyderabad, India (Hybrid)</p>
+        <ul>
+          <li>Conducted applied academic research in cybersecurity and data analytics</li>
+          <li>Performed data cleaning, EDA, and statistical modeling</li>
+          <li>Collaborated with faculty to enhance analytical rigor and methodology</li>
+        </ul>
+      </div>
+
+      <div class="experience-item">
+        <h4>Embedded Systems Intern (IoT/RFID) — IBM Collaboration</h4>
+        <p class="date">May 2019 – Jun 2019 | Hyderabad, India</p>
+        <ul>
+          <li>Developed RFID-based access control system using C/C++</li>
+          <li>Performed anomaly diagnostics and root-cause analysis</li>
+          <li>Delivered a working prototype with full documentation</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+
+
+  <section class="achievements">
+    <h2>Achievements</h2>
+    <div class="achievement-grid">
+      <div class="achievement-card">
+        <i class="fas fa-trophy"></i>
+        <h3>Best Data Science Project</h3>
+        <p>Awarded for innovative solution in healthcare analytics</p>
+      </div>
+      <div class="achievement-card">
+        <i class="fas fa-certificate"></i>
+        <h3>Published Research</h3>
+        <p>Machine learning paper published in leading journal</p>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <p>Connect with me:</p>
+    <div class="social-links">
+      <a href="https://www.linkedin.com/in/pratyusha-g-a92915229/" target="_blank">
+        <i class="fab fa-linkedin"></i>
+        <span>LinkedIn</span>
+      </a>
+      <a href="https://github.com/Pratyusha108" target="_blank">
+        <i class="fab fa-github"></i>
+        <span>GitHub</span>
+      </a>
+      <a href="mailto:saipratyushagorapalli333@gmail.com">
+        <i class="fas fa-envelope"></i>
+        <span>Email</span>
+      </a>
+    </div>
+  </footer>
+
+  <div class="floating-social">
+    <a href="https://www.linkedin.com/in/pratyusha-g-a92915229/" target="_blank" class="icon linkedin" title="LinkedIn">
+      <i class="fab fa-linkedin-in"></i>
+    </a>
+    <a href="https://github.com/Pratyusha108" target="_blank" class="icon github" title="GitHub">
+      <i class="fab fa-github"></i>
+    </a>
+    <a href="https://www.kaggle.com/saipgorapalli" target="_blank" class="icon kaggle" title="Kaggle">
+      <i class="fab fa-kaggle"></i>
+    </a>
+    <a href="mailto:saipratyushagorapalli333@gmail.com" class="icon email" title="Email Me">
+      <i class="fas fa-envelope"></i>
+    </a>
+  </div>
+
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+
+      // Dark mode toggle
+      const toggleButton = document.getElementById('dark-mode-toggle');
+      const body = document.body;
+      const toggleIcon = document.querySelector('.toggle-icon');
+
+      // Load saved theme or default to light
+      const currentTheme = localStorage.getItem('theme') || 'light-mode';
+      body.classList.add(currentTheme);
+      updateToggleIcon(currentTheme);
+
+      toggleButton.addEventListener('click', function () {
+        body.classList.toggle('dark-mode');
+        body.classList.toggle('light-mode');
+
+        const newTheme = body.classList.contains('dark-mode') ? 'dark-mode' : 'light-mode';
+        localStorage.setItem('theme', newTheme);
+        updateToggleIcon(newTheme);
+      });
+
+      function updateToggleIcon(theme) {
+        toggleIcon.textContent = theme === 'dark-mode' ? '☀️' : '🌙';
+      }
+
+    });
+  </script>
+
+</body>
+
+</html>

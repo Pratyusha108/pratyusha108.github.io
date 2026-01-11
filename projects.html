@@ -1,0 +1,705 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Data Science Projects - Pratyusha G</title>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+  <style>
+    /* ---- GRID FIX ---- */
+    .project-showcase {
+      max-width: 1200px;
+      margin: 2rem auto;
+      padding: 2rem;
+      text-align: center;
+    }
+
+    .project-grid {
+      display: grid !important;
+      gap: 2rem;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      margin-top: 2rem;
+    }
+
+    .project-card {
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 15px;
+      overflow: hidden;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      transition: transform .3s ease;
+    }
+
+    .project-card:hover {
+      transform: translateY(-5px);
+    }
+
+    .project-card img {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+    }
+
+    .project-content {
+      padding: 1rem;
+      text-align: left;
+    }
+
+    .project-stats,
+    .project-tags {
+      display: flex;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+      margin-top: 0.5rem;
+    }
+
+    .project-tags span {
+      background: rgba(255, 159, 0, 0.2);
+      padding: 4px 8px;
+      border-radius: 8px;
+      color: #ff9f00;
+      font-size: 0.8rem;
+    }
+
+    .project-footer {
+      padding: 1rem;
+    }
+
+    .project-link {
+      background: #ff9f00;
+      color: #fff;
+      padding: 8px 14px;
+      border-radius: 6px;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      text-decoration: none;
+      cursor: pointer;
+    }
+
+    /* ---- RESEARCH ---- */
+    .research-section {
+      max-width: 800px;
+      margin: 3rem auto;
+      padding: 2rem;
+      text-align: center;
+    }
+
+    /* ---- DARK/LIGHT SUPPORT ---- */
+    body.light-mode {
+      background: #f9f9f9;
+      color: #222;
+    }
+
+    body.dark-mode {
+      background: #121212;
+      color: #e6e6e6;
+    }
+
+    body.light-mode .project-card {
+      background: #fff;
+      border-color: #ddd;
+    }
+
+    body.dark-mode .project-card {
+      background: rgba(255, 255, 255, 0.06);
+      border-color: rgba(255, 255, 255, 0.1);
+    }
+
+    /* ---- DARK MODE TOGGLE ---- */
+    .dark-mode-toggle {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      padding: 15px 30px;
+      background: #444;
+      color: #fff;
+      border: none;
+      border-radius: 30px;
+      cursor: pointer;
+      font-size: 1rem;
+      z-index: 999;
+    }
+
+    /* ========= MODAL ========= */
+    .modal-backdrop {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.7);
+      justify-content: center;
+      align-items: center;
+      z-index: 2000;
+      padding: 20px;
+    }
+
+    .modal-box {
+      background: #1f1f1f;
+      border-radius: 12px;
+      padding: 20px;
+      max-width: 800px;
+      width: 100%;
+      color: #fff;
+      position: relative;
+      animation: fadeIn .3s ease-out;
+      overflow-y: auto;
+      max-height: 90vh;
+    }
+
+    body.light-mode .modal-box {
+      background: #fff;
+      color: #111;
+    }
+
+    .modal-box img {
+      width: 100%;
+      border-radius: 10px;
+      margin-bottom: 1rem;
+    }
+
+    .modal-section {
+      margin: 1rem 0;
+      text-align: left;
+    }
+
+    .modal-section h4 {
+      margin-bottom: 0.3rem;
+      color: #ff9f00;
+    }
+
+    .modal-tags span {
+      background: #ff9f00;
+      color: #fff;
+      padding: 5px 8px;
+      margin-right: 5px;
+      border-radius: 6px;
+      font-size: 0.8rem;
+      display: inline-block;
+      margin-bottom: 5px;
+    }
+
+    .modal-close {
+      position: absolute;
+      top: 8px;
+      right: 12px;
+      font-size: 26px;
+      cursor: pointer;
+    }
+
+    .modal-github-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: #24292e;
+      color: #fff;
+      padding: 8px 14px;
+      border-radius: 6px;
+      margin-top: 10px;
+      text-decoration: none;
+      font-size: 0.9rem;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(10px);
+      }
+
+      to {
+        opacity: 1;
+      }
+    }
+
+    /* ========= MODAL ========= */
+    .modal-backdrop {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.7);
+      justify-content: center;
+      align-items: center;
+      z-index: 2000;
+      padding: 20px;
+    }
+
+    .modal-box {
+      background: #1f1f1f;
+      border-radius: 14px;
+      padding: 24px;
+      max-width: 720px;
+      width: 100%;
+      color: #fff;
+      position: relative;
+      animation: fadeIn .28s ease-out;
+    }
+
+    body.light-mode .modal-box {
+      background: #fff;
+      color: #111;
+    }
+
+    /* ===== MODAL BACKDROP ===== */
+    .modal-backdrop {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.7);
+      justify-content: center;
+      align-items: center;
+      z-index: 2000;
+      padding: 20px;
+      overflow: hidden;
+      /* prevents page scroll behind modal */
+    }
+
+    /* ===== MODAL BOX ===== */
+    .modal-box {
+      background: #1f1f1f;
+      border-radius: 14px;
+      padding: 24px;
+      max-width: 760px;
+      width: 100%;
+      color: #fff;
+      position: relative;
+      animation: fadeIn .28s ease-out;
+      overflow-y: auto;
+      /* scroll vertically */
+      overflow-x: hidden;
+      /* prevent horizontal scroll */
+      max-height: 90vh;
+      /* ensure fits screen height */
+      box-sizing: border-box;
+      /* prevent overflow from padding */
+    }
+
+    /* Light mode support */
+    body.light-mode .modal-box {
+      background: #fff;
+      color: #111;
+    }
+
+    /* ===== MODAL IMAGE ===== */
+    .modal-box img {
+      width: 100%;
+      height: auto;
+      max-height: 240px;
+      object-fit: cover;
+      border-radius: 10px;
+      margin-bottom: 1rem;
+    }
+
+    /* ===== CLOSE BUTTON ===== */
+    .modal-close {
+      position: absolute;
+      top: 12px;
+      right: 12px;
+      background: #ff3b3b;
+      color: #fff;
+      border-radius: 50%;
+      width: 32px;
+      height: 32px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+      cursor: pointer;
+      border: 2px solid #fff;
+      z-index: 50;
+    }
+
+
+    /* ===== SECTIONS ===== */
+    .modal-section {
+      margin: 0.75rem 0;
+      text-align: left;
+      white-space: normal;
+    }
+
+    .modal-section h4 {
+      margin-bottom: 0.3rem;
+      color: #ff9f00;
+      font-weight: 600;
+    }
+
+    /* ===== TAGS ===== */
+    .modal-tags span {
+      background: #ff9f00;
+      color: #fff;
+      padding: 5px 8px;
+      margin-right: 5px;
+      border-radius: 6px;
+      font-size: 0.8rem;
+      display: inline-block;
+      margin-bottom: 5px;
+    }
+
+    /* ===== GITHUB BUTTON ===== */
+    .modal-github-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: #24292e;
+      color: #fff;
+      padding: 8px 14px;
+      border-radius: 6px;
+      margin-top: 12px;
+      text-decoration: none;
+      font-size: 0.9rem;
+      white-space: nowrap;
+    }
+
+    /* Animation */
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(10px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <header>
+    <h1>My Projects</h1>
+    <nav>
+      <a href="index.html">Home</a> |
+      <a href="about.html">About</a> |
+      <a href="projects.html">Projects</a> |
+      <a href="contact.html">Contact</a> |
+      <a href="https://drive.google.com/file/d/1OW8rf1p6glkDIZWrz_QliNmNXKOoP6Z_/view?usp=sharing"
+        target="_blank">Resume</a>
+    </nav>
+    <button id="dark-mode-toggle" class="dark-mode-toggle">
+      <span class="toggle-icon">🌙</span>
+    </button>
+  </header>
+
+  <!-- PROJECT SHOWCASE -->
+
+  <!-- PROJECT SHOWCASE -->
+  <section class="project-showcase">
+    <h1>Data Science Portfolio</h1>
+    <p class="showcase-intro">Exploring the intersection of Machine Learning, AI, and Real-World Problem Solving</p>
+
+    <div class="project-grid">
+
+      <!-- Time Series -->
+      <div class="project-card">
+        <img src="./p1.png">
+        <div class="project-content">
+          <h3>Applied Time Series Analytics & Forecasting</h3>
+          <p>Multi-domain forecasting using classical and modern models.</p>
+          <div class="project-tags">
+            <span>R</span><span>Forecasting</span><span>Time Series</span>
+          </div>
+        </div>
+        <div class="project-footer">
+          <span class="project-link" onclick="openModal('timeSeries')"><i class="fab fa-github"></i> View Project</span>
+        </div>
+      </div>
+
+      <!-- COVID-19 Mortality -->
+      <div class="project-card">
+        <img src="./p2.png">
+        <div class="project-content">
+          <h3>COVID-19 Mortality Prediction & Analysis</h3>
+          <p>End-to-end ML pipeline for epidemiological mortality modeling.</p>
+          <div class="project-tags">
+            <span>Python</span><span>ML</span><span>EDA</span>
+          </div>
+        </div>
+        <div class="project-footer">
+          <span class="project-link" onclick="openModal('covidMortality')"><i class="fab fa-github"></i> View
+            Project</span>
+        </div>
+      </div>
+
+      <!-- Mortgage Analytics -->
+      <div class="project-card">
+        <img src="./p3.webp">
+        <div class="project-content">
+          <h3>Mortgage Payback Analytics</h3>
+          <p>Predicting mortgage payoff behavior using supervised models.</p>
+          <div class="project-tags">
+            <span>Python</span><span>Finance</span><span>ML</span>
+          </div>
+        </div>
+        <div class="project-footer">
+          <span class="project-link" onclick="openModal('mortgageAnalytics')"><i class="fab fa-github"></i> View
+            Project</span>
+        </div>
+      </div>
+
+      <!-- Mailing Analytics -->
+      <div class="project-card">
+        <img src="./p4.png">
+        <div class="project-content">
+          <h3>Software Mailing Response Analytics</h3>
+          <p>Customer targeting optimization using response modeling.</p>
+          <div class="project-tags">
+            <span>R</span><span>Logistic Regression</span><span>PCA</span>
+          </div>
+        </div>
+        <div class="project-footer">
+          <span class="project-link" onclick="openModal('mailingAnalytics')"><i class="fab fa-github"></i> View
+            Project</span>
+        </div>
+      </div>
+
+      <!-- Smartphone Resale -->
+      <div class="project-card">
+        <img src="./p5.png">
+        <div class="project-content">
+          <h3>Smartphone Resale Price Prediction</h3>
+          <p>Regression + classification for used device pricing analytics.</p>
+          <div class="project-tags">
+            <span>R</span><span>Regression</span><span>Classification</span>
+          </div>
+        </div>
+        <div class="project-footer">
+          <span class="project-link" onclick="openModal('smartphonePricing')"><i class="fab fa-github"></i> View
+            Project</span>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- RESEARCH SECTION -->
+  <section class="research-section">
+    <h2>Research Publications</h2>
+    <div class="research-papers">
+      <div class="paper-card">
+        <h3>Exploring Future Trends in Data Analytics</h3>
+        <p>Independent Research Whitepaper, 2026</p>
+        <a target="_blank"
+          href="https://docs.google.com/document/d/1kRDTyUDM1cZv7sJ3W-iN1VHIV7y-4Ya5/edit?usp=sharing&ouid=105755186344662571710&rtpof=true&sd=true"
+          class="paper-link"><i class="fas fa-external-link-alt"></i> Read Paper</a>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <p>Connect with me:</p>
+    <div class="social-links">
+      <a href="https://www.linkedin.com/in/pratyusha-g-a92915229/" target="_blank"><i
+          class="fab fa-linkedin"></i><span>LinkedIn</span></a>
+      <a href="https://github.com/Pratyusha108" target="_blank"><i class="fab fa-github"></i><span>GitHub</span></a>
+
+      <a href="mailto:saipratyushagorapalli333@gmail.com"><i class="fas fa-envelope"></i><span>Email</span></a>
+    </div>
+  </footer>
+
+  <!-- MODAL STRUCTURE -->
+  <div id="modal" class="modal-backdrop" onclick="closeOnBack(event)">
+    <div class="modal-box" onclick="event.stopPropagation()">
+      <span class="modal-close" onclick="closeModal()">✕</span>
+
+      <img id="modal-img">
+      <h2 id="modal-title"></h2>
+
+      <div id="modal-desc" class="modal-section"></div>
+      <div id="modal-tech" class="modal-section"></div>
+      <div id="modal-approach" class="modal-section"></div>
+      <div id="modal-result" class="modal-section"></div>
+
+      <div id="modal-tags" class="modal-tags"></div>
+
+      <a id="modal-github" href="#" target="_blank" class="modal-github-btn">
+        <i class="fab fa-github"></i> GitHub Repo
+      </a>
+    </div>
+  </div>
+
+  <div class="floating-social">
+    <a href="https://www.linkedin.com/in/pratyusha-g-a92915229/" target="_blank" class="icon linkedin" title="LinkedIn">
+      <i class="fab fa-linkedin-in"></i>
+    </a>
+    <a href="https://github.com/Pratyusha108" target="_blank" class="icon github" title="GitHub">
+      <i class="fab fa-github"></i>
+    </a>
+    <a href="https://www.kaggle.com/saipgorapalli" target="_blank" class="icon kaggle" title="Kaggle">
+      <i class="fab fa-kaggle"></i>
+    </a>
+    <a href="mailto:saipratyushagorapalli333@gmail.com" class="icon email" title="Email Me">
+      <i class="fas fa-envelope"></i>
+    </a>
+  </div>
+
+
+
+  <!-- JS DARK MODE + MODAL -->
+  <script>
+    /* DARK MODE */
+    document.addEventListener('DOMContentLoaded', () => {
+      const body = document.body;
+      const toggleBtn = document.getElementById('dark-mode-toggle');
+      const icon = document.querySelector('.toggle-icon');
+
+      const savedTheme = localStorage.getItem('theme') || 'light-mode';
+      body.classList.add(savedTheme);
+      icon.textContent = savedTheme === 'dark-mode' ? '☀️' : '🌙';
+
+      toggleBtn.addEventListener('click', () => {
+        body.classList.toggle('dark-mode');
+        body.classList.toggle('light-mode');
+
+        const newTheme = body.classList.contains('dark-mode') ? 'dark-mode' : 'light-mode';
+        localStorage.setItem('theme', newTheme);
+        icon.textContent = newTheme === 'dark-mode' ? '☀️' : '🌙';
+      });
+    });
+
+    /* PORTFOLIO MODAL DATA */
+    const modalData = {
+      timeSeries: {
+        title: "Applied Time Series Analytics & Forecasting",
+        img: "./p1.png",
+        desc: "End-to-end time series research portfolio using multi-domain datasets to model and forecast complex temporal behavior.",
+        tech: "R, forecast, tsfeatures, zoo, tidyverse, Exponential Smoothing, ETS, TBATS, STL",
+        approach: `
+      The work focuses on contrasting classical and modern forecasting across diverse datasets. Methods included:
+      • Decomposition (trend/seasonality/noise)
+      • Benchmark models (Naïve, sNaïve, MA)
+      • Statistical forecasting (SES, Holt, Holt-Winters)
+      • Hybrid STL + ETS models and TBATS for multi-seasonal data
+      • Train-test splits, error metrics, and visual diagnostics
+      The analytical workflow mirrors how forecasting teams evaluate temporal dependence, structural patterns, and model suitability in production settings.
+    `,
+        result: "Consistently demonstrated that seasonality-aware models outperform naïve baselines, with TBATS handling complex multi-seasonality and Holt-Winters excelling in retail/seasonal data.",
+        tags: ["Time Series", "ETS", "TBATS", "R", "Forecasting"],
+        github: "https://github.com/Pratyusha108/TIME-SERIES-ANALYSIS-PROJECT"
+      },
+
+      covidMortality: {
+        title: "COVID-19 Mortality Prediction & Analytics",
+        img: "./p2.png",
+        desc: "Epidemiological data engineering + machine learning pipeline to understand COVID-19 mortality dynamics and outcomes.",
+        tech: "Python, Pandas, NumPy, Matplotlib, Seaborn, Scikit-learn, Basemap",
+        approach: `
+      • Built ETL pipelines for global COVID datasets (cleaning, enrichment, transformations)
+      • Engineered health metrics such as fatality and recovery rates
+      • Performed EDA to analyze temporal and regional dynamics
+      • Modeled mortality using Random Forest & SVM regression
+      • Classified outcome severity using Random Forest classification
+      • Used geospatial + time-series visualizations to explain global severity trends
+      The project reflects public-health analytics workflows emphasizing interpretability and model-driven policy insight.
+    `,
+        result: "Active case counts and confirmed case volumes emerged as strong mortality predictors. Random Forest regression showed best performance with interpretable feature importance.",
+        tags: ["COVID-19", "ML", "Regression", "EDA", "Python"],
+        github: "https://github.com/Pratyusha108/COVID-19-MORTALITY-RATE-PREDICTION-ANALYSIS-USING-PYTHON"
+      },
+
+      mortgageAnalytics: {
+        title: "Mortgage Payback Analytics",
+        img: "./p3.webp",
+        desc: "Predictive analytics on U.S. residential mortgage performance to identify payoff likelihood and portfolio risk drivers.",
+        tech: "Python, Logistic Regression, Decision Trees, Random Forest, PCA, Pandas",
+        approach: `
+      • Used panel loan data (~622k loan-month records) across 60 months
+      • Cleaned borrower, loan term, and macroeconomic factors
+      • Engineered loan age, maturity, and balance dynamics
+      • Modeled payoff events using supervised learning (logistic + RF)
+      • Applied PCA + clustering for behavioral borrower segmentation
+      • Interpreted payoff drivers in a financial context (LTV, unemployment, HPI)
+      Workflow mirrors institutional finance analytics for liquidity and portfolio lifecycle modeling.
+    `,
+        result: "Lower LTV and rising housing prices significantly increase payoff likelihood; payoff rates peak mid-loan lifecycle, matching observed mortgage economics.",
+        tags: ["Finance", "Python", "Random Forest", "PCA", "Clustering"],
+        github: "https://github.com/Pratyusha108/Mortage_payback_Analytics"
+      },
+
+      mailingAnalytics: {
+        title: "Software Mailing List Response Analytics",
+        img: "./p4.png",
+        desc: "Direct marketing response modeling + customer targeting optimization using supervised & unsupervised learning.",
+        tech: "R, Logistic Regression, K-Means, PCA, ROC/AUC, Gains/Lift",
+        approach: `
+      • Cleaned and validated consortium mailing data
+      • Engineered behavioral & source features influencing response
+      • Modeled purchase response using Logistic Regression, Trees, KNN
+      • Ranked customers into deciles for mailing prioritization
+      • Clustered customers (K-Means) into execution tiers (A/B/C)
+      • Validated response lift, decile gains, and ROC-AUC for ranking quality
+      Designed to reflect real marketing science workflows for scalable direct-mail targeting.
+    `,
+        result: "Logistic Regression produced best decile lift and interpretability. High-value deciles showed strong concentration of responders, supporting profit-first mailing strategy.",
+        tags: ["Marketing", "R", "Logistic Regression", "Clustering", "PCA"],
+        github: "https://github.com/Pratyusha108/software-mailing-list-response-analytics"
+      },
+
+      smartphonePricing: {
+        title: "Smartphone Resale Price Prediction",
+        img: "./p5.png",
+        desc: "Regression + classification system for consistent used-device pricing and operational tiering.",
+        tech: "R, Multiple Linear Regression, kNN, Random Forest, Logistic Regression, C5.0",
+        approach: `
+      • Analyzed 3,400+ device records with specs + usage history
+      • Modeled normalized_used_price via MLR, kNN, and RF
+      • Classified devices into High/Low pricing tiers for quoting
+      • Standardized numeric predictors and engineered categorical dummies
+      • Evaluated regression via RMSE & R², classification via accuracy & confusion matrix
+      • Produced business-aligned outputs for pricing and tiering decisions
+      Mimics real resale pricing workflows balancing accuracy + interpretability.
+    `,
+        result: "Multiple Linear Regression achieved R² ≈ 0.78 with stable validation/test performance; Logistic Regression achieved ≈86% accuracy for High/Low pricing tiers.",
+        tags: ["R", "Regression", "Classification", "ML", "Pricing"],
+        github: "https://github.com/Pratyusha108/smartphone-resale-price-prediction"
+      }
+    };
+
+    /* OPEN MODAL */
+    /* OPEN MODAL */
+    function openModal(key) {
+      const m = modalData[key];
+
+      document.getElementById("modal-img").src = m.img;
+      document.getElementById("modal-title").innerText = m.title;
+
+      document.getElementById("modal-desc").innerHTML = `<h4>Overview:</h4>${m.desc}`;
+      document.getElementById("modal-tech").innerHTML = `<h4>Tech Stack:</h4>${m.tech}`;
+      document.getElementById("modal-approach").innerHTML = `<h4>Approach:</h4><p>${m.approach}</p>`;
+      document.getElementById("modal-result").innerHTML = `<h4>Results:</h4>${m.result}`;
+
+      const tagsDiv = document.getElementById("modal-tags");
+      tagsDiv.innerHTML = "";
+      m.tags.forEach(t => tagsDiv.innerHTML += `<span>${t}</span>`);
+
+      document.getElementById("modal-github").href = m.github;
+
+      document.getElementById("modal").style.display = "flex";
+    }
+
+    /* CLOSE MODAL */
+    function closeModal() {
+      document.getElementById("modal").style.display = "none";
+    }
+
+    /* CLOSE WHEN CLICKING BACKDROP */
+    function closeOnBack(e) {
+      if (e.target.id === 'modal') closeModal();
+    }
+
+    /* OPTIONAL — BACKDROP CLICK CLOSE */
+    window.onclick = (e) => {
+      if (e.target.id === "modal") closeModal();
+    };
+
+
+  </script>
+
+</body>
+
+</html>
