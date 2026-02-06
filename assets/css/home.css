@@ -545,82 +545,131 @@ body.light-mode .typewriter-line {
 
 /* Testimonials */
 .testimonials {
-  padding: 2rem;
+  padding: 3rem 2rem;
   text-align: center;
+  max-width: 900px;
+  margin: 2rem auto;
 }
 
 .testimonials > h2 {
   color: #ff9f00;
-  margin-bottom: 1.5rem;
+  margin-bottom: 0.5rem;
   font-size: 2rem;
+}
+
+.testimonials > p.section-subtitle {
+  color: #999;
+  font-size: 1rem;
+  margin-bottom: 2rem;
 }
 
 /* Testimonial Carousel */
 .testimonial-carousel {
   position: relative;
-  max-width: 700px;
+  max-width: 750px;
   margin: 0 auto;
-  padding: 0 50px;
+  padding: 0 55px;
   overflow: hidden;
 }
 
 .testimonial-track {
   display: flex;
-  transition: transform 0.5s ease;
+  transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .testimonial-card {
   background: rgba(255, 255, 255, 0.05);
-  padding: 2rem;
-  border-radius: 15px;
+  padding: 2.5rem 2rem 2rem;
+  border-radius: 16px;
   min-width: 100%;
   flex-shrink: 0;
   box-sizing: border-box;
+  position: relative;
+  border: 1px solid rgba(255, 159, 0, 0.1);
+}
+
+.testimonial-card .quote-icon {
+  font-size: 2.5rem;
+  color: rgba(255, 159, 0, 0.25);
+  margin-bottom: 0.75rem;
+  display: block;
 }
 
 .testimonial-card p {
   font-style: italic;
-  margin-bottom: 1rem;
+  margin-bottom: 1.5rem;
   color: #e6e6e6;
-  line-height: 1.7;
+  line-height: 1.8;
+  font-size: 1.05rem;
 }
 
-.testimonial-card h4 {
+.testimonial-card .reviewer {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  justify-content: flex-end;
+}
+
+.testimonial-card .reviewer-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #ff9f00, #ff6b6b);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  font-weight: 700;
+  font-size: 0.9rem;
+  flex-shrink: 0;
+}
+
+.testimonial-card .reviewer-info h4 {
   color: #ff9f00;
+  font-size: 0.95rem;
+  margin: 0;
+  text-align: right;
+}
+
+.testimonial-card .reviewer-info span {
+  color: #999;
+  font-size: 0.8rem;
+  display: block;
   text-align: right;
 }
 
 .carousel-dots {
   display: flex;
   justify-content: center;
-  gap: 8px;
-  margin-top: 1.5rem;
+  gap: 10px;
+  margin-top: 2rem;
 }
 
 .carousel-dot {
-  width: 12px;
-  height: 12px;
+  width: 10px;
+  height: 10px;
   border-radius: 50%;
-  background: rgba(255, 159, 0, 0.3);
+  background: rgba(255, 159, 0, 0.25);
   border: none;
   cursor: pointer;
-  transition: background 0.3s, transform 0.3s;
+  transition: all 0.3s ease;
 }
 
 .carousel-dot.active {
   background: #ff9f00;
-  transform: scale(1.2);
+  width: 28px;
+  border-radius: 5px;
 }
 
 .carousel-arrow {
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
-  background: rgba(255, 159, 0, 0.8);
-  color: #fff;
-  border: none;
-  width: 36px;
-  height: 36px;
+  background: rgba(255, 159, 0, 0.15);
+  color: #ff9f00;
+  border: 2px solid rgba(255, 159, 0, 0.3);
+  width: 40px;
+  height: 40px;
   border-radius: 50%;
   font-size: 16px;
   cursor: pointer;
@@ -628,11 +677,13 @@ body.light-mode .typewriter-line {
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: background 0.3s;
+  transition: all 0.3s ease;
 }
 
 .carousel-arrow:hover {
   background: #ff9f00;
+  color: #fff;
+  border-color: #ff9f00;
 }
 
 .carousel-prev {
@@ -816,16 +867,199 @@ body.light-mode .contact-form button:hover {
 }
 
 body.light-mode .testimonial-card {
-  background: white;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  background: #fff;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  border-color: #eee;
 }
 
 body.light-mode .testimonial-card p {
   color: #555;
 }
 
+body.light-mode .testimonial-card .reviewer-info span {
+  color: #888;
+}
+
+body.light-mode .testimonials > p.section-subtitle {
+  color: #777;
+}
+
 body.light-mode .carousel-arrow {
-  background: rgba(255, 159, 0, 0.9);
+  background: rgba(255, 159, 0, 0.1);
+  border-color: rgba(255, 159, 0, 0.3);
+}
+
+body.light-mode .carousel-arrow:hover {
+  background: #ff9f00;
+  color: #fff;
+}
+
+/* GitHub Activity Heatmap Embed */
+.github-activity {
+  padding: 3rem 2rem;
+  text-align: center;
+  max-width: 900px;
+  margin: 2rem auto;
+}
+
+.github-activity h2 {
+  color: #ff9f00;
+  margin-bottom: 0.5rem;
+  font-size: 2rem;
+}
+
+.github-activity .section-subtitle {
+  color: #999;
+  font-size: 1rem;
+  margin-bottom: 2rem;
+}
+
+.github-stats {
+  display: flex;
+  justify-content: center;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+}
+
+.github-stat-card {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 159, 0, 0.1);
+  border-radius: 12px;
+  padding: 1.5rem 2rem;
+  text-align: center;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  min-width: 140px;
+}
+
+.github-stat-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 20px rgba(255, 159, 0, 0.15);
+}
+
+.github-stat-card i {
+  font-size: 1.8rem;
+  color: #ff9f00;
+  margin-bottom: 0.75rem;
+  display: block;
+}
+
+.github-stat-card .gh-number {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #ff9f00;
+  display: block;
+}
+
+.github-stat-card .gh-label {
+  font-size: 0.85rem;
+  color: #999;
+  margin-top: 0.25rem;
+  display: block;
+}
+
+body.light-mode .github-stat-card {
+  background: #fff;
+  border-color: #eee;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.06);
+}
+
+.github-profile-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 2rem;
+  padding: 10px 24px;
+  background: #24292e;
+  color: #fff;
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+.github-profile-link:hover {
+  background: #ff9f00;
+  transform: translateY(-2px);
+}
+
+/* Tech Stack Marquee */
+.tech-marquee {
+  overflow: hidden;
+  padding: 1.5rem 0;
+  margin: 1rem auto;
+  max-width: 1200px;
+  position: relative;
+}
+
+.tech-marquee::before,
+.tech-marquee::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  width: 80px;
+  height: 100%;
+  z-index: 2;
+  pointer-events: none;
+}
+
+.tech-marquee::before {
+  left: 0;
+  background: linear-gradient(to right, #121212, transparent);
+}
+
+.tech-marquee::after {
+  right: 0;
+  background: linear-gradient(to left, #121212, transparent);
+}
+
+body.light-mode .tech-marquee::before {
+  background: linear-gradient(to right, #f9f9f9, transparent);
+}
+
+body.light-mode .tech-marquee::after {
+  background: linear-gradient(to left, #f9f9f9, transparent);
+}
+
+.marquee-track {
+  display: flex;
+  gap: 2.5rem;
+  animation: marquee 25s linear infinite;
+  width: max-content;
+}
+
+.marquee-track:hover {
+  animation-play-state: paused;
+}
+
+.tech-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: #ccc;
+  white-space: nowrap;
+  padding: 8px 16px;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.tech-item i {
+  font-size: 1.2rem;
+  color: #ff9f00;
+}
+
+body.light-mode .tech-item {
+  background: #fff;
+  color: #333;
+  border-color: #eee;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.06);
+}
+
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
 }
 
 /* Responsive - Home */
