@@ -190,6 +190,37 @@ body.light-mode .modal-box {
   white-space: nowrap;
 }
 
+/* Filter Tabs */
+.filter-tabs {
+  display: flex;
+  justify-content: center;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+  margin-bottom: 2rem;
+}
+
+.filter-btn {
+  padding: 8px 18px;
+  border: 2px solid #ff9f00;
+  background: transparent;
+  color: #ff9f00;
+  border-radius: 25px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+.filter-btn.active,
+.filter-btn:hover {
+  background: #ff9f00;
+  color: #fff;
+}
+
+.project-card.hidden {
+  display: none;
+}
+
 /* Modal Animation */
 @keyframes fadeIn {
   from {

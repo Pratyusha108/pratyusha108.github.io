@@ -509,36 +509,138 @@
   background: #28a745;
 }
 
+/* Typewriter */
+.typewriter-line {
+  font-size: clamp(1.1rem, 2.5vw, 1.4rem);
+  color: #e6e6e6;
+  margin-bottom: 1.5rem;
+}
+
+.typewriter-text {
+  color: #ff9f00;
+  font-weight: 700;
+  border-right: 3px solid #ff9f00;
+  padding-right: 2px;
+  animation: blink-cursor 0.7s step-end infinite;
+}
+
+@keyframes blink-cursor {
+  50% { border-color: transparent; }
+}
+
+body.light-mode .typewriter-line {
+  color: #555;
+}
+
+/* Particle Canvas */
+#particle-canvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  pointer-events: none;
+}
+
 /* Testimonials */
 .testimonials {
-  display: flex;
-  gap: 2rem;
   padding: 2rem;
-  flex-wrap: wrap;
-  justify-content: center;
+  text-align: center;
+}
+
+.testimonials > h2 {
+  color: #ff9f00;
+  margin-bottom: 1.5rem;
+  font-size: 2rem;
+}
+
+/* Testimonial Carousel */
+.testimonial-carousel {
+  position: relative;
+  max-width: 700px;
+  margin: 0 auto;
+  padding: 0 50px;
+  overflow: hidden;
+}
+
+.testimonial-track {
+  display: flex;
+  transition: transform 0.5s ease;
 }
 
 .testimonial-card {
   background: rgba(255, 255, 255, 0.05);
   padding: 2rem;
   border-radius: 15px;
-  max-width: 500px;
-  transition: transform 0.3s ease;
-}
-
-.testimonial-card:hover {
-  transform: translateY(-5px);
+  min-width: 100%;
+  flex-shrink: 0;
+  box-sizing: border-box;
 }
 
 .testimonial-card p {
   font-style: italic;
   margin-bottom: 1rem;
   color: #e6e6e6;
+  line-height: 1.7;
 }
 
 .testimonial-card h4 {
   color: #ff9f00;
   text-align: right;
+}
+
+.carousel-dots {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 1.5rem;
+}
+
+.carousel-dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: rgba(255, 159, 0, 0.3);
+  border: none;
+  cursor: pointer;
+  transition: background 0.3s, transform 0.3s;
+}
+
+.carousel-dot.active {
+  background: #ff9f00;
+  transform: scale(1.2);
+}
+
+.carousel-arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(255, 159, 0, 0.8);
+  color: #fff;
+  border: none;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  font-size: 16px;
+  cursor: pointer;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.3s;
+}
+
+.carousel-arrow:hover {
+  background: #ff9f00;
+}
+
+.carousel-prev {
+  left: 0;
+}
+
+.carousel-next {
+  right: 0;
 }
 
 /* Contact Form on Home */
@@ -720,6 +822,10 @@ body.light-mode .testimonial-card {
 
 body.light-mode .testimonial-card p {
   color: #555;
+}
+
+body.light-mode .carousel-arrow {
+  background: rgba(255, 159, 0, 0.9);
 }
 
 /* Responsive - Home */

@@ -147,11 +147,35 @@ function closeOnBack(e) {
   if (e.target.id === 'modal') closeModal();
 }
 
-/* AUTO-OPEN FROM URL PARAM */
+/* AUTO-OPEN FROM URL PARAM + FILTER TABS */
 document.addEventListener('DOMContentLoaded', function () {
+  // Auto-open modal from URL
   var params = new URLSearchParams(window.location.search);
   var openKey = params.get('open');
   if (openKey && modalData[openKey]) {
     openModal(openKey);
+  }
+
+  // Filter tabs
+  var filterBtns = document.querySelectorAll('.filter-btn');
+  var projectCards = document.querySelectorAll('.project-showcase .project-card');
+
+  if (filterBtns.length > 0) {
+    filterBtns.forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        filterBtns.forEach(function (b) { b.classList.remove('active'); });
+        btn.classList.add('active');
+
+        var filter = btn.dataset.filter;
+
+        projectCards.forEach(function (card) {
+          if (filter === 'all' || card.dataset.categories.indexOf(filter) !== -1) {
+            card.classList.remove('hidden');
+          } else {
+            card.classList.add('hidden');
+          }
+        });
+      });
+    });
   }
 });

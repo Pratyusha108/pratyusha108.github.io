@@ -4,7 +4,13 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta property="og:title" content="Projects - Sai Pratyusha Gorapalli">
+  <meta property="og:description" content="Data Science projects in ML, forecasting, NLP, and analytics">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://pratyusha108.github.io/projects.html">
+  <meta property="og:image" content="https://pratyusha108.github.io/assets/images/profile-pic.png">
   <title>Data Science Projects - Pratyusha G</title>
+  <link rel="icon" type="image/svg+xml" href="assets/images/favicon.svg">
   <link rel="stylesheet" href="assets/css/base.css">
   <link rel="stylesheet" href="assets/css/layout.css">
   <link rel="stylesheet" href="assets/css/projects.css">
@@ -13,8 +19,11 @@
 
 <body>
 
+  <div class="scroll-progress"></div>
+
   <header>
     <h1>My Projects</h1>
+    <button class="hamburger"><i class="fas fa-bars"></i></button>
     <nav>
       <a href="index.html">Home</a> |
       <a href="about.html">About</a> |
@@ -29,15 +38,24 @@
   </header>
 
   <!-- PROJECT SHOWCASE -->
-  <section class="project-showcase">
+  <section class="project-showcase fade-in">
     <h1>Data Science Portfolio</h1>
     <p class="showcase-intro">Exploring the intersection of Machine Learning, AI, and Real-World Problem Solving</p>
+
+    <!-- Filter Tabs -->
+    <div class="filter-tabs">
+      <button class="filter-btn active" data-filter="all">All</button>
+      <button class="filter-btn" data-filter="python">Python</button>
+      <button class="filter-btn" data-filter="r">R</button>
+      <button class="filter-btn" data-filter="ml">ML</button>
+      <button class="filter-btn" data-filter="finance">Finance</button>
+    </div>
 
     <div class="project-grid">
 
       <!-- Time Series -->
-      <div class="project-card">
-        <img src="assets/images/project-time-series.png">
+      <div class="project-card" data-categories="r ml forecasting">
+        <img src="assets/images/project-time-series.png" loading="lazy">
         <div class="project-content">
           <h3>Applied Time Series Analytics & Forecasting</h3>
           <p>Multi-domain forecasting using classical and modern models.</p>
@@ -51,8 +69,8 @@
       </div>
 
       <!-- COVID-19 Mortality -->
-      <div class="project-card">
-        <img src="assets/images/project-covid-mortality.png">
+      <div class="project-card" data-categories="python ml">
+        <img src="assets/images/project-covid-mortality.png" loading="lazy">
         <div class="project-content">
           <h3>COVID-19 Mortality Prediction & Analysis</h3>
           <p>End-to-end ML pipeline for epidemiological mortality modeling.</p>
@@ -67,8 +85,8 @@
       </div>
 
       <!-- Mortgage Analytics -->
-      <div class="project-card">
-        <img src="assets/images/project-mortgage-analytics.webp">
+      <div class="project-card" data-categories="python ml finance">
+        <img src="assets/images/project-mortgage-analytics.webp" loading="lazy">
         <div class="project-content">
           <h3>Mortgage Payback Analytics</h3>
           <p>Predicting mortgage payoff behavior using supervised models.</p>
@@ -83,8 +101,8 @@
       </div>
 
       <!-- Mailing Analytics -->
-      <div class="project-card">
-        <img src="assets/images/project-mailing-analytics.png">
+      <div class="project-card" data-categories="r ml">
+        <img src="assets/images/project-mailing-analytics.png" loading="lazy">
         <div class="project-content">
           <h3>Software Mailing Response Analytics</h3>
           <p>Customer targeting optimization using response modeling.</p>
@@ -99,8 +117,8 @@
       </div>
 
       <!-- Smartphone Resale -->
-      <div class="project-card">
-        <img src="assets/images/project-smartphone-pricing.png">
+      <div class="project-card" data-categories="r ml">
+        <img src="assets/images/project-smartphone-pricing.png" loading="lazy">
         <div class="project-content">
           <h3>Smartphone Resale Price Prediction</h3>
           <p>Regression + classification for used device pricing analytics.</p>
@@ -115,8 +133,8 @@
       </div>
 
       <!-- Predictive Viability Check -->
-      <div class="project-card">
-        <img src="assets/images/project-predictive-viability.png">
+      <div class="project-card" data-categories="python ml">
+        <img src="assets/images/project-predictive-viability.png" loading="lazy">
         <div class="project-content">
           <h3>Predictive Viability Check (Pre-Modeling Feasibility)</h3>
           <p>A practical framework to assess data quality, leakage risk, stability/drift, and modeling feasibility before building ML.</p>
@@ -133,7 +151,7 @@
   </section>
 
   <!-- RESEARCH SECTION -->
-  <section class="research-section">
+  <section class="research-section fade-in">
     <h2>Research Publications</h2>
     <div class="research-papers">
       <div class="paper-card">
@@ -176,6 +194,8 @@
       </a>
     </div>
   </div>
+
+  <button class="back-to-top"><i class="fas fa-chevron-up"></i></button>
 
   <div class="floating-social">
     <a href="https://www.linkedin.com/in/pratyusha-g-a92915229/" target="_blank" class="icon linkedin" title="LinkedIn">

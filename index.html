@@ -7,7 +7,17 @@
   <meta name="description"
     content="Data Scientist Portfolio - Expertise in Machine Learning, Data Analysis, and AI Solutions">
   <meta name="keywords" content="data science, machine learning, AI, python, data analysis, deep learning">
+  <meta property="og:title" content="Sai Pratyusha Gorapalli - Data Scientist Portfolio">
+  <meta property="og:description" content="Expertise in Machine Learning, Data Analysis, and AI Solutions">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://pratyusha108.github.io">
+  <meta property="og:image" content="https://pratyusha108.github.io/assets/images/profile-pic.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Sai Pratyusha Gorapalli - Data Scientist Portfolio">
+  <meta name="twitter:description" content="Expertise in Machine Learning, Data Analysis, and AI Solutions">
+  <meta name="twitter:image" content="https://pratyusha108.github.io/assets/images/profile-pic.png">
   <title>Sai Pratyusha Gorapalli</title>
+  <link rel="icon" type="image/svg+xml" href="assets/images/favicon.svg">
   <link rel="stylesheet" href="assets/css/base.css">
   <link rel="stylesheet" href="assets/css/layout.css">
   <link rel="stylesheet" href="assets/css/home.css">
@@ -16,9 +26,13 @@
 
 <body>
 
+  <!-- Scroll Progress Bar -->
+  <div class="scroll-progress"></div>
+
   <!-- Header Section with Navigation and Dark Mode Toggle -->
   <header>
     <h1 class="glow-name">Sai Pratyusha Gorapalli</h1>
+    <button class="hamburger"><i class="fas fa-bars"></i></button>
     <nav>
       <a href="index.html">Home</a> |
       <a href="about.html">About</a> |
@@ -28,10 +42,12 @@
         target="_blank">Resume</a>
     </nav>
 
-    <!-- Main Content Section -->
+    <!-- Hero Section with Particle Background -->
     <section class="hero">
+      <canvas id="particle-canvas"></canvas>
       <div class="hero-content">
         <h2>Transforming Data into Insights</h2>
+        <p class="typewriter-line">I'm a <span id="typewriter" class="typewriter-text">Data Scientist</span></p>
         <p>Specializing in machine learning solutions, predictive modeling, and data-driven decision making. With
           expertise in Python, TensorFlow, and advanced statistical analysis, I help organizations unlock the power of
           their data.</p>
@@ -55,12 +71,12 @@
       </div>
     </section>
 
-    <!-- New Analytics Dashboard Section -->
-    <section class="dashboard">
+    <!-- Analytics Dashboard Section -->
+    <section class="dashboard fade-in">
       <h2>Data Visualization Portfolio</h2>
       <div class="dashboard-grid">
         <div class="dashboard-item">
-          <img src="assets/images/dashboard-ninja-warrior.png" alt="American Ninja Warrior Power BI Dashboard">
+          <img src="assets/images/dashboard-ninja-warrior.png" alt="American Ninja Warrior Power BI Dashboard" loading="lazy">
 
           <div class="dashboard-content">
             <h3>American Ninja Warrior – Power BI Analytics Dashboard</h3>
@@ -85,7 +101,7 @@
 
         <div class="dashboard-item">
           <img src="https://formstory.io/wp-content/uploads/2024/05/Customer-segmentation-analysis-1.jpg"
-            alt="Tableau Visualization Projects">
+            alt="Tableau Visualization Projects" loading="lazy">
           <div class="dashboard-content">
             <h3>Data Visualization with Tableau</h3>
             <p>
@@ -102,7 +118,7 @@
       </div>
     </section>
 
-    <section class="skills">
+    <section class="skills fade-in">
       <h2>Technical Expertise</h2>
       <ul>
         <li>Data Analysis with Python</li>
@@ -116,7 +132,7 @@
       </ul>
     </section>
 
-    <section class="certifications">
+    <section class="certifications fade-in">
       <h2><i class="fas fa-award"></i> Professional Certifications</h2>
       <div class="cert-container">
 
@@ -233,15 +249,13 @@
       </div>
     </section>
 
-
-
-    <section class="projects">
+    <section class="projects fade-in">
       <h2>Featured Projects</h2>
       <div class="project-grid">
 
         <!-- Time Series Analytics -->
         <div class="project-card">
-          <img src="assets/images/project-time-series.png" alt="Time Series Analytics">
+          <img src="assets/images/project-time-series.png" alt="Time Series Analytics" loading="lazy">
           <div class="project-content">
             <h3>Applied Time Series Forecasting</h3>
             <p>Multi-domain time series forecasting portfolio using ETS, TBATS, STL decomposition and benchmarking.</p>
@@ -256,7 +270,7 @@
 
         <!-- Software Mailing Response -->
         <div class="project-card">
-          <img src="assets/images/project-mailing-analytics.png" alt="Mailing Response Analytics">
+          <img src="assets/images/project-mailing-analytics.png" alt="Mailing Response Analytics" loading="lazy">
           <div class="project-content">
             <h3>Software Mailing Response Analytics</h3>
             <p>Direct marketing targeting optimization using logistic regression, PCA, clustering and decile ranking.
@@ -272,7 +286,7 @@
 
         <!-- Smartphone Resale Pricing -->
         <div class="project-card">
-          <img src="assets/images/project-smartphone-pricing.png" alt="Smartphone Price Prediction">
+          <img src="assets/images/project-smartphone-pricing.png" alt="Smartphone Price Prediction" loading="lazy">
           <div class="project-content">
             <h3>Smartphone Resale Price Prediction</h3>
             <p>ML system for regression-based price estimation and classification-based pricing tiers for used
@@ -289,40 +303,52 @@
       </div>
     </section>
 
+    <!-- Testimonials Carousel -->
+    <section class="testimonials fade-in">
+      <h2>What People Say</h2>
+      <div class="testimonial-carousel">
+        <button class="carousel-arrow carousel-prev"><i class="fas fa-chevron-left"></i></button>
+        <div class="testimonial-track">
+          <div class="testimonial-card">
+            <p>"Sai Pratyusha consistently demonstrated exceptional professionalism, leadership, and technical maturity. Her
+              ability to learn rapidly, deliver high-quality work on time, and uplift peers made her one of the most
+              dependable and standout individuals I have mentored."</p>
+            <h4>- Dr. P. Venkataiah, Professor & Project Guide, Department of Business Management, Osmania University</h4>
+          </div>
 
-    <section class="testimonials">
-      <div class="testimonial-card">
-        <p>"Sai Pratyusha consistently demonstrated exceptional professionalism, leadership, and technical maturity. Her
-          ability to learn rapidly, deliver high-quality work on time, and uplift peers made her one of the most
-          dependable and standout individuals I have mentored."</p>
-        <h4>- Dr. P. Venkataiah, Professor & Project Guide, Department of Business Management, Osmania University</h4>
-      </div>
+          <div class="testimonial-card">
+            <p>"Sai Pratyusha combines strong analytical thinking with excellent communication and organizational skills.
+              She approaches complex problems with clarity, discipline, and a rare balance of technical depth and managerial
+              insight."</p>
+            <h4>- Dr. Y. Jahangir, Associate Professor & Placement Officer, Department of Business Management, Osmania
+              University</h4>
+          </div>
 
-      <div class="testimonial-card">
-        <p>"Sai Pratyusha combines strong analytical thinking with excellent communication and organizational skills.
-          She approaches complex problems with clarity, discipline, and a rare balance of technical depth and managerial
-          insight."</p>
-        <h4>- Dr. Y. Jahangir, Associate Professor & Placement Officer, Department of Business Management, Osmania
-          University</h4>
-      </div>
+          <div class="testimonial-card">
+            <p>"Sai Pratyusha is highly professional, detail-oriented, and reliable in execution. Her commitment to quality,
+              structured thinking, and ability to lead teams under deadlines consistently set her apart from her peers."</p>
+            <h4>- Dr. Nagasekhara Reddy Naguru, Head of Department – Electrical & Electronics Engineering, Stanley College
+              of Engineering & Technology for Women</h4>
+          </div>
 
-      <div class="testimonial-card">
-        <p>"Sai Pratyusha is highly professional, detail-oriented, and reliable in execution. Her commitment to quality,
-          structured thinking, and ability to lead teams under deadlines consistently set her apart from her peers."</p>
-        <h4>- Dr. Nagasekhara Reddy Naguru, Head of Department – Electrical & Electronics Engineering, Stanley College
-          of Engineering & Technology for Women</h4>
-      </div>
-
-      <div class="testimonial-card">
-        <p>"I was impressed by Sai Pratyusha clarity of thought, professionalism, and genuine passion for data-driven
-          problem solving. She approaches challenges with maturity, curiosity, and strong ownership."</p>
-        <h4>- Sai Shravani Sistla, Machine Learning Engineer, Adobe | IIT Kharagpur & Georgia Tech (Alumni)</h4>
+          <div class="testimonial-card">
+            <p>"I was impressed by Sai Pratyusha clarity of thought, professionalism, and genuine passion for data-driven
+              problem solving. She approaches challenges with maturity, curiosity, and strong ownership."</p>
+            <h4>- Sai Shravani Sistla, Machine Learning Engineer, Adobe | IIT Kharagpur & Georgia Tech (Alumni)</h4>
+          </div>
+        </div>
+        <button class="carousel-arrow carousel-next"><i class="fas fa-chevron-right"></i></button>
+        <div class="carousel-dots">
+          <button class="carousel-dot active"></button>
+          <button class="carousel-dot"></button>
+          <button class="carousel-dot"></button>
+          <button class="carousel-dot"></button>
+        </div>
       </div>
     </section>
 
-
     <!-- Contact Section -->
-    <section id="contact" class="contact-form">
+    <section id="contact" class="contact-form fade-in">
       <h2>Contact Me</h2>
       <form>
         <input type="text" name="name" placeholder="Your Name" required>
@@ -359,6 +385,9 @@
     <button id="dark-mode-toggle" class="dark-mode-toggle">
       <span class="toggle-icon">🌙</span>
     </button>
+
+    <!-- Back to Top -->
+    <button class="back-to-top"><i class="fas fa-chevron-up"></i></button>
 
     <div class="floating-social">
       <a href="https://www.linkedin.com/in/pratyusha-g-a92915229/" target="_blank" class="icon linkedin">
