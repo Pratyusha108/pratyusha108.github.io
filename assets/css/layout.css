@@ -1,0 +1,256 @@
+/* Header */
+header {
+  background-color: #222;
+  color: #f1f1f1;
+  width: 100%;
+  padding: 20px;
+  text-align: center;
+  border-radius: 10px;
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+  margin-bottom: 30px;
+}
+
+header h1 {
+  font-size: 36px;
+  margin-bottom: 10px;
+}
+
+.tagline {
+  font-size: 1.2rem;
+  color: #ff9f00;
+  margin-bottom: 20px;
+}
+
+header nav {
+  display: flex;
+  justify-content: center;
+  gap: 30px;
+  margin-top: 20px;
+}
+
+header a {
+  color: #f1f1f1;
+  text-decoration: none;
+  font-size: 18px;
+  font-weight: bold;
+}
+
+header a:hover {
+  color: #ff9f00;
+}
+
+/* Footer */
+footer {
+  text-align: center;
+  padding: 20px;
+  background-color: #222;
+  color: #ff9f00;
+  width: 100%;
+  margin-top: 50px;
+}
+
+footer a {
+  color: #ff9f00;
+  margin: 0 10px;
+  text-decoration: none;
+}
+
+footer a:hover {
+  color: #28a745;
+  opacity: 0.7;
+}
+
+/* Social Links */
+.social-links {
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+  margin: 1.5rem 0;
+  flex-wrap: wrap;
+}
+
+.social-links a {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1.5rem;
+  border-radius: 25px;
+  background: rgba(255, 255, 255, 0.1);
+  color: #ff9f00;
+  text-decoration: none;
+  transition: all 0.3s ease;
+}
+
+.social-links a i {
+  font-size: 1.25rem;
+}
+
+.social-links a:hover {
+  transform: translateY(-3px);
+  background: #ff9f00;
+  color: white;
+}
+
+/* Dark Mode Toggle Button */
+.dark-mode-toggle {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  background-color: #444;
+  color: #fff;
+  border: none;
+  padding: 15px 30px;
+  border-radius: 50px;
+  font-size: 20px;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.3s;
+  z-index: 1000;
+}
+
+.dark-mode-toggle:hover {
+  background-color: #ff9f00;
+  transform: scale(1.1);
+}
+
+.toggle-icon {
+  font-size: 24px;
+}
+
+/* Floating Social */
+.floating-social {
+  position: fixed;
+  top: 25%;
+  left: 30px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  z-index: 9999;
+}
+
+.floating-social .icon {
+  width: 42px;
+  height: 42px;
+  background: #222;
+  color: #fff;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 18px;
+  text-decoration: none;
+  transition: transform 0.25s ease, background 0.25s ease;
+  cursor: pointer;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+}
+
+.floating-social .linkedin {
+  background: #0A66C2;
+}
+
+.floating-social .github {
+  background: #333;
+}
+
+.floating-social .email {
+  background: #D44638;
+}
+
+.floating-social .icon:hover {
+  transform: translateX(4px);
+  background: #ff9f00;
+  color: #fff;
+}
+
+/* Glow Name */
+.glow-name {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: #ffffff;
+  text-shadow: 0 0 8px rgba(255, 255, 255, 0.4);
+}
+
+/* Dark Mode - Header/Footer */
+body.dark-mode header {
+  background-color: #333;
+}
+
+/* Light Mode - Header/Footer/Social */
+body.light-mode header {
+  background-color: #fff;
+  color: #333;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+body.light-mode header nav a {
+  color: #333;
+  font-weight: 600;
+  position: relative;
+  padding-bottom: 5px;
+  transition: color 0.3s ease;
+}
+
+body.light-mode header nav a:hover {
+  color: #ff9f00;
+}
+
+body.light-mode header nav a::after {
+  content: '';
+  position: absolute;
+  width: 0;
+  height: 2px;
+  bottom: 0;
+  left: 0;
+  background-color: #ff9f00;
+  transition: width 0.3s ease;
+}
+
+body.light-mode header nav a:hover::after {
+  width: 100%;
+}
+
+body.light-mode footer {
+  background-color: #f4f4f4;
+  color: #555;
+}
+
+body.light-mode .social-links a {
+  background: rgba(0, 0, 0, 0.05);
+}
+
+body.light-mode .social-links a:hover {
+  background: #ff9f00;
+  color: #fff;
+}
+
+body.light-mode .floating-social .icon {
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+}
+
+body.light-mode .glow-name {
+  color: #ff9f00;
+  text-shadow: 0 0 10px rgba(255, 159, 0, 0.4);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  header {
+    padding: 15px;
+  }
+}
+
+@media (max-width: 480px) {
+  .social-links {
+    flex-direction: column;
+    align-items: center;
+  }
+}
+
+@media (max-width: 600px) {
+  .floating-social {
+    top: auto;
+    bottom: 20px;
+    flex-direction: row;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+}

@@ -1,0 +1,204 @@
+/* ---- PROJECT SHOWCASE ---- */
+.project-showcase {
+  max-width: 1200px;
+  margin: 2rem auto;
+  padding: 2rem;
+  text-align: center;
+}
+
+.project-grid {
+  display: grid !important;
+  gap: 2rem;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  margin-top: 2rem;
+}
+
+.project-card {
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 15px;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  transition: transform .3s ease;
+}
+
+.project-card:hover {
+  transform: translateY(-5px);
+}
+
+.project-card img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+}
+
+.project-content {
+  padding: 1rem;
+  text-align: left;
+}
+
+.project-stats,
+.project-tags {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  margin-top: 0.5rem;
+}
+
+.project-tags span {
+  background: rgba(255, 159, 0, 0.2);
+  padding: 4px 8px;
+  border-radius: 8px;
+  color: #ff9f00;
+  font-size: 0.8rem;
+}
+
+.project-footer {
+  padding: 1rem;
+}
+
+.project-link {
+  background: #ff9f00;
+  color: #fff;
+  padding: 8px 14px;
+  border-radius: 6px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+/* ---- RESEARCH ---- */
+.research-section {
+  max-width: 800px;
+  margin: 3rem auto;
+  padding: 2rem;
+  text-align: center;
+}
+
+/* ---- DARK/LIGHT SUPPORT ---- */
+body.light-mode .project-card {
+  background: #fff;
+  border-color: #ddd;
+}
+
+body.dark-mode .project-card {
+  background: rgba(255, 255, 255, 0.06);
+  border-color: rgba(255, 255, 255, 0.1);
+}
+
+/* ===== MODAL BACKDROP ===== */
+.modal-backdrop {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.7);
+  justify-content: center;
+  align-items: center;
+  z-index: 2000;
+  padding: 20px;
+  overflow: hidden;
+}
+
+/* ===== MODAL BOX ===== */
+.modal-box {
+  background: #1f1f1f;
+  border-radius: 14px;
+  padding: 24px;
+  max-width: 760px;
+  width: 100%;
+  color: #fff;
+  position: relative;
+  animation: fadeIn .28s ease-out;
+  overflow-y: auto;
+  overflow-x: hidden;
+  max-height: 90vh;
+  box-sizing: border-box;
+}
+
+body.light-mode .modal-box {
+  background: #fff;
+  color: #111;
+}
+
+/* ===== MODAL IMAGE ===== */
+.modal-box img {
+  width: 100%;
+  height: auto;
+  max-height: 240px;
+  object-fit: cover;
+  border-radius: 10px;
+  margin-bottom: 1rem;
+}
+
+/* ===== CLOSE BUTTON ===== */
+.modal-close {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  background: #ff3b3b;
+  color: #fff;
+  border-radius: 50%;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  cursor: pointer;
+  border: 2px solid #fff;
+  z-index: 50;
+}
+
+/* ===== SECTIONS ===== */
+.modal-section {
+  margin: 0.75rem 0;
+  text-align: left;
+  white-space: normal;
+}
+
+.modal-section h4 {
+  margin-bottom: 0.3rem;
+  color: #ff9f00;
+  font-weight: 600;
+}
+
+/* ===== TAGS ===== */
+.modal-tags span {
+  background: #ff9f00;
+  color: #fff;
+  padding: 5px 8px;
+  margin-right: 5px;
+  border-radius: 6px;
+  font-size: 0.8rem;
+  display: inline-block;
+  margin-bottom: 5px;
+}
+
+/* ===== GITHUB BUTTON ===== */
+.modal-github-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: #24292e;
+  color: #fff;
+  padding: 8px 14px;
+  border-radius: 6px;
+  margin-top: 12px;
+  text-decoration: none;
+  font-size: 0.9rem;
+  white-space: nowrap;
+}
+
+/* Modal Animation */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

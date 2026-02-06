@@ -1,0 +1,62 @@
+/* Contact Page */
+.contact-section {
+  max-width: 600px;
+  margin: 2rem auto;
+  text-align: center;
+  padding: 2rem;
+}
+
+.contact-section form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.input-row {
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+}
+
+.contact-section input,
+.contact-section textarea {
+  padding: 10px;
+  font-size: 1rem;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+}
+
+.submit-btn {
+  padding: 10px;
+  border: none;
+  background: #ff9f00;
+  color: white;
+  border-radius: 6px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+/* Dark Mode */
+body.dark-mode .contact-section input,
+body.dark-mode .contact-section textarea {
+  background: #333;
+  color: #eee;
+  border: 1px solid #555;
+}
+
+body.dark-mode .contact-section label,
+body.dark-mode .contact-section p {
+  color: #e6e6e6;
+}
+
+body.dark-mode .submit-btn {
+  background: #ff9f00;
+  color: white;
+}
+
+/* Light Mode */
+body.light-mode .contact-section input,
+body.light-mode .contact-section textarea {
+  background: #fff;
+  color: #333;
+}

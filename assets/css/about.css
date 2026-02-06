@@ -1,0 +1,219 @@
+/* ===== ABOUT SECTION ===== */
+.about-section {
+  width: 100%;
+  max-width: 1000px;
+  margin: 2rem auto;
+  padding: 2rem;
+  border-radius: 15px;
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(8px);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+}
+
+.about-content h2 {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #ff9f00;
+  margin-bottom: 1.2rem;
+}
+
+.about-content p {
+  font-size: 1rem;
+  line-height: 1.7;
+  color: #dcdcdc;
+  margin-bottom: 1.8rem;
+  max-width: 850px;
+}
+
+.about-content h3 {
+  font-size: 1.4rem;
+  margin-top: 2rem;
+  margin-bottom: 0.8rem;
+  color: #ff9f00;
+  font-weight: 600;
+  border-left: 4px solid #ff9f00;
+  padding-left: 10px;
+}
+
+.about-content ul {
+  list-style: none;
+  margin: 0 0 1.5rem 0;
+  padding: 0;
+}
+
+.about-content ul li {
+  padding: 8px 0;
+  font-size: 1rem;
+  color: #e6e6e6;
+  position: relative;
+  padding-left: 20px;
+}
+
+.about-content ul li::before {
+  content: "\2022";
+  color: #ff9f00;
+  font-weight: bold;
+  position: absolute;
+  left: 0;
+  top: 4px;
+}
+
+/* ===== EXPERIENCE BLOCK ===== */
+.experience-item {
+  margin-bottom: 2rem;
+  padding: 1.2rem;
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.05);
+  border-left: 3px solid #ff9f00;
+}
+
+.experience-item h4 {
+  font-size: 1.2rem;
+  color: #fff;
+  margin-bottom: 0.3rem;
+  font-weight: 600;
+}
+
+.experience-item .date {
+  font-size: 0.9rem;
+  color: #bbb;
+  margin-bottom: 0.8rem;
+}
+
+/* ===== ACHIEVEMENTS ===== */
+.achievements {
+  max-width: 1000px;
+  margin: 0 auto 3rem auto;
+  padding: 2rem;
+}
+
+.achievements h2 {
+  text-align: center;
+  font-size: 2rem;
+  margin-bottom: 2rem;
+  color: #ff9f00;
+}
+
+.achievement-grid {
+  display: flex;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.achievement-card {
+  flex: 1 1 250px;
+  min-height: 160px;
+  padding: 1.2rem;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 12px;
+  text-align: center;
+  transition: transform 0.3s ease;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.achievement-card i {
+  font-size: 2rem;
+  color: #ff9f00;
+  margin-bottom: 0.8rem;
+}
+
+.achievement-card h3 {
+  font-size: 1.2rem;
+  color: #fff;
+  margin-bottom: 0.3rem;
+}
+
+.achievement-card p {
+  font-size: 0.95rem;
+  color: #dcdcdc;
+  line-height: 1.4;
+}
+
+.achievement-card:hover {
+  transform: translateY(-5px);
+}
+
+/* ABOUT SECTION - DARK MODE */
+body.dark-mode .about-section {
+  background: rgba(255, 255, 255, 0.05);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.6);
+}
+
+body.dark-mode .about-content h2,
+body.dark-mode .about-content h3 {
+  color: #ff9f00;
+}
+
+body.dark-mode .about-content p,
+body.dark-mode .about-content li,
+body.dark-mode .experience-item .date {
+  color: #dcdcdc;
+}
+
+body.dark-mode .experience-item {
+  background: rgba(255, 255, 255, 0.07);
+  border-left: 3px solid #ff9f00;
+}
+
+/* ABOUT SECTION - LIGHT MODE */
+body.light-mode .about-section {
+  background: #ffffff;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+  border: 1px solid #e6e6e6;
+}
+
+body.light-mode .about-content h2,
+body.light-mode .about-content h3 {
+  color: #ff9f00;
+}
+
+body.light-mode .about-content p {
+  color: #444;
+}
+
+body.light-mode .about-content ul li {
+  color: #333;
+}
+
+body.light-mode .about-content ul li::before {
+  color: #ff9f00;
+}
+
+body.light-mode .experience-item {
+  background: #fafafa;
+  border-left: 3px solid #ff9f00;
+  border-radius: 10px;
+  border: 1px solid #e3e3e3;
+}
+
+body.light-mode .experience-item h4 {
+  color: #333;
+}
+
+body.light-mode .experience-item .date {
+  color: #777;
+}
+
+/* ACHIEVEMENTS - LIGHT MODE */
+body.light-mode .achievements h2 {
+  color: #ff9f00;
+}
+
+body.light-mode .achievement-card {
+  background: #ffffff;
+  border: 1px solid #e6e6e6;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+}
+
+body.light-mode .achievement-card i {
+  color: #ff9f00;
+}
+
+body.light-mode .achievement-card h3 {
+  color: #333;
+}
+
+body.light-mode .achievement-card p {
+  color: #555;
+}

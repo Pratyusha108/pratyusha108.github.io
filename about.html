@@ -5,7 +5,9 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>About Me - Data Scientist</title>
-  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="assets/css/base.css">
+  <link rel="stylesheet" href="assets/css/layout.css">
+  <link rel="stylesheet" href="assets/css/about.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 
@@ -117,35 +119,7 @@
     </a>
   </div>
 
-
-  <script>
-    document.addEventListener('DOMContentLoaded', function () {
-
-      // Dark mode toggle
-      const toggleButton = document.getElementById('dark-mode-toggle');
-      const body = document.body;
-      const toggleIcon = document.querySelector('.toggle-icon');
-
-      // Load saved theme or default to light
-      const currentTheme = localStorage.getItem('theme') || 'light-mode';
-      body.classList.add(currentTheme);
-      updateToggleIcon(currentTheme);
-
-      toggleButton.addEventListener('click', function () {
-        body.classList.toggle('dark-mode');
-        body.classList.toggle('light-mode');
-
-        const newTheme = body.classList.contains('dark-mode') ? 'dark-mode' : 'light-mode';
-        localStorage.setItem('theme', newTheme);
-        updateToggleIcon(newTheme);
-      });
-
-      function updateToggleIcon(theme) {
-        toggleIcon.textContent = theme === 'dark-mode' ? '☀️' : '🌙';
-      }
-
-    });
-  </script>
+  <script src="assets/js/main.js"></script>
 
 </body>
 
