@@ -14,3 +14,7 @@ Desktop.ini
 temp_clone/
 node_modules/
 .env
+_ul
+
+# Claude Code
+.claude/

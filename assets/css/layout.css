@@ -234,7 +234,9 @@ body.light-mode .glow-name {
 
 /* Active Nav */
 nav a.active {
-  color: #ff9f00 !important;
+  position: relative;
+  border-bottom: 2px solid #ff9f00;
+  padding-bottom: 3px;
 }
 
 body.light-mode nav a.active::after {

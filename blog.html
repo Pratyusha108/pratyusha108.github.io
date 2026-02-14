@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta property="og:title" content="Blog - Sai Pratyusha Gorapalli">
+  <meta property="og:description"
+    content="Insights on Machine Learning, Data Science, AI, and Career Growth">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://pratyusha108.github.io/blog.html">
+  <meta property="og:image" content="https://pratyusha108.github.io/assets/images/profile-pic.png">
+  <title>Blog - Sai Pratyusha Gorapalli</title>
+  <link rel="icon" type="image/svg+xml" href="assets/images/favicon.svg">
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#ff9f00">
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
+  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-XXXXXXXXXX');</script>
+  <link rel="stylesheet" href="assets/css/base.css">
+  <link rel="stylesheet" href="assets/css/layout.css">
+  <link rel="stylesheet" href="assets/css/blog.css">
+  <link rel="stylesheet" href="assets/css/chatbot.css">
+  <link rel="stylesheet" href="assets/css/stats.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+
+<body>
+
+  <!-- Page Loader -->
+  <div class="page-loader">
+    <div class="loader-spinner"></div>
+  </div>
+
+  <!-- Scroll Progress Bar -->
+  <div class="scroll-progress"></div>
+
+  <!-- Full-page particle canvas -->
+  <canvas id="blog-particle-canvas"></canvas>
+
+  <!-- Header -->
+  <header>
+    <h1>Data Science Blog</h1>
+    <button class="hamburger"><i class="fas fa-bars"></i></button>
+    <nav>
+      <a href="index.html">Home</a> |
+      <a href="about.html">About</a> |
+      <a href="projects.html">Projects</a> |
+      <a href="blog.html">Blog</a> |
+      <a href="contact.html">Contact</a> |
+      <a href="https://drive.google.com/file/d/18MX4_zaDu7gWHV5CO3ZDHE2YTWmbgXRm/view?usp=sharing"
+        target="_blank">Resume</a>
+    </nav>
+    <button id="dark-mode-toggle" class="dark-mode-toggle">
+      <span class="toggle-icon">🌙</span>
+    </button>
+  </header>
+
+  <!-- Background Grid -->
+  <div class="blog-bg-grid"></div>
+
+  <!-- Floating Data Decorations -->
+  <div class="blog-decorations" aria-hidden="true">
+    <div class="blog-float-dot" style="--x:10%;--y:30%;--d:0s;--s:6px"></div>
+    <div class="blog-float-dot" style="--x:85%;--y:20%;--d:1.5s;--s:4px"></div>
+    <div class="blog-float-dot" style="--x:70%;--y:60%;--d:3s;--s:8px"></div>
+    <div class="blog-float-dot" style="--x:20%;--y:75%;--d:0.8s;--s:5px"></div>
+    <div class="blog-float-dot" style="--x:50%;--y:45%;--d:2.2s;--s:7px"></div>
+    <div class="blog-float-dot" style="--x:92%;--y:80%;--d:4s;--s:4px"></div>
+    <div class="blog-float-ring" style="--x:15%;--y:50%;--d:1s"></div>
+    <div class="blog-float-ring" style="--x:80%;--y:35%;--d:2.5s"></div>
+    <div class="blog-float-ring" style="--x:55%;--y:80%;--d:0.5s"></div>
+  </div>
+
+  <!-- Blog Hero -->
+  <section class="blog-hero">
+    <div class="blog-hero-orbs" aria-hidden="true">
+      <div class="hero-orb"></div>
+      <div class="hero-orb"></div>
+      <div class="hero-orb"></div>
+    </div>
+    <div class="blog-hero-content">
+      <h1>Insights & Ideas</h1>
+      <p>Thoughts on Machine Learning, Data Science, AI, and navigating a non-linear career in tech.</p>
+      <div class="blog-hero-divider"></div>
+    </div>
+  </section>
+
+  <!-- Filter Tabs -->
+  <div class="blog-filters"></div>
+
+  <!-- Post Grid -->
+  <div class="blog-grid"></div>
+
+  <!-- Expanded Post Overlay -->
+  <div class="blog-overlay"></div>
+
+  <!-- Footer -->
+  <footer>
+    <p>Connect with me:</p>
+    <div class="social-links">
+      <a href="https://www.linkedin.com/in/pratyusha-g-a92915229/" target="_blank">
+        <i class="fab fa-linkedin"></i>
+        <span>LinkedIn</span>
+      </a>
+      <a href="https://github.com/Pratyusha108" target="_blank">
+        <i class="fab fa-github"></i>
+        <span>GitHub</span>
+      </a>
+      <a href="mailto:saipratyushagorapalli@gmail.com">
+        <i class="fas fa-envelope"></i>
+        <span>Email</span>
+      </a>
+    </div>
+  </footer>
+
+  <!-- Back to Top -->
+  <button class="back-to-top"><i class="fas fa-chevron-up"></i></button>
+
+  <!-- Floating Social -->
+  <div class="floating-social">
+    <a href="https://www.linkedin.com/in/pratyusha-g-a92915229/" target="_blank" class="icon linkedin" title="LinkedIn">
+      <i class="fab fa-linkedin-in"></i>
+    </a>
+    <a href="https://github.com/Pratyusha108" target="_blank" class="icon github" title="GitHub">
+      <i class="fab fa-github"></i>
+    </a>
+    <a href="https://www.kaggle.com/saipgorapalli" target="_blank" class="icon kaggle" title="Kaggle">
+      <i class="fab fa-kaggle"></i>
+    </a>
+    <a href="mailto:saipratyushagorapalli@gmail.com" class="icon email" title="Email Me">
+      <i class="fas fa-envelope"></i>
+    </a>
+  </div>
+
+  <script src="assets/js/main.js"></script>
+  <script src="assets/js/chatbot.js"></script>
+  <script src="assets/js/blog.js"></script>
+  <script src="assets/js/stats.js"></script>
+  <script id="dsq-count-scr" src="https://pratyusha-portfolio.disqus.com/count.js" async></script>
+
+</body>
+
+</html>

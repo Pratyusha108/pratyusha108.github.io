@@ -11,15 +11,29 @@
   <meta property="og:image" content="https://pratyusha108.github.io/assets/images/profile-pic.png">
   <title>Data Science Projects - Pratyusha G</title>
   <link rel="icon" type="image/svg+xml" href="assets/images/favicon.svg">
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#ff9f00">
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
+  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-XXXXXXXXXX');</script>
   <link rel="stylesheet" href="assets/css/base.css">
   <link rel="stylesheet" href="assets/css/layout.css">
   <link rel="stylesheet" href="assets/css/projects.css">
+  <link rel="stylesheet" href="assets/css/chatbot.css">
+  <link rel="stylesheet" href="assets/css/stats.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 
 <body>
 
+  <!-- Page Loader -->
+  <div class="page-loader">
+    <div class="loader-spinner"></div>
+  </div>
+
   <div class="scroll-progress"></div>
+
+  <!-- Full-page particle canvas -->
+  <canvas id="page-particle-canvas"></canvas>
 
   <header>
     <h1>My Projects</h1>
@@ -28,6 +42,7 @@
       <a href="index.html">Home</a> |
       <a href="about.html">About</a> |
       <a href="projects.html">Projects</a> |
+      <a href="blog.html">Blog</a> |
       <a href="contact.html">Contact</a> |
       <a href="https://drive.google.com/file/d/18MX4_zaDu7gWHV5CO3ZDHE2YTWmbgXRm/view?usp=sharing"
         target="_blank">Resume</a>
@@ -41,6 +56,7 @@
   <section class="project-showcase fade-in">
     <h1>Data Science Portfolio</h1>
     <p class="showcase-intro">Exploring the intersection of Machine Learning, AI, and Real-World Problem Solving</p>
+    <div class="project-showcase-divider"></div>
 
     <!-- Filter Tabs -->
     <div class="filter-tabs">
@@ -213,6 +229,8 @@
   </div>
 
   <script src="assets/js/main.js"></script>
+  <script src="assets/js/chatbot.js"></script>
+  <script src="assets/js/stats.js"></script>
   <script src="assets/js/projects.js"></script>
 
 </body>

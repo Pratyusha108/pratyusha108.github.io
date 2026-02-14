@@ -51,7 +51,7 @@ const modalData = {
       \u2022 Designed a structured go / no-go decision framework
       This approach mirrors industry best practices used to prevent wasted modeling effort and governance risk.
     `,
-    result: "Enabled early identification of data risks, leakage issues, and low-signal datasets\u2014helping avoid unreliable models and ensuring only viable datasets proceed to ML development.",
+    result: "Enabled early identification of data risks, leakage issues, and low-signal datasets - helping avoid unreliable models and ensuring only viable datasets proceed to ML development.",
     tags: ["Python", "EDA", "Data Quality", "Leakage", "Drift", "Governance"],
     github: "https://github.com/Pratyusha108/predictive-viability-check"
   },
@@ -175,6 +175,38 @@ document.addEventListener('DOMContentLoaded', function () {
             card.classList.add('hidden');
           }
         });
+      });
+    });
+  }
+
+  // ====== AUTO-SCROLL TO PORTFOLIO HEADING ======
+  if (!params.get('open')) {
+    var showcase = document.querySelector('.project-showcase');
+    if (showcase) {
+      setTimeout(function () {
+        showcase.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }, 700);
+    }
+  }
+
+  // ====== 3D TILT EFFECT ON PROJECT CARDS ======
+  var projectGrid = document.querySelector('.project-grid');
+  if (projectGrid && !('ontouchstart' in window)) {
+    projectGrid.addEventListener('mousemove', function (e) {
+      var card = e.target.closest('.project-card');
+      if (!card) return;
+      var rect = card.getBoundingClientRect();
+      var x = e.clientX - rect.left;
+      var y = e.clientY - rect.top;
+      var rotateX = ((y - rect.height / 2) / (rect.height / 2)) * -8;
+      var rotateY = ((x - rect.width / 2) / (rect.width / 2)) * 8;
+      card.style.transform = 'perspective(800px) rotateX(' + rotateX + 'deg) rotateY(' + rotateY + 'deg) translateY(-5px)';
+      card.style.setProperty('--glow-x', x + 'px');
+      card.style.setProperty('--glow-y', y + 'px');
+    });
+    projectGrid.addEventListener('mouseleave', function () {
+      projectGrid.querySelectorAll('.project-card').forEach(function (card) {
+        card.style.transform = '';
       });
     });
   }

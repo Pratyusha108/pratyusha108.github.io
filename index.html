@@ -18,13 +18,51 @@
   <meta name="twitter:image" content="https://pratyusha108.github.io/assets/images/profile-pic.png">
   <title>Sai Pratyusha Gorapalli</title>
   <link rel="icon" type="image/svg+xml" href="assets/images/favicon.svg">
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#ff9f00">
+  <!-- Google Analytics - Replace G-XXXXXXXXXX with your GA4 Measurement ID -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-XXXXXXXXXX');
+  </script>
+  <!-- Structured Data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    "name": "Sai Pratyusha Gorapalli",
+    "url": "https://pratyusha108.github.io",
+    "jobTitle": "Data Scientist",
+    "description": "Data Scientist specializing in Machine Learning, Deep Learning, NLP, and AI Agents",
+    "sameAs": [
+      "https://www.linkedin.com/in/pratyusha-g-a92915229/",
+      "https://github.com/Pratyusha108",
+      "https://www.kaggle.com/saipgorapalli"
+    ],
+    "knowsAbout": ["Machine Learning", "Data Science", "Deep Learning", "NLP", "Computer Vision", "Python", "R", "SQL", "AI Agents"],
+    "alumniOf": {
+      "@type": "CollegeOrUniversity",
+      "name": "University of North Texas"
+    }
+  }
+  </script>
   <link rel="stylesheet" href="assets/css/base.css">
   <link rel="stylesheet" href="assets/css/layout.css">
   <link rel="stylesheet" href="assets/css/home.css">
+  <link rel="stylesheet" href="assets/css/chatbot.css">
+  <link rel="stylesheet" href="assets/css/stats.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 
 <body>
+
+  <!-- Page Loader -->
+  <div class="page-loader">
+    <div class="loader-spinner"></div>
+  </div>
 
   <!-- Scroll Progress Bar -->
   <div class="scroll-progress"></div>
@@ -37,6 +75,7 @@
       <a href="index.html">Home</a> |
       <a href="about.html">About</a> |
       <a href="projects.html">Projects</a> |
+      <a href="blog.html">Blog</a> |
       <a href="#contact">Contact</a> |
       <a href="https://drive.google.com/file/d/18MX4_zaDu7gWHV5CO3ZDHE2YTWmbgXRm/view?usp=sharing"
         target="_blank">Resume</a>
@@ -79,7 +118,7 @@
           <img src="assets/images/dashboard-ninja-warrior.png" alt="American Ninja Warrior Power BI Dashboard" loading="lazy">
 
           <div class="dashboard-content">
-            <h3>American Ninja Warrior – Power BI Analytics Dashboard</h3>
+            <h3>American Ninja Warrior - Power BI Analytics Dashboard</h3>
             <p>
               Advanced BI dashboard analyzing obstacle patterns, competition structure, and
               geographic distribution across 10 seasons, built with data modeling & DAX.
@@ -120,16 +159,17 @@
 
     <section class="skills fade-in">
       <h2>Technical Expertise</h2>
-      <ul>
-        <li>Data Analysis with Python</li>
-        <li>Machine Learning Algorithms</li>
-        <li>Deep Learning & Neural Networks</li>
-        <li>SQL Database Management</li>
-        <li>Data Visualization (PowerBI/Tableau)</li>
-        <li>Statistical Analysis</li>
-        <li>Natural Language Processing</li>
-        <li>Computer Vision</li>
-      </ul>
+      <div class="skill-cloud">
+        <span class="skill-pill" style="--i:0"><i class="fas fa-chart-line"></i> Data Analysis</span>
+        <span class="skill-pill" style="--i:1"><i class="fas fa-brain"></i> Machine Learning</span>
+        <span class="skill-pill" style="--i:2"><i class="fas fa-network-wired"></i> Deep Learning & Neural Networks</span>
+        <span class="skill-pill" style="--i:3"><i class="fas fa-database"></i> Database Management</span>
+        <span class="skill-pill" style="--i:4"><i class="fas fa-chart-bar"></i> Data Visualization</span>
+        <span class="skill-pill" style="--i:5"><i class="fas fa-square-root-alt"></i> Statistical Analysis</span>
+        <span class="skill-pill" style="--i:6"><i class="fas fa-comments"></i> Natural Language Processing</span>
+        <span class="skill-pill" style="--i:7"><i class="fas fa-eye"></i> Computer Vision</span>
+        <span class="skill-pill" style="--i:8"><i class="fas fa-robot"></i> AI Agents</span>
+      </div>
     </section>
 
     <!-- Tech Stack Marquee -->
@@ -365,88 +405,135 @@
       </a>
     </section>
 
-    <!-- Testimonials Carousel -->
+    <!-- Testimonials Section - Grid Layout -->
     <section class="testimonials fade-in">
       <h2>What People Say</h2>
       <p class="section-subtitle">Trusted by professors, mentors, and industry professionals</p>
-      <div class="testimonial-carousel">
-        <button class="carousel-arrow carousel-prev"><i class="fas fa-chevron-left"></i></button>
-        <div class="testimonial-track">
+      <div class="testimonial-grid">
 
-          <div class="testimonial-card">
+        <div class="testimonial-card">
+          <div class="testimonial-glow"></div>
+          <div class="testimonial-header">
+            <div class="reviewer-avatar-ring">
+              <div class="reviewer-avatar">PV</div>
+            </div>
+            <div class="reviewer-meta">
+              <h4>Dr. P. Venkataiah</h4>
+              <span>Professor & Project Guide</span>
+              <span class="reviewer-org"><i class="fas fa-university"></i> Osmania University</span>
+            </div>
+            <span class="reviewer-badge"><i class="fas fa-check-circle"></i> Faculty Advisor</span>
+          </div>
+          <div class="testimonial-stars">
+            <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+          </div>
+          <div class="testimonial-body">
             <i class="fas fa-quote-left quote-icon"></i>
             <p>Sai Pratyusha consistently demonstrated exceptional professionalism, leadership, and technical maturity. Her
               ability to learn rapidly, deliver high-quality work on time, and uplift peers made her one of the most
               dependable and standout individuals I have mentored.</p>
-            <div class="reviewer">
-              <div class="reviewer-info">
-                <h4>Dr. P. Venkataiah</h4>
-                <span>Professor & Project Guide, Osmania University</span>
-              </div>
-              <div class="reviewer-avatar">PV</div>
-            </div>
           </div>
+        </div>
 
-          <div class="testimonial-card">
+        <div class="testimonial-card">
+          <div class="testimonial-glow"></div>
+          <div class="testimonial-header">
+            <div class="reviewer-avatar-ring">
+              <div class="reviewer-avatar">YJ</div>
+            </div>
+            <div class="reviewer-meta">
+              <h4>Dr. Y. Jahangir</h4>
+              <span>Associate Professor & Placement Officer</span>
+              <span class="reviewer-org"><i class="fas fa-university"></i> Osmania University</span>
+            </div>
+            <span class="reviewer-badge"><i class="fas fa-check-circle"></i> Academic Mentor</span>
+          </div>
+          <div class="testimonial-stars">
+            <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+          </div>
+          <div class="testimonial-body">
             <i class="fas fa-quote-left quote-icon"></i>
             <p>Sai Pratyusha combines strong analytical thinking with excellent communication and organizational skills.
               She approaches complex problems with clarity, discipline, and a rare balance of technical depth and managerial
               insight.</p>
-            <div class="reviewer">
-              <div class="reviewer-info">
-                <h4>Dr. Y. Jahangir</h4>
-                <span>Associate Professor & Placement Officer, Osmania University</span>
-              </div>
-              <div class="reviewer-avatar">YJ</div>
-            </div>
           </div>
+        </div>
 
-          <div class="testimonial-card">
+        <div class="testimonial-card">
+          <div class="testimonial-glow"></div>
+          <div class="testimonial-header">
+            <div class="reviewer-avatar-ring">
+              <div class="reviewer-avatar">NR</div>
+            </div>
+            <div class="reviewer-meta">
+              <h4>Dr. Nagasekhara Reddy Naguru</h4>
+              <span>Head of Department</span>
+              <span class="reviewer-org"><i class="fas fa-building"></i> Stanley College of Engineering</span>
+            </div>
+            <span class="reviewer-badge"><i class="fas fa-check-circle"></i> Department Head</span>
+          </div>
+          <div class="testimonial-stars">
+            <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+          </div>
+          <div class="testimonial-body">
             <i class="fas fa-quote-left quote-icon"></i>
             <p>Sai Pratyusha is highly professional, detail-oriented, and reliable in execution. Her commitment to quality,
               structured thinking, and ability to lead teams under deadlines consistently set her apart from her peers.</p>
-            <div class="reviewer">
-              <div class="reviewer-info">
-                <h4>Dr. Nagasekhara Reddy Naguru</h4>
-                <span>Head of Department, Stanley College of Engineering</span>
-              </div>
-              <div class="reviewer-avatar">NR</div>
-            </div>
           </div>
+        </div>
 
-          <div class="testimonial-card">
+        <div class="testimonial-card">
+          <div class="testimonial-glow"></div>
+          <div class="testimonial-header">
+            <div class="reviewer-avatar-ring">
+              <div class="reviewer-avatar">SS</div>
+            </div>
+            <div class="reviewer-meta">
+              <h4>Sai Shravani Sistla</h4>
+              <span>ML Engineer, Adobe</span>
+              <span class="reviewer-org"><i class="fas fa-graduation-cap"></i> IIT Kharagpur & Georgia Tech</span>
+            </div>
+            <span class="reviewer-badge"><i class="fas fa-check-circle"></i> Industry Pro</span>
+          </div>
+          <div class="testimonial-stars">
+            <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+          </div>
+          <div class="testimonial-body">
             <i class="fas fa-quote-left quote-icon"></i>
             <p>I was impressed by Sai Pratyusha's clarity of thought, professionalism, and genuine passion for data-driven
               problem solving. She approaches challenges with maturity, curiosity, and strong ownership.</p>
-            <div class="reviewer">
-              <div class="reviewer-info">
-                <h4>Sai Shravani Sistla</h4>
-                <span>ML Engineer, Adobe | IIT Kharagpur & Georgia Tech</span>
-              </div>
-              <div class="reviewer-avatar">SS</div>
-            </div>
           </div>
+        </div>
 
-        </div>
-        <button class="carousel-arrow carousel-next"><i class="fas fa-chevron-right"></i></button>
-        <div class="carousel-dots">
-          <button class="carousel-dot active"></button>
-          <button class="carousel-dot"></button>
-          <button class="carousel-dot"></button>
-          <button class="carousel-dot"></button>
-        </div>
       </div>
     </section>
 
     <!-- Contact Section -->
-    <section id="contact" class="contact-form fade-in">
-      <h2>Contact Me</h2>
-      <form>
-        <input type="text" name="name" placeholder="Your Name" required>
-        <input type="email" name="email" placeholder="Your Email" required>
-        <textarea name="message" rows="5" placeholder="Your Message" required></textarea>
-        <button type="submit">Send Message</button>
-      </form>
+    <section id="contact" class="contact-home fade-in">
+      <h2>Get In Touch</h2>
+      <p class="contact-subtitle">Have a project in mind, want to collaborate, or just say hello? Drop me a message.</p>
+      <div class="contact-form-wrapper">
+        <form>
+          <div class="form-row">
+            <div class="form-group">
+              <div class="input-icon"><i class="fas fa-user"></i></div>
+              <input type="text" name="name" placeholder="Your Name" required>
+            </div>
+            <div class="form-group">
+              <div class="input-icon"><i class="fas fa-envelope"></i></div>
+              <input type="email" name="email" placeholder="Your Email" required>
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="input-icon textarea-icon"><i class="fas fa-comment-alt"></i></div>
+            <textarea name="message" rows="5" placeholder="Your Message" required></textarea>
+          </div>
+          <button type="submit" class="contact-submit">
+            <span>Send Message</span>
+            <i class="fas fa-paper-plane"></i>
+          </button>
+        </form>
+      </div>
     </section>
 
     <!-- Footer -->
@@ -496,6 +583,8 @@
     </div>
 
     <script src="assets/js/main.js"></script>
+    <script src="assets/js/chatbot.js"></script>
+    <script src="assets/js/stats.js"></script>
     <script src="assets/js/contact.js"></script>
 
 </body>

@@ -1,9 +1,68 @@
+/* ===== PARTICLE CANVAS ===== */
+#page-particle-canvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 0;
+}
+
 /* ---- PROJECT SHOWCASE ---- */
 .project-showcase {
   max-width: 1200px;
   margin: 2rem auto;
   padding: 2rem;
   text-align: center;
+  position: relative;
+  z-index: 1;
+}
+
+.project-showcase h1 {
+  font-size: clamp(2.2rem, 5vw, 3.2rem);
+  font-weight: 800;
+  margin-bottom: 10px;
+  background: linear-gradient(135deg, #ff9f00, #ff6b6b);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  filter: drop-shadow(0 0 30px rgba(255, 159, 0, 0.25));
+  animation: projectReveal 1s ease-out;
+}
+
+.showcase-intro {
+  color: #aaa;
+  font-size: 1.05rem;
+  max-width: 600px;
+  margin: 0 auto 8px;
+  line-height: 1.6;
+  animation: projectReveal 1s ease-out 0.2s backwards;
+}
+
+.project-showcase-divider {
+  width: 120px;
+  height: 3px;
+  margin: 0 auto 2rem;
+  border-radius: 3px;
+  background: linear-gradient(90deg, #ff9f00, #ff6b6b, #ff9f00);
+  background-size: 200% 100%;
+  animation: gradientShift 3s ease infinite, projectReveal 1s ease-out 0.4s backwards;
+}
+
+@keyframes projectReveal {
+  from { opacity: 0; transform: translateY(20px) scale(0.97); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+@keyframes gradientShift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+body.light-mode .showcase-intro {
+  color: #666;
 }
 
 .project-grid {
@@ -11,6 +70,7 @@
   gap: 2rem;
   grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
   margin-top: 2rem;
+  perspective: 1000px;
 }
 
 .project-card {
@@ -18,11 +78,28 @@
   border-radius: 15px;
   overflow: hidden;
   border: 1px solid rgba(255, 255, 255, 0.1);
-  transition: transform .3s ease;
+  transition: transform .3s ease, box-shadow .3s ease;
+  will-change: transform;
+  position: relative;
+}
+
+.project-card::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  background: radial-gradient(600px circle at var(--glow-x, 50%) var(--glow-y, 50%), rgba(255, 159, 0, 0.08), transparent 40%);
+  pointer-events: none;
 }
 
 .project-card:hover {
   transform: translateY(-5px);
+  box-shadow: 0 10px 30px rgba(255, 159, 0, 0.15);
+}
+
+.project-card:hover::after {
+  opacity: 1;
 }
 
 .project-card img {
@@ -139,12 +216,12 @@ body.light-mode .modal-box {
   background: #ff3b3b;
   color: #fff;
   border-radius: 50%;
-  width: 32px;
-  height: 32px;
+  width: 44px;
+  height: 44px;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 18px;
+  font-size: 20px;
   cursor: pointer;
   border: 2px solid #fff;
   z-index: 50;
@@ -231,5 +308,37 @@ body.light-mode .modal-box {
   to {
     opacity: 1;
     transform: translateY(0);
+  }
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 768px) {
+  .project-showcase {
+    padding: 1.5rem 1rem;
+  }
+
+  .modal-box {
+    padding: 16px;
+    border-radius: 12px;
+  }
+
+  .modal-backdrop {
+    padding: 12px;
+  }
+}
+
+@media (max-width: 480px) {
+  .filter-btn {
+    padding: 10px 16px;
+    font-size: 0.85rem;
+    min-height: 44px;
+  }
+
+  .project-showcase h1 {
+    font-size: 1.8rem;
+  }
+
+  .modal-box img {
+    max-height: 180px;
   }
 }

@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>404 - Page Not Found</title>
+  <link rel="icon" type="image/svg+xml" href="assets/images/favicon.svg">
+  <link rel="stylesheet" href="assets/css/base.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <style>
+    body {
+      margin: 0;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #121212;
+      color: #fff;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      overflow: hidden;
+    }
+
+    .error-container {
+      text-align: center;
+      position: relative;
+      z-index: 1;
+      padding: 2rem;
+    }
+
+    .error-code {
+      font-size: clamp(6rem, 20vw, 12rem);
+      font-weight: 900;
+      background: linear-gradient(135deg, #ff9f00, #ff6b6b);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      line-height: 1;
+      margin: 0;
+      filter: drop-shadow(0 0 40px rgba(255, 159, 0, 0.3));
+    }
+
+    .error-title {
+      font-size: clamp(1.2rem, 3vw, 1.8rem);
+      color: #ccc;
+      margin: 1rem 0 0.5rem;
+      font-weight: 600;
+    }
+
+    .error-desc {
+      color: #888;
+      font-size: 1rem;
+      max-width: 400px;
+      margin: 0 auto 2.5rem;
+      line-height: 1.6;
+    }
+
+    .error-home {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 14px 36px;
+      background: linear-gradient(135deg, #ff9f00, #ff6b6b);
+      color: #fff;
+      border-radius: 50px;
+      text-decoration: none;
+      font-weight: 700;
+      font-size: 1rem;
+      transition: all 0.4s ease;
+      box-shadow: 0 4px 20px rgba(255, 159, 0, 0.3);
+    }
+
+    .error-home:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 30px rgba(255, 159, 0, 0.5);
+    }
+
+    .error-home i {
+      transition: transform 0.3s;
+    }
+
+    .error-home:hover i {
+      transform: translateX(-3px);
+    }
+
+    canvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 0;
+      pointer-events: none;
+    }
+  </style>
+</head>
+
+<body>
+  <canvas id="error-canvas"></canvas>
+
+  <div class="error-container">
+    <p class="error-code">404</p>
+    <h1 class="error-title">Page Not Found</h1>
+    <p class="error-desc">The page you're looking for doesn't exist or has been moved.</p>
+    <a href="index.html" class="error-home">
+      <i class="fas fa-arrow-left"></i> Back to Home
+    </a>
+  </div>
+
+  <script>
+    (function () {
+      var canvas = document.getElementById('error-canvas');
+      var ctx = canvas.getContext('2d');
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+      window.addEventListener('resize', function () {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+      });
+      var particles = [];
+      for (var i = 0; i < 50; i++) {
+        particles.push({
+          x: Math.random() * canvas.width,
+          y: Math.random() * canvas.height,
+          vx: (Math.random() - 0.5) * 0.4,
+          vy: (Math.random() - 0.5) * 0.4,
+          r: Math.random() * 3 + 1,
+          color: i % 3 === 0 ? '#ff6b6b' : '#ff9f00'
+        });
+      }
+      function draw() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        for (var i = 0; i < particles.length; i++) {
+          var p = particles[i];
+          p.x += p.vx;
+          p.y += p.vy;
+          if (p.x < 0) p.x = canvas.width;
+          if (p.x > canvas.width) p.x = 0;
+          if (p.y < 0) p.y = canvas.height;
+          if (p.y > canvas.height) p.y = 0;
+          ctx.beginPath();
+          ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+          ctx.fillStyle = p.color;
+          ctx.globalAlpha = 0.6;
+          ctx.fill();
+          for (var j = i + 1; j < particles.length; j++) {
+            var p2 = particles[j];
+            var dx = p.x - p2.x;
+            var dy = p.y - p2.y;
+            var dist = Math.sqrt(dx * dx + dy * dy);
+            if (dist < 120) {
+              ctx.beginPath();
+              ctx.moveTo(p.x, p.y);
+              ctx.lineTo(p2.x, p2.y);
+              ctx.strokeStyle = '#ff9f00';
+              ctx.globalAlpha = 0.12 * (1 - dist / 120);
+              ctx.lineWidth = 0.5;
+              ctx.stroke();
+            }
+          }
+        }
+        ctx.globalAlpha = 1;
+        requestAnimationFrame(draw);
+      }
+      draw();
+    })();
+  </script>
+</body>
+
+</html>

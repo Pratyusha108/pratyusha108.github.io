@@ -9,15 +9,26 @@
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://pratyusha108.github.io/contact.html">
   <meta property="og:image" content="https://pratyusha108.github.io/assets/images/profile-pic.png">
-  <title>Contact Me</title>
+  <title>Contact - Sai Pratyusha Gorapalli</title>
   <link rel="icon" type="image/svg+xml" href="assets/images/favicon.svg">
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#ff9f00">
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
+  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-XXXXXXXXXX');</script>
   <link rel="stylesheet" href="assets/css/base.css">
   <link rel="stylesheet" href="assets/css/layout.css">
   <link rel="stylesheet" href="assets/css/contact.css">
+  <link rel="stylesheet" href="assets/css/chatbot.css">
+  <link rel="stylesheet" href="assets/css/stats.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 
 <body>
+
+  <!-- Page Loader -->
+  <div class="page-loader">
+    <div class="loader-spinner"></div>
+  </div>
 
   <div class="scroll-progress"></div>
 
@@ -28,35 +39,179 @@
       <a href="index.html">Home</a> |
       <a href="about.html">About</a> |
       <a href="projects.html">Projects</a> |
-      <a href="contact.html">Contact</a> |
+      <a href="blog.html">Blog</a> |
+      <a href="contact.html" class="active">Contact</a> |
       <a href="https://drive.google.com/file/d/18MX4_zaDu7gWHV5CO3ZDHE2YTWmbgXRm/view?usp=sharing"
         target="_blank">Resume</a>
     </nav>
     <button id="dark-mode-toggle" class="dark-mode-toggle">
-      <span class="toggle-icon">🌙</span>
+      <span class="toggle-icon">&#127769;</span>
     </button>
   </header>
 
-  <section class="contact-section fade-in">
-    <h2>Get in Touch</h2>
-    <p>Feel free to reach out to me via this form, or through my social links below!</p>
+  <!-- Availability Badge -->
+  <div class="contact-availability fade-in">
+    <span class="availability-dot"></span>
+    <span>Open to Work - Actively Seeking Data Science Opportunities</span>
+  </div>
 
-    <form action="mailto:saipratyushagorapalli@gmail.com" method="POST" enctype="text/plain">
-      <div class="input-row">
-        <label for="name">Your Name:</label>
-        <input type="text" id="name" name="name" required>
+  <!-- Contact Hero -->
+  <section class="contact-hero fade-in">
+    <div class="hero-decoration">
+      <div class="deco-circle deco-circle-1"></div>
+      <div class="deco-circle deco-circle-2"></div>
+    </div>
+    <h2 class="contact-hero-title">Let's Connect</h2>
+    <p class="contact-hero-subtitle">
+      Whether you have a data science challenge, a collaboration idea, or just want to talk about machine learning
+      and analytics, I'd love to hear from you.
+    </p>
+    <div class="contact-location-badge">
+      <i class="fas fa-map-marker-alt"></i>
+      <span>Based in St. Louis, MO - Open to Remote, Hybrid & On-site</span>
+    </div>
+  </section>
+
+  <!-- Contact Main Content -->
+  <section class="contact-main fade-in">
+    <div class="contact-grid">
+
+      <!-- LEFT COLUMN - Contact Info -->
+      <div class="contact-info-col">
+        <h3 class="info-col-title">
+          <i class="fas fa-address-book"></i> Contact Information
+        </h3>
+        <p class="info-col-desc">Feel free to reach out through any of these channels. I typically respond within 24 hours.</p>
+
+        <!-- Email Card - Primary -->
+        <a href="mailto:saipratyushagorapalli@gmail.com" class="contact-card">
+          <div class="contact-card-icon">
+            <i class="fas fa-envelope"></i>
+          </div>
+          <div class="contact-card-body">
+            <span class="contact-card-label">Primary Email</span>
+            <span class="contact-card-value">saipratyushagorapalli@gmail.com</span>
+          </div>
+          <i class="fas fa-arrow-right contact-card-arrow"></i>
+        </a>
+
+        <!-- Email Card - Academic -->
+        <a href="mailto:sgorapalli@webster.edu" class="contact-card">
+          <div class="contact-card-icon">
+            <i class="fas fa-university"></i>
+          </div>
+          <div class="contact-card-body">
+            <span class="contact-card-label">Academic Email</span>
+            <span class="contact-card-value">sgorapalli@webster.edu</span>
+          </div>
+          <i class="fas fa-arrow-right contact-card-arrow"></i>
+        </a>
+
+        <!-- LinkedIn Card -->
+        <a href="https://www.linkedin.com/in/pratyusha-g-a92915229/" target="_blank" class="contact-card">
+          <div class="contact-card-icon linkedin-icon">
+            <i class="fab fa-linkedin-in"></i>
+          </div>
+          <div class="contact-card-body">
+            <span class="contact-card-label">LinkedIn</span>
+            <span class="contact-card-value">pratyusha-g</span>
+          </div>
+          <i class="fas fa-external-link-alt contact-card-arrow"></i>
+        </a>
+
+        <!-- GitHub Card -->
+        <a href="https://github.com/Pratyusha108" target="_blank" class="contact-card">
+          <div class="contact-card-icon github-icon">
+            <i class="fab fa-github"></i>
+          </div>
+          <div class="contact-card-body">
+            <span class="contact-card-label">GitHub</span>
+            <span class="contact-card-value">Pratyusha108</span>
+          </div>
+          <i class="fas fa-external-link-alt contact-card-arrow"></i>
+        </a>
+
+        <!-- Kaggle Card -->
+        <a href="https://www.kaggle.com/saipgorapalli" target="_blank" class="contact-card">
+          <div class="contact-card-icon kaggle-icon">
+            <i class="fab fa-kaggle"></i>
+          </div>
+          <div class="contact-card-body">
+            <span class="contact-card-label">Kaggle</span>
+            <span class="contact-card-value">saipgorapalli</span>
+          </div>
+          <i class="fas fa-external-link-alt contact-card-arrow"></i>
+        </a>
+
+        <!-- Location Card -->
+        <div class="contact-card location-card">
+          <div class="contact-card-icon location-icon">
+            <i class="fas fa-map-marker-alt"></i>
+          </div>
+          <div class="contact-card-body">
+            <span class="contact-card-label">Location</span>
+            <span class="contact-card-value">St. Louis, Missouri, USA</span>
+          </div>
+        </div>
       </div>
 
-      <div class="input-row">
-        <label for="email">Your Email:</label>
-        <input type="email" id="email" name="email" required>
+      <!-- RIGHT COLUMN - Contact Form -->
+      <div class="contact-form-col">
+        <h3 class="form-col-title">
+          <i class="fas fa-paper-plane"></i> Send a Message
+        </h3>
+        <p class="form-col-desc">Have a project, question, or opportunity? Drop me a message below.</p>
+
+        <form action="mailto:saipratyushagorapalli@gmail.com" method="POST" enctype="text/plain" class="contact-form">
+          <div class="form-group">
+            <div class="form-input-icon"><i class="fas fa-user"></i></div>
+            <input type="text" id="name" name="name" placeholder="Your Name" required>
+          </div>
+
+          <div class="form-group">
+            <div class="form-input-icon"><i class="fas fa-envelope"></i></div>
+            <input type="email" id="email" name="email" placeholder="Your Email" required>
+          </div>
+
+          <div class="form-group">
+            <div class="form-input-icon"><i class="fas fa-tag"></i></div>
+            <input type="text" id="subject" name="subject" placeholder="Subject" required>
+          </div>
+
+          <div class="form-group">
+            <div class="form-input-icon textarea-icon"><i class="fas fa-comment-alt"></i></div>
+            <textarea id="message" name="message" rows="6" placeholder="Your Message" required></textarea>
+          </div>
+
+          <button type="submit" class="contact-submit-btn">
+            <span>Send Message</span>
+            <i class="fas fa-paper-plane"></i>
+          </button>
+        </form>
       </div>
 
-      <label for="message">Your Message:</label>
-      <textarea id="message" name="message" rows="5" required></textarea>
+    </div>
+  </section>
 
-      <button type="submit" class="submit-btn">Send Message</button>
-    </form>
+  <!-- Quick Response Promise -->
+  <section class="response-promise fade-in">
+    <div class="promise-grid">
+      <div class="promise-item">
+        <div class="promise-icon"><i class="fas fa-bolt"></i></div>
+        <h4>Quick Response</h4>
+        <p>I aim to reply within 24 hours on business days</p>
+      </div>
+      <div class="promise-item">
+        <div class="promise-icon"><i class="fas fa-handshake"></i></div>
+        <h4>Open to Collaborate</h4>
+        <p>Data science projects, research, or freelance work</p>
+      </div>
+      <div class="promise-item">
+        <div class="promise-icon"><i class="fas fa-globe-americas"></i></div>
+        <h4>Flexible Location</h4>
+        <p>Available for remote, hybrid, and on-site roles</p>
+      </div>
+    </div>
   </section>
 
   <footer>
@@ -70,7 +225,7 @@
         <i class="fab fa-github"></i>
         <span>GitHub</span>
       </a>
-      <a href="mailto:saipratyushagorapalli333@gmail.com">
+      <a href="mailto:saipratyushagorapalli@gmail.com">
         <i class="fas fa-envelope"></i>
         <span>Email</span>
       </a>
@@ -80,6 +235,8 @@
   <button class="back-to-top"><i class="fas fa-chevron-up"></i></button>
 
   <script src="assets/js/main.js"></script>
+  <script src="assets/js/chatbot.js"></script>
+  <script src="assets/js/stats.js"></script>
 
 </body>
 

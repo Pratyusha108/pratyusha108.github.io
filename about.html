@@ -5,21 +5,36 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta property="og:title" content="About - Sai Pratyusha Gorapalli">
-  <meta property="og:description" content="Data Scientist with expertise in ML, statistics, and AI solutions">
+  <meta property="og:description"
+    content="Data Scientist & ML Engineer with 2+ years experience in analytics, dashboards, and ML pipeline development">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://pratyusha108.github.io/about.html">
   <meta property="og:image" content="https://pratyusha108.github.io/assets/images/profile-pic.png">
   <title>About Me - Data Scientist</title>
   <link rel="icon" type="image/svg+xml" href="assets/images/favicon.svg">
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#ff9f00">
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
+  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-XXXXXXXXXX');</script>
   <link rel="stylesheet" href="assets/css/base.css">
   <link rel="stylesheet" href="assets/css/layout.css">
   <link rel="stylesheet" href="assets/css/about.css">
+  <link rel="stylesheet" href="assets/css/chatbot.css">
+  <link rel="stylesheet" href="assets/css/stats.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 
 <body>
 
+  <!-- Page Loader -->
+  <div class="page-loader">
+    <div class="loader-spinner"></div>
+  </div>
+
   <div class="scroll-progress"></div>
+
+  <!-- Full-page particle canvas -->
+  <canvas id="page-particle-canvas"></canvas>
 
   <!-- Header Section -->
   <header>
@@ -29,6 +44,7 @@
       <a href="index.html">Home</a> |
       <a href="about.html">About</a> |
       <a href="projects.html">Projects</a> |
+      <a href="blog.html">Blog</a> |
       <a href="contact.html">Contact</a> |
       <a href="https://drive.google.com/file/d/18MX4_zaDu7gWHV5CO3ZDHE2YTWmbgXRm/view?usp=sharing"
         target="_blank">Resume</a>
@@ -38,47 +54,238 @@
     </button>
   </header>
 
+  <!-- Availability Badge -->
+  <div class="availability-banner fade-in">
+    <span class="status-dot"></span>
+    <span>Open to Work - Actively seeking Data Science, Data Analyst & ML Engineering roles</span>
+  </div>
+
+  <!-- Professional Summary -->
   <section class="about-section fade-in">
     <div class="about-content">
-      <h2>My Journey in Data Science</h2>
+      <h2>Professional Summary</h2>
       <p>
-        I'm a passionate Data Scientist with a strong foundation in statistics and machine learning.
-        My journey began with a degree in Computer Science, followed by specialized training in data
-        science and artificial intelligence.
+        <strong>Data Science professional</strong> with <strong>2+ years of experience</strong> delivering
+        <strong>analytics, dashboards, and decision-support reporting</strong> for business and research stakeholders.
+        Skilled in <strong>SQL, Power BI, Excel, and Python</strong>; strong at translating requirements into clear,
+        actionable insights for <strong>data-driven decision-making</strong>. Experienced in collecting, cleaning, and
+        analyzing <strong>structured/unstructured data</strong> and performing <strong>exploratory data analysis
+          (EDA)</strong> to identify patterns, trends, and data quality issues on real-world datasets.
+      </p>
+      <p>
+        <strong>Microsoft Certified Azure Data Scientist Associate (DP-100)</strong> with hands-on experience across
+        <strong>predictive modeling, feature engineering, classification, clustering,</strong> and <strong>time series
+          forecasting</strong>. Proven track record building and deploying ML models across
+        <strong>healthcare, finance, cybersecurity, retail,</strong> and <strong>IoT domains</strong> using
+        <strong>TensorFlow, PyTorch, Scikit-learn, Databricks,</strong> and <strong>Azure ML</strong>. Adept at
+        <strong>stakeholder communication</strong>, translating complex analytical findings into executive-ready insights.
       </p>
 
-      <h3>Education</h3>
-      <ul>
-        <li>M.S. in Data Analytics — Webster University (Aug 2023 – May 2026)</li>
-        <li>MBA in Technology Management — Osmania University (Dec 2022)</li>
-        <li>B.Tech in Electrical & Electronics Engineering — Osmania University (Nov 2020)</li>
-      </ul>
-
-      <h3>Work Experience</h3>
-      <div class="experience-item">
-        <h4>Graduate Research Assistant — Osmania University</h4>
-        <p class="date">Jan 2022 – Dec 2022 | Hyderabad, India (Hybrid)</p>
-        <ul>
-          <li>Conducted applied academic research in cybersecurity and data analytics</li>
-          <li>Performed data cleaning, EDA, and statistical modeling</li>
-          <li>Collaborated with faculty to enhance analytical rigor and methodology</li>
-        </ul>
-      </div>
-
-      <div class="experience-item">
-        <h4>Embedded Systems Intern (IoT/RFID) — IBM Collaboration</h4>
-        <p class="date">May 2019 – Jun 2019 | Hyderabad, India</p>
-        <ul>
-          <li>Developed RFID-based access control system using C/C++</li>
-          <li>Performed anomaly diagnostics and root-cause analysis</li>
-          <li>Delivered a working prototype with full documentation</li>
-        </ul>
+      <!-- Core Competencies -->
+      <h3>Core Competencies</h3>
+      <div class="competency-grid">
+        <div class="competency-item"><i class="fas fa-brain"></i> Machine Learning & Predictive Modeling</div>
+        <div class="competency-item"><i class="fas fa-network-wired"></i> Neural Networks (CNN, RNN, Transformers)</div>
+        <div class="competency-item"><i class="fas fa-language"></i> NLP & LLM Evaluation (BERT, RoBERTa)</div>
+        <div class="competency-item"><i class="fas fa-robot"></i> Agentic AI Workflows & Generative AI</div>
+        <div class="competency-item"><i class="fas fa-chart-bar"></i> Power BI, Tableau & Data Visualization</div>
+        <div class="competency-item"><i class="fas fa-database"></i> ETL, Data Pipelines & SQL Analytics</div>
+        <div class="competency-item"><i class="fas fa-cogs"></i> Feature Engineering & Model Evaluation</div>
+        <div class="competency-item"><i class="fas fa-cloud"></i> Azure ML, Databricks & Apache Spark</div>
+        <div class="competency-item"><i class="fas fa-search"></i> Information Retrieval & Recommendation Systems</div>
+        <div class="competency-item"><i class="fas fa-chart-line"></i> KPI Analysis & Stakeholder Reporting</div>
+        <div class="competency-item"><i class="fas fa-shield-alt"></i> Data Governance, Privacy & Security</div>
+        <div class="competency-item"><i class="fas fa-users"></i> Requirements Analysis & Cross-functional Communication</div>
       </div>
     </div>
   </section>
 
+  <!-- Skills Progress Bars -->
+  <section class="skills-section fade-in">
+    <h2>Technical Proficiency</h2>
+    <div class="radar-chart-container">
+      <canvas id="radar-chart"></canvas>
+    </div>
+    <div class="skills-container">
+      <div class="skill-bar">
+        <div class="skill-info"><span>Python (Pandas, NumPy, Scikit-learn)</span><span>92%</span></div>
+        <div class="bar-bg"><div class="bar-fill" data-width="92"></div></div>
+      </div>
+      <div class="skill-bar">
+        <div class="skill-info"><span>SQL (MySQL, PostgreSQL, Azure SQL)</span><span>90%</span></div>
+        <div class="bar-bg"><div class="bar-fill" data-width="90"></div></div>
+      </div>
+      <div class="skill-bar">
+        <div class="skill-info"><span>Power BI, Tableau & Data Visualization</span><span>88%</span></div>
+        <div class="bar-bg"><div class="bar-fill" data-width="88"></div></div>
+      </div>
+      <div class="skill-bar">
+        <div class="skill-info"><span>R Programming (tidyverse, forecast)</span><span>85%</span></div>
+        <div class="bar-bg"><div class="bar-fill" data-width="85"></div></div>
+      </div>
+      <div class="skill-bar">
+        <div class="skill-info"><span>Machine Learning & Predictive Modeling</span><span>90%</span></div>
+        <div class="bar-bg"><div class="bar-fill" data-width="90"></div></div>
+      </div>
+      <div class="skill-bar">
+        <div class="skill-info"><span>Deep Learning (TensorFlow / PyTorch)</span><span>82%</span></div>
+        <div class="bar-bg"><div class="bar-fill" data-width="82"></div></div>
+      </div>
+      <div class="skill-bar">
+        <div class="skill-info"><span>Cloud & MLOps (Azure, Databricks, Spark)</span><span>80%</span></div>
+        <div class="bar-bg"><div class="bar-fill" data-width="80"></div></div>
+      </div>
+      <div class="skill-bar">
+        <div class="skill-info"><span>NLP & Transformers (BERT, LLMs)</span><span>78%</span></div>
+        <div class="bar-bg"><div class="bar-fill" data-width="78"></div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Interactive Timeline -->
+  <section class="timeline-section fade-in">
+    <h2>Education & Experience</h2>
+    <div class="timeline">
+
+      <div class="timeline-item">
+        <div class="timeline-dot"><i class="fas fa-graduation-cap"></i></div>
+        <div class="timeline-content">
+          <span class="timeline-date">Aug 2023 - May 2026</span>
+          <h4>M.S. in Data Analytics</h4>
+          <p class="timeline-org"><i class="fas fa-university"></i> Webster University, St. Louis, MO</p>
+          <p><strong>Coursework:</strong> Applied Business Statistics, Analytics Programming (R, Python), Databases &
+            Warehousing, Data Visualization, Machine Learning, Time Series Analytics, Analytics Practicum</p>
+        </div>
+      </div>
+
+      <div class="timeline-item">
+        <div class="timeline-dot"><i class="fas fa-microscope"></i></div>
+        <div class="timeline-content">
+          <span class="timeline-date">Jan 2022 - Dec 2022</span>
+          <h4>Graduate Research Assistant - Industry-Oriented Research</h4>
+          <p class="timeline-org"><i class="fas fa-building"></i> Osmania University, Hyderabad, India (Hybrid)</p>
+          <ul>
+            <li>Conducted applied research in <strong>cybersecurity and industrial safety</strong> using data cleaning,
+              EDA, statistical modeling, and analytical reporting; identified patterns, trends, and data quality issues</li>
+            <li>Partnered with faculty and stakeholders to <strong>gather requirements, scope analyses</strong>, and
+              translate business/security needs into analytical workflows</li>
+            <li>Produced <strong>executive summaries, process documentation, and analytical reports</strong> for risk
+              assessment and decision-making while adhering to governance, privacy, and security requirements</li>
+            <li>Investigated data inconsistencies across sources, documented root causes, and implemented
+              <strong>data quality checks</strong> to improve metric integrity</li>
+            <li>Assisted in developing, testing, and evaluating <strong>statistical, predictive, and ML models</strong>
+              for security, risk, and operational decisions</li>
+            <li>Presented simplified, <strong>executive-ready insights</strong> for non-technical stakeholders</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="timeline-item">
+        <div class="timeline-dot"><i class="fas fa-chart-line"></i></div>
+        <div class="timeline-content">
+          <span class="timeline-date">Jan 2021 - Feb 2022</span>
+          <h4>Data Analyst - Independent Analytics Engagements</h4>
+          <p class="timeline-org"><i class="fas fa-building"></i> Data Analytics & Business Intelligence, Hyderabad,
+            India (Remote)</p>
+          <ul>
+            <li>Collected, cleaned, and validated <strong>sales, operations, and customer data</strong> (Excel +
+              relational sources) for analytics readiness across thousands of records</li>
+            <li>Performed <strong>EDA to detect trends, anomalies, and data quality issues</strong>, improving reporting
+              reliability and insight quality</li>
+            <li>Built <strong>Power BI dashboards</strong> for revenue performance, product metrics, and customer
+              segmentation with KPI scorecards and drill-down views</li>
+            <li>Wrote/optimized <strong>SQL queries</strong> for extraction, transformation, KPI tracking, and recurring
+              reporting, reducing manual analysis effort</li>
+            <li>Defined and monitored <strong>KPIs aligned to business objectives</strong>; ensured consistent metric
+              definitions across reports and stakeholders</li>
+            <li>Reconciled dashboards with source data to <strong>validate outputs and resolve discrepancies</strong></li>
+            <li>Delivered <strong>actionable insights</strong> via clear visuals and concise recommendations for
+              non-technical stakeholders</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="timeline-item">
+        <div class="timeline-dot"><i class="fas fa-graduation-cap"></i></div>
+        <div class="timeline-content">
+          <span class="timeline-date">2020 - Dec 2022</span>
+          <h4>MBA in Technology Management (IT)</h4>
+          <p class="timeline-org"><i class="fas fa-university"></i> Osmania University, Hyderabad, India</p>
+          <p><strong>Coursework:</strong> Business Analytics, Relational Database Management Systems, Information Systems,
+            Risk & Process Analysis</p>
+        </div>
+      </div>
+
+      <div class="timeline-item">
+        <div class="timeline-dot"><i class="fas fa-graduation-cap"></i></div>
+        <div class="timeline-content">
+          <span class="timeline-date">2016 - Nov 2020</span>
+          <h4>B.Tech in Electrical & Electronics Engineering</h4>
+          <p class="timeline-org"><i class="fas fa-university"></i> Osmania University, Hyderabad, India</p>
+          <p>Built a strong analytical foundation in engineering principles, signal processing, and embedded systems.
+            Developed problem-solving and quantitative reasoning skills directly applicable to data science and ML.</p>
+        </div>
+      </div>
+
+      <div class="timeline-item">
+        <div class="timeline-dot"><i class="fas fa-briefcase"></i></div>
+        <div class="timeline-content">
+          <span class="timeline-date">May 2019 - Jun 2019</span>
+          <h4>Data Analyst Intern (IoT / Security Systems)</h4>
+          <p class="timeline-org"><i class="fas fa-building"></i> Smart Bridge - IBM Collaboration, Hyderabad, India</p>
+          <ul>
+            <li>Built an <strong>RFID smart access-control system</strong> in C/C++ with authorization logic, event
+              logging, and validation for reliability and auditability</li>
+            <li>Generated <strong>structured event-level data</strong> to enable monitoring, anomaly detection, and
+              operational analysis with event logs captured across repeated test runs</li>
+            <li>Cleaned/analyzed system logs to identify <strong>access patterns, failure modes, and abnormal
+                behavior</strong>; used quantitative metrics where applicable</li>
+            <li>Performed <strong>EDA on latency, consistency, signal reliability</strong>; applied root-cause analysis
+              to diagnose anomalies and failures</li>
+            <li>Documented system behavior, data flows, and validation results; produced artifacts supporting
+              <strong>traceability, governance, and predictive monitoring</strong></li>
+          </ul>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Currently Learning -->
+  <section class="learning-section fade-in">
+    <h2>Currently Learning</h2>
+    <p class="section-subtitle">Staying ahead of the curve with emerging technologies</p>
+    <div class="learning-grid">
+      <div class="learning-card">
+        <i class="fas fa-robot"></i>
+        <span>Large Language Models (LLMs)</span>
+      </div>
+      <div class="learning-card">
+        <i class="fas fa-rocket"></i>
+        <span>MLOps & Model Deployment</span>
+      </div>
+      <div class="learning-card">
+        <i class="fas fa-network-wired"></i>
+        <span>Transformer Architecture</span>
+      </div>
+      <div class="learning-card">
+        <i class="fas fa-cloud-upload-alt"></i>
+        <span>Cloud Architecture (AWS)</span>
+      </div>
+      <div class="learning-card">
+        <i class="fas fa-magic"></i>
+        <span>Generative AI & Agentic Workflows</span>
+      </div>
+      <div class="learning-card">
+        <i class="fas fa-project-diagram"></i>
+        <span>Apache Spark & Databricks</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- Achievements -->
   <section class="achievements fade-in">
-    <h2>Achievements</h2>
+    <h2>Achievements & Recognition</h2>
     <div class="achievement-grid">
       <div class="achievement-card">
         <i class="fas fa-trophy"></i>
@@ -88,9 +295,38 @@
       <div class="achievement-card">
         <i class="fas fa-certificate"></i>
         <h3>Published Research</h3>
-        <p>Machine learning paper published in leading journal</p>
+        <p>Authored research paper on future trends in data analytics & AI decision systems</p>
+      </div>
+      <div class="achievement-card">
+        <i class="fas fa-award"></i>
+        <h3>Microsoft Certified</h3>
+        <p>Azure Data Scientist Associate (DP-100)</p>
+      </div>
+      <div class="achievement-card">
+        <i class="fas fa-star"></i>
+        <h3>50+ Projects</h3>
+        <p>Diverse portfolio spanning ML, NLP, CV, forecasting, and BI dashboards</p>
       </div>
     </div>
+  </section>
+
+  <!-- GitHub Activity -->
+  <section class="github-activity fade-in">
+    <h2>GitHub Activity</h2>
+    <div id="github-heatmap" class="github-heatmap"></div>
+    <a href="https://github.com/Pratyusha108" target="_blank" class="github-profile-link">
+      <i class="fab fa-github"></i> View Full Profile
+    </a>
+  </section>
+
+  <!-- Download Resume CTA -->
+  <section class="resume-cta fade-in">
+    <h2>Want to know more?</h2>
+    <p>Download my full resume for a detailed overview of my experience, skills, and qualifications.</p>
+    <a href="https://drive.google.com/file/d/18MX4_zaDu7gWHV5CO3ZDHE2YTWmbgXRm/view?usp=sharing" target="_blank"
+      class="resume-btn">
+      <i class="fas fa-file-download"></i> Download Resume
+    </a>
   </section>
 
   <footer>
@@ -129,6 +365,8 @@
   </div>
 
   <script src="assets/js/main.js"></script>
+  <script src="assets/js/chatbot.js"></script>
+  <script src="assets/js/stats.js"></script>
 
 </body>
 
