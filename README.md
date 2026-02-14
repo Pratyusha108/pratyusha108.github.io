@@ -117,7 +117,7 @@ A modern, interactive portfolio website showcasing my data science projects, ski
    npx serve .
    ```
 
-3. For Google Analytics, replace `G-XXXXXXXXXX` in all HTML files with your GA4 Measurement ID.
+3. For Google Analytics, replace `G-68HP6VR0T6` in all HTML files with your GA4 Measurement ID.
 
 ---
 
