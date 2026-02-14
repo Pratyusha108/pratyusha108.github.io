@@ -68,6 +68,85 @@
       .trim();
   }
 
+  // ====== SAFE MATH EVALUATOR ======
+  function tryMathEval(rawInput) {
+    var text = rawInput.toLowerCase().trim();
+
+    // Strip conversational wrappers
+    text = text
+      .replace(/^(what\s*('?s|is)|calculate|compute|solve|evaluate|tell me|whats)\s*/i, '')
+      .replace(/[=?]+\s*$/, '')
+      .trim();
+
+    // Must contain at least one digit
+    if (!/\d/.test(text)) return null;
+    // Must contain an operator or math function to be a math expression
+    if (!/[+\-*\/\^%x()]/.test(text) && !/sqrt|pow|pi|sin|cos|tan|log|abs|mod|factorial/.test(text)) return null;
+    // Reject if too many letters (probably a sentence, not math)
+    var letterCount = (text.match(/[a-z]/g) || []).length;
+    var digitCount = (text.match(/[0-9]/g) || []).length;
+    if (letterCount > digitCount + 10) return null;
+
+    // Build safe expression
+    var expr = text
+      .replace(/\s+/g, '')
+      .replace(/x(?=\d)/gi, '*')      // 2x3 -> 2*3
+      .replace(/(\d)\(/g, '$1*(')     // 2(3) -> 2*(3)
+      .replace(/\)\(/g, ')*(')        // (2)(3) -> (2)*(3)
+      .replace(/\^/g, '**')           // power
+      .replace(/mod/gi, '%')          // modulo
+      .replace(/pi/gi, '(' + Math.PI + ')')
+      .replace(/e(?![a-z])/gi, '(' + Math.E + ')');
+
+    // Handle math functions -> Math.fn()
+    expr = expr.replace(/sqrt\(/gi, 'Math.sqrt(');
+    expr = expr.replace(/abs\(/gi, 'Math.abs(');
+    expr = expr.replace(/sin\(/gi, 'Math.sin(');
+    expr = expr.replace(/cos\(/gi, 'Math.cos(');
+    expr = expr.replace(/tan\(/gi, 'Math.tan(');
+    expr = expr.replace(/log\(/gi, 'Math.log10(');
+    expr = expr.replace(/ln\(/gi, 'Math.log(');
+    expr = expr.replace(/pow\(/gi, 'Math.pow(');
+    expr = expr.replace(/ceil\(/gi, 'Math.ceil(');
+    expr = expr.replace(/floor\(/gi, 'Math.floor(');
+    expr = expr.replace(/round\(/gi, 'Math.round(');
+
+    // Handle factorial: n!
+    expr = expr.replace(/(\d+)!/g, function (m, n) {
+      var num = parseInt(n, 10);
+      if (num > 20 || num < 0) return 'Infinity';
+      var f = 1; for (var i = 2; i <= num; i++) f *= i;
+      return '' + f;
+    });
+
+    // Safety: only allow safe characters after transformations
+    if (!/^[0-9+\-*\/().%\s,Math.sqrtabceilflognpow10]+$/.test(expr)) return null;
+
+    try {
+      var result = new Function('return (' + expr + ')')();
+      if (typeof result !== 'number' || !isFinite(result)) return null;
+
+      var formatted = Number.isInteger(result) ? result.toLocaleString() : parseFloat(result.toFixed(6)).toString();
+
+      // Clean up the display expression
+      var display = rawInput.trim().replace(/^(what\s*('?s|is)|calculate|compute|solve|evaluate)\s*/i, '').replace(/[?]+$/, '').trim();
+
+      return {
+        answer: '<strong>&#128270; ' + display + ' = ' + formatted + '</strong><br><br>' +
+          'I can do basic math! Try things like:<br>' +
+          '&#8226; <strong>Arithmetic:</strong> 25 * 4 + 10<br>' +
+          '&#8226; <strong>Powers:</strong> 2^10<br>' +
+          '&#8226; <strong>Roots:</strong> sqrt(144)<br>' +
+          '&#8226; <strong>Trig:</strong> sin(3.14), cos(0)<br>' +
+          '&#8226; <strong>Factorial:</strong> 5!<br><br>' +
+          'Or ask me about <strong>math formulas</strong>!',
+        suggestions: ['Math formulas', 'Statistics formulas', 'Geometry formulas']
+      };
+    } catch (e) {
+      return null;
+    }
+  }
+
   // ====== UTILITY ======
   function randomFrom(arr) {
     return arr[Math.floor(Math.random() * arr.length)];
@@ -771,11 +850,166 @@
     // ============ BASIC CHAT (priority 70) ============
 
     {
-      keywords: ['2+2', 'math', 'calculate', 'plus', 'equals'],
+      keywords: ['math', 'mathematics', 'math formulas', 'formulas', 'formula', 'equations', 'equation', 'calculate', 'calculator', 'computation'],
       priority: 70,
-      answer: 'I\'m more of a data science chatbot than a calculator, but 2+2 is definitely <strong>4</strong>!<br><br>' +
-        'Ask me about Pratyusha\'s skills and I\'ll crunch some real numbers for you.',
-      suggestions: ['What are her skills?', 'Tell me about her projects', 'Tell me a joke']
+      answer: '<strong>Math Formulas I Know</strong><br><br>' +
+        'I can help with formulas across these areas:<br><br>' +
+        '&#8226; <strong>Geometry</strong> - Area, perimeter, volume, surface area<br>' +
+        '&#8226; <strong>Algebra</strong> - Quadratic, binomial, logarithms, exponents<br>' +
+        '&#8226; <strong>Statistics</strong> - Mean, variance, std dev, z-score, Bayes<br>' +
+        '&#8226; <strong>Trigonometry</strong> - Sin, cos, tan, identities<br>' +
+        '&#8226; <strong>Calculus</strong> - Derivatives, integrals, limits<br>' +
+        '&#8226; <strong>Probability</strong> - Permutations, combinations, distributions<br><br>' +
+        'I can also solve basic calculations! Try: <strong>5! + sqrt(144)</strong><br><br>' +
+        'Ask about any specific topic!',
+      suggestions: ['Geometry formulas', 'Statistics formulas', 'Algebra formulas', 'Calculus formulas']
+    },
+    {
+      keywords: ['geometry', 'area', 'perimeter', 'volume', 'surface area', 'circle', 'triangle', 'rectangle', 'square', 'sphere', 'cylinder', 'cone', 'cube', 'trapezoid', 'parallelogram', 'circumference'],
+      priority: 70,
+      answer: '<strong>Geometry Formulas</strong><br><br>' +
+        '<strong>2D Shapes:</strong><br>' +
+        '&#8226; <strong>Circle:</strong> Area = &pi;r<sup>2</sup> | Circumference = 2&pi;r<br>' +
+        '&#8226; <strong>Rectangle:</strong> Area = l &times; w | Perimeter = 2(l + w)<br>' +
+        '&#8226; <strong>Triangle:</strong> Area = &frac12; &times; b &times; h | Heron\'s: &radic;[s(s-a)(s-b)(s-c)]<br>' +
+        '&#8226; <strong>Trapezoid:</strong> Area = &frac12;(a + b) &times; h<br>' +
+        '&#8226; <strong>Parallelogram:</strong> Area = b &times; h<br><br>' +
+        '<strong>3D Shapes:</strong><br>' +
+        '&#8226; <strong>Sphere:</strong> Volume = (4/3)&pi;r<sup>3</sup> | SA = 4&pi;r<sup>2</sup><br>' +
+        '&#8226; <strong>Cylinder:</strong> Volume = &pi;r<sup>2</sup>h | SA = 2&pi;r(r + h)<br>' +
+        '&#8226; <strong>Cone:</strong> Volume = (1/3)&pi;r<sup>2</sup>h | SA = &pi;r(r + l)<br>' +
+        '&#8226; <strong>Cube:</strong> Volume = a<sup>3</sup> | SA = 6a<sup>2</sup><br><br>' +
+        '<strong>Pythagorean Theorem:</strong> a<sup>2</sup> + b<sup>2</sup> = c<sup>2</sup>',
+      suggestions: ['Algebra formulas', 'Trigonometry', 'Statistics formulas', 'More math']
+    },
+    {
+      keywords: ['algebra', 'quadratic', 'binomial', 'logarithm', 'exponent', 'polynomial', 'factoring', 'linear equation', 'slope', 'distance formula', 'midpoint'],
+      priority: 70,
+      answer: '<strong>Algebra Formulas</strong><br><br>' +
+        '<strong>Quadratic Formula:</strong><br>' +
+        '&#8226; x = (-b &plusmn; &radic;(b<sup>2</sup> - 4ac)) / 2a<br>' +
+        '&#8226; Discriminant: &Delta; = b<sup>2</sup> - 4ac<br><br>' +
+        '<strong>Binomial Theorem:</strong><br>' +
+        '&#8226; (a + b)<sup>2</sup> = a<sup>2</sup> + 2ab + b<sup>2</sup><br>' +
+        '&#8226; (a - b)<sup>2</sup> = a<sup>2</sup> - 2ab + b<sup>2</sup><br>' +
+        '&#8226; (a + b)(a - b) = a<sup>2</sup> - b<sup>2</sup><br><br>' +
+        '<strong>Logarithm Rules:</strong><br>' +
+        '&#8226; log(ab) = log(a) + log(b)<br>' +
+        '&#8226; log(a/b) = log(a) - log(b)<br>' +
+        '&#8226; log(a<sup>n</sup>) = n &times; log(a)<br><br>' +
+        '<strong>Coordinate Geometry:</strong><br>' +
+        '&#8226; Slope: m = (y<sub>2</sub> - y<sub>1</sub>) / (x<sub>2</sub> - x<sub>1</sub>)<br>' +
+        '&#8226; Distance: d = &radic;[(x<sub>2</sub>-x<sub>1</sub>)<sup>2</sup> + (y<sub>2</sub>-y<sub>1</sub>)<sup>2</sup>]<br>' +
+        '&#8226; Midpoint: ((x<sub>1</sub>+x<sub>2</sub>)/2, (y<sub>1</sub>+y<sub>2</sub>)/2)',
+      suggestions: ['Geometry formulas', 'Calculus formulas', 'Statistics formulas']
+    },
+    {
+      keywords: ['statistics', 'stats', 'mean', 'median', 'mode', 'standard deviation', 'variance', 'z score', 'zscore', 'correlation', 'bayes', 'bayesian', 'probability distribution', 'normal distribution', 'bell curve', 'hypothesis', 'p value', 'confidence interval'],
+      priority: 70,
+      answer: '<strong>Statistics Formulas</strong><br><br>' +
+        '<strong>Central Tendency:</strong><br>' +
+        '&#8226; Mean: &mu; = &Sigma;x<sub>i</sub> / n<br>' +
+        '&#8226; Median: Middle value (sorted data)<br>' +
+        '&#8226; Mode: Most frequent value<br><br>' +
+        '<strong>Spread:</strong><br>' +
+        '&#8226; Variance: &sigma;<sup>2</sup> = &Sigma;(x<sub>i</sub> - &mu;)<sup>2</sup> / n<br>' +
+        '&#8226; Std Deviation: &sigma; = &radic;variance<br>' +
+        '&#8226; Z-Score: z = (x - &mu;) / &sigma;<br><br>' +
+        '<strong>Correlation and Regression:</strong><br>' +
+        '&#8226; Pearson r = &Sigma;(x-x&#772;)(y-y&#772;) / &radic;[&Sigma;(x-x&#772;)<sup>2</sup> &times; &Sigma;(y-y&#772;)<sup>2</sup>]<br>' +
+        '&#8226; R<sup>2</sup> = 1 - (SS<sub>res</sub> / SS<sub>tot</sub>)<br><br>' +
+        '<strong>Bayes\' Theorem:</strong><br>' +
+        '&#8226; P(A|B) = P(B|A) &times; P(A) / P(B)<br><br>' +
+        '<strong>Confidence Interval:</strong> x&#772; &plusmn; z &times; (&sigma; / &radic;n)<br><br>' +
+        '<em>These are core to Pratyusha\'s data science work!</em>',
+      suggestions: ['Probability formulas', 'Her ML expertise', 'Algebra formulas']
+    },
+    {
+      keywords: ['trigonometry', 'trig', 'sine', 'cosine', 'tangent', 'pythagorean', 'sin cos tan', 'unit circle', 'radian', 'degree', 'inverse trig', 'soh cah toa', 'sohcahtoa'],
+      priority: 70,
+      answer: '<strong>Trigonometry Formulas</strong><br><br>' +
+        '<strong>Basic Ratios (SOH CAH TOA):</strong><br>' +
+        '&#8226; sin(&theta;) = Opposite / Hypotenuse<br>' +
+        '&#8226; cos(&theta;) = Adjacent / Hypotenuse<br>' +
+        '&#8226; tan(&theta;) = Opposite / Adjacent<br><br>' +
+        '<strong>Pythagorean Identities:</strong><br>' +
+        '&#8226; sin<sup>2</sup>(&theta;) + cos<sup>2</sup>(&theta;) = 1<br>' +
+        '&#8226; 1 + tan<sup>2</sup>(&theta;) = sec<sup>2</sup>(&theta;)<br>' +
+        '&#8226; 1 + cot<sup>2</sup>(&theta;) = csc<sup>2</sup>(&theta;)<br><br>' +
+        '<strong>Key Values:</strong><br>' +
+        '&#8226; sin(0) = 0, sin(30) = 0.5, sin(45) = &radic;2/2, sin(60) = &radic;3/2, sin(90) = 1<br>' +
+        '&#8226; cos(0) = 1, cos(30) = &radic;3/2, cos(45) = &radic;2/2, cos(60) = 0.5, cos(90) = 0<br><br>' +
+        '<strong>Conversion:</strong> Radians = Degrees &times; &pi; / 180',
+      suggestions: ['Geometry formulas', 'Algebra formulas', 'Calculus formulas']
+    },
+    {
+      keywords: ['calculus', 'derivative', 'integral', 'differentiation', 'integration', 'limit', 'limits', 'chain rule', 'product rule', 'quotient rule', 'antiderivative'],
+      priority: 70,
+      answer: '<strong>Calculus Formulas</strong><br><br>' +
+        '<strong>Derivative Rules:</strong><br>' +
+        '&#8226; Power Rule: d/dx [x<sup>n</sup>] = nx<sup>n-1</sup><br>' +
+        '&#8226; Product Rule: d/dx [fg] = f\'g + fg\'<br>' +
+        '&#8226; Quotient Rule: d/dx [f/g] = (f\'g - fg\') / g<sup>2</sup><br>' +
+        '&#8226; Chain Rule: d/dx [f(g(x))] = f\'(g(x)) &times; g\'(x)<br><br>' +
+        '<strong>Common Derivatives:</strong><br>' +
+        '&#8226; d/dx [sin(x)] = cos(x)<br>' +
+        '&#8226; d/dx [cos(x)] = -sin(x)<br>' +
+        '&#8226; d/dx [e<sup>x</sup>] = e<sup>x</sup><br>' +
+        '&#8226; d/dx [ln(x)] = 1/x<br><br>' +
+        '<strong>Basic Integrals:</strong><br>' +
+        '&#8226; &int; x<sup>n</sup> dx = x<sup>n+1</sup>/(n+1) + C<br>' +
+        '&#8226; &int; e<sup>x</sup> dx = e<sup>x</sup> + C<br>' +
+        '&#8226; &int; 1/x dx = ln|x| + C<br>' +
+        '&#8226; &int; sin(x) dx = -cos(x) + C<br><br>' +
+        '<strong>Limits:</strong> lim(x->a) f(x) = L',
+      suggestions: ['Algebra formulas', 'Statistics formulas', 'Trigonometry']
+    },
+    {
+      keywords: ['probability', 'permutation', 'combination', 'factorial', 'ncr', 'npr', 'choose', 'counting', 'binomial distribution', 'poisson', 'expected value'],
+      priority: 70,
+      answer: '<strong>Probability Formulas</strong><br><br>' +
+        '<strong>Counting:</strong><br>' +
+        '&#8226; Permutations: P(n,r) = n! / (n-r)!<br>' +
+        '&#8226; Combinations: C(n,r) = n! / [r!(n-r)!]<br>' +
+        '&#8226; Factorial: n! = n &times; (n-1) &times; ... &times; 1<br><br>' +
+        '<strong>Probability Rules:</strong><br>' +
+        '&#8226; P(A or B) = P(A) + P(B) - P(A and B)<br>' +
+        '&#8226; P(A and B) = P(A) &times; P(B|A)<br>' +
+        '&#8226; Complement: P(A\') = 1 - P(A)<br><br>' +
+        '<strong>Distributions:</strong><br>' +
+        '&#8226; Binomial: P(X=k) = C(n,k) p<sup>k</sup>(1-p)<sup>n-k</sup><br>' +
+        '&#8226; Poisson: P(X=k) = (&lambda;<sup>k</sup> e<sup>-&lambda;</sup>) / k!<br>' +
+        '&#8226; Normal: f(x) = (1/&sigma;&radic;2&pi;) e<sup>-(x-&mu;)<sup>2</sup>/2&sigma;<sup>2</sup></sup><br><br>' +
+        '<strong>Expected Value:</strong> E(X) = &Sigma; x<sub>i</sub> &times; P(x<sub>i</sub>)',
+      suggestions: ['Statistics formulas', 'Bayes theorem?', 'Her data science skills']
+    },
+    {
+      keywords: ['linear algebra', 'matrix', 'matrices', 'determinant', 'eigenvalue', 'eigenvector', 'vector', 'dot product', 'cross product', 'transpose', 'inverse matrix'],
+      priority: 70,
+      answer: '<strong>Linear Algebra Formulas</strong><br><br>' +
+        '<strong>Vectors:</strong><br>' +
+        '&#8226; Dot Product: a &middot; b = &Sigma;a<sub>i</sub>b<sub>i</sub> = |a||b|cos(&theta;)<br>' +
+        '&#8226; Magnitude: |v| = &radic;(v<sub>1</sub><sup>2</sup> + v<sub>2</sub><sup>2</sup> + ... + v<sub>n</sub><sup>2</sup>)<br><br>' +
+        '<strong>Matrices:</strong><br>' +
+        '&#8226; (AB)<sup>T</sup> = B<sup>T</sup>A<sup>T</sup><br>' +
+        '&#8226; (AB)<sup>-1</sup> = B<sup>-1</sup>A<sup>-1</sup><br>' +
+        '&#8226; det(AB) = det(A) &times; det(B)<br>' +
+        '&#8226; 2x2 Determinant: ad - bc<br><br>' +
+        '<strong>Eigenvalues:</strong> Av = &lambda;v (solve det(A - &lambda;I) = 0)<br><br>' +
+        '<em>Linear algebra is fundamental to machine learning - used in PCA, SVD, neural networks, and more. Pratyusha applies these daily!</em>',
+      suggestions: ['Her ML expertise', 'Statistics formulas', 'Calculus formulas']
+    },
+    {
+      keywords: ['advanced math', 'complex math', 'higher math', 'differential equation', 'partial derivative', 'fourier', 'laplace', 'topology', 'abstract algebra', 'number theory', 'real analysis', 'complex analysis', 'tensor'],
+      priority: 70,
+      answer: 'That\'s getting into advanced mathematics territory! I know the fundamentals, but for topics like differential equations, Fourier transforms, or abstract algebra, I\'d recommend dedicated math resources.<br><br>' +
+        'What I <em>can</em> tell you is that Pratyusha applies advanced math concepts daily in her data science work:<br><br>' +
+        '&#8226; <strong>Linear Algebra</strong> for ML model internals<br>' +
+        '&#8226; <strong>Calculus</strong> for gradient descent and optimization<br>' +
+        '&#8226; <strong>Statistics</strong> for hypothesis testing and inference<br>' +
+        '&#8226; <strong>Probability</strong> for Bayesian methods and distributions<br><br>' +
+        'Want to know how she applies math in her projects?',
+      suggestions: ['Her ML expertise', 'View projects', 'Statistics formulas']
     },
     {
       keywords: ['weather', 'rain', 'sunny', 'cold', 'hot', 'temperature', 'climate'],
@@ -936,16 +1170,20 @@
 
   // ====== FIND ANSWER ======
   function findAnswer(input) {
-    // Step 1: Normalize input
+    // Step 1: Try math evaluation on raw input (before normalization strips operators)
+    var mathResult = tryMathEval(input);
+    if (mathResult) return mathResult;
+
+    // Step 2: Normalize input
     var normalized = normalizeInput(input);
 
-    // Step 2: Pre-filter (catches insults, off-topic, gibberish, slang, affirmatives)
+    // Step 3: Pre-filter (catches insults, off-topic, gibberish, slang, affirmatives)
     var filtered = preFilter(normalized);
     if (filtered.matched) {
       return { answer: filtered.answer, suggestions: filtered.suggestions };
     }
 
-    // Step 3: Expand with synonyms and score against knowledge base
+    // Step 4: Expand with synonyms and score against knowledge base
     var expandedWords = expandWithSynonyms(normalized);
     var scores = [];
 
@@ -956,7 +1194,7 @@
 
     scores.sort(function (a, b) { return b.score - a.score; });
 
-    // Step 4: Threshold check - require minimum score for non-priority entries
+    // Step 5: Threshold check - require minimum score for non-priority entries
     if (scores.length === 0) {
       var personalContext = /pratyusha|portfolio|resume|hire|career/.test(normalized);
       var fb = getRotatingFallback(personalContext);
