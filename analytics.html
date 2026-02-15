@@ -55,22 +55,153 @@
     </button>
   </header>
 
-  <!-- Morphing Data Universe Hero -->
-  <section class="parallax-hero">
-    <canvas id="hero-canvas" class="parallax-layer"></canvas>
+  <!-- Data Landscape Parallax Hero -->
+  <section class="parallax-hero" id="parallax-hero">
+    <!-- Layer 6: Neural network sky -->
+    <div class="parallax-layer plx-neural" data-speed="0.05">
+      <svg viewBox="0 0 1440 500" preserveAspectRatio="xMidYMid slice">
+        <!-- Connections -->
+        <line class="nn-conn nn-pulse-a" x1="180" y1="80" x2="400" y2="50"/>
+        <line class="nn-conn nn-pulse-b" x1="180" y1="80" x2="400" y2="140"/>
+        <line class="nn-conn nn-pulse-c" x1="180" y1="180" x2="400" y2="140"/>
+        <line class="nn-conn nn-pulse-a" x1="180" y1="180" x2="400" y2="230"/>
+        <line class="nn-conn nn-pulse-b" x1="320" y1="300" x2="400" y2="230"/>
+        <line class="nn-conn nn-pulse-c" x1="400" y1="50" x2="660" y2="90"/>
+        <line class="nn-conn nn-pulse-a" x1="400" y1="140" x2="660" y2="90"/>
+        <line class="nn-conn nn-pulse-b" x1="400" y1="140" x2="660" y2="200"/>
+        <line class="nn-conn nn-pulse-c" x1="400" y1="230" x2="660" y2="200"/>
+        <line class="nn-conn nn-pulse-a" x1="400" y1="230" x2="660" y2="310"/>
+        <line class="nn-conn nn-pulse-b" x1="660" y1="90" x2="920" y2="60"/>
+        <line class="nn-conn nn-pulse-c" x1="660" y1="90" x2="920" y2="170"/>
+        <line class="nn-conn nn-pulse-a" x1="660" y1="200" x2="920" y2="170"/>
+        <line class="nn-conn nn-pulse-b" x1="660" y1="200" x2="920" y2="280"/>
+        <line class="nn-conn nn-pulse-c" x1="660" y1="310" x2="920" y2="280"/>
+        <line class="nn-conn nn-pulse-a" x1="920" y1="60" x2="1180" y2="120"/>
+        <line class="nn-conn nn-pulse-b" x1="920" y1="170" x2="1180" y2="120"/>
+        <line class="nn-conn nn-pulse-c" x1="920" y1="170" x2="1180" y2="250"/>
+        <line class="nn-conn nn-pulse-a" x1="920" y1="280" x2="1180" y2="250"/>
+        <line class="nn-conn nn-pulse-b" x1="1180" y1="120" x2="1340" y2="180"/>
+        <line class="nn-conn nn-pulse-c" x1="1180" y1="250" x2="1340" y2="180"/>
+        <!-- Nodes -->
+        <circle class="nn-node nn-pulse-a" cx="180" cy="80" r="5"/>
+        <circle class="nn-node nn-pulse-b" cx="180" cy="180" r="4"/>
+        <circle class="nn-node nn-pulse-c" cx="320" cy="300" r="3.5"/>
+        <circle class="nn-node nn-pulse-a" cx="400" cy="50" r="4.5"/>
+        <circle class="nn-node nn-pulse-b" cx="400" cy="140" r="5"/>
+        <circle class="nn-node nn-pulse-c" cx="400" cy="230" r="4"/>
+        <circle class="nn-node nn-pulse-a" cx="660" cy="90" r="5"/>
+        <circle class="nn-node nn-pulse-b" cx="660" cy="200" r="4.5"/>
+        <circle class="nn-node nn-pulse-c" cx="660" cy="310" r="3.5"/>
+        <circle class="nn-node nn-pulse-a" cx="920" cy="60" r="4"/>
+        <circle class="nn-node nn-pulse-b" cx="920" cy="170" r="5"/>
+        <circle class="nn-node nn-pulse-c" cx="920" cy="280" r="4.5"/>
+        <circle class="nn-node nn-pulse-a" cx="1180" cy="120" r="5"/>
+        <circle class="nn-node nn-pulse-b" cx="1180" cy="250" r="4"/>
+        <circle class="nn-node nn-pulse-c" cx="1340" cy="180" r="5.5"/>
+        <circle class="nn-node nn-pulse-a" cx="100" cy="260" r="3"/>
+        <circle class="nn-node nn-pulse-b" cx="1400" cy="90" r="3"/>
+      </svg>
+    </div>
 
-    <div class="parallax-layer parallax-content">
+    <!-- Layer 5: Far mountains - sine wave ridgeline -->
+    <div class="parallax-layer plx-mountain plx-mtn-far" data-speed="0.1">
+      <svg viewBox="0 0 1440 400" preserveAspectRatio="none">
+        <path class="mtn-fill mtn-far-fill" d="M0,400 L0,320 C80,300 160,340 240,310 C320,280 360,330 440,295 C520,260 580,310 660,280 C740,250 800,300 880,265 C960,230 1020,290 1100,255 C1180,220 1240,270 1320,240 C1380,220 1440,260 1440,260 L1440,400 Z"/>
+        <!-- Data point stars -->
+        <circle class="mtn-star" cx="200" cy="260" r="1.5"/>
+        <circle class="mtn-star" cx="380" cy="240" r="1"/>
+        <circle class="mtn-star" cx="550" cy="220" r="1.8"/>
+        <circle class="mtn-star" cx="730" cy="200" r="1.2"/>
+        <circle class="mtn-star" cx="900" cy="190" r="1.5"/>
+        <circle class="mtn-star" cx="1080" cy="180" r="1"/>
+        <circle class="mtn-star" cx="1250" cy="195" r="1.3"/>
+        <circle class="mtn-star" cx="120" cy="275" r="1"/>
+        <circle class="mtn-star" cx="450" cy="250" r="1.2"/>
+        <circle class="mtn-star" cx="820" cy="215" r="1.4"/>
+        <circle class="mtn-star" cx="1150" cy="170" r="1.1"/>
+        <circle class="mtn-star" cx="1370" cy="210" r="1.3"/>
+      </svg>
+    </div>
+
+    <!-- Layer 4: Mid-far mountains - exponential growth curve -->
+    <div class="parallax-layer plx-mountain plx-mtn-midfar" data-speed="0.2">
+      <svg viewBox="0 0 1440 400" preserveAspectRatio="none">
+        <path class="mtn-fill mtn-midfar-fill" d="M0,400 L0,350 C120,348 240,345 360,338 C480,328 540,320 660,305 C780,285 840,270 960,245 C1080,215 1140,195 1260,165 C1340,145 1400,130 1440,120 L1440,400 Z"/>
+        <!-- Scatter plot dots along the slope -->
+        <circle class="mtn-scatter" cx="200" cy="345" r="3" opacity="0.3"/>
+        <circle class="mtn-scatter" cx="350" cy="338" r="2.5" opacity="0.25"/>
+        <circle class="mtn-scatter" cx="500" cy="325" r="3.5" opacity="0.3"/>
+        <circle class="mtn-scatter" cx="620" cy="312" r="2" opacity="0.2"/>
+        <circle class="mtn-scatter" cx="750" cy="290" r="3" opacity="0.28"/>
+        <circle class="mtn-scatter" cx="880" cy="260" r="2.5" opacity="0.25"/>
+        <circle class="mtn-scatter" cx="1000" cy="235" r="3.5" opacity="0.3"/>
+        <circle class="mtn-scatter" cx="1120" cy="205" r="2" opacity="0.22"/>
+        <circle class="mtn-scatter" cx="1250" cy="170" r="3" opacity="0.28"/>
+        <circle class="mtn-scatter" cx="1380" cy="138" r="2.5" opacity="0.25"/>
+      </svg>
+    </div>
+
+    <!-- Layer 3: Mid mountains - step function ridgeline -->
+    <div class="parallax-layer plx-mountain plx-mtn-mid" data-speed="0.3">
+      <svg viewBox="0 0 1440 400" preserveAspectRatio="none">
+        <path class="mtn-fill mtn-mid-fill" d="M0,400 L0,330 L240,330 L240,290 L480,290 L480,320 L660,320 L660,260 L900,260 L900,300 L1060,300 L1060,230 L1260,230 L1260,270 L1440,270 L1440,400 Z"/>
+        <!-- Bar chart groups on plateaus -->
+        <rect class="mtn-bar" x="60" y="310" width="12" height="20" rx="1"/>
+        <rect class="mtn-bar" x="80" y="315" width="12" height="15" rx="1"/>
+        <rect class="mtn-bar" x="100" y="305" width="12" height="25" rx="1"/>
+        <rect class="mtn-bar" x="310" y="270" width="12" height="20" rx="1"/>
+        <rect class="mtn-bar" x="330" y="265" width="12" height="25" rx="1"/>
+        <rect class="mtn-bar" x="350" y="275" width="12" height="15" rx="1"/>
+        <rect class="mtn-bar" x="710" y="240" width="12" height="20" rx="1"/>
+        <rect class="mtn-bar" x="730" y="235" width="12" height="25" rx="1"/>
+        <rect class="mtn-bar" x="750" y="245" width="12" height="15" rx="1"/>
+        <rect class="mtn-bar" x="1110" y="210" width="12" height="20" rx="1"/>
+        <rect class="mtn-bar" x="1130" y="205" width="12" height="25" rx="1"/>
+        <rect class="mtn-bar" x="1150" y="215" width="12" height="15" rx="1"/>
+      </svg>
+    </div>
+
+    <!-- Layer 2: Near hills - rolling hills + bar chart skyline -->
+    <div class="parallax-layer plx-mountain plx-mtn-near" data-speed="0.45">
+      <svg viewBox="0 0 1440 400" preserveAspectRatio="none">
+        <path class="mtn-fill mtn-near-fill" d="M0,400 L0,340 C60,330 120,350 200,325 C280,300 340,320 420,310 C500,300 560,330 640,315 C720,300 780,310 860,305 C940,300 1000,325 1080,310 C1160,295 1220,315 1300,305 C1360,298 1420,310 1440,315 L1440,400 Z"/>
+        <!-- Bar chart skyline columns -->
+        <rect class="mtn-bar-near" x="50" y="310" width="16" height="30" rx="2"/>
+        <rect class="mtn-bar-near" x="75" y="300" width="16" height="40" rx="2"/>
+        <rect class="mtn-bar-near" x="100" y="320" width="16" height="20" rx="2"/>
+        <rect class="mtn-bar-near" x="180" y="295" width="16" height="45" rx="2"/>
+        <rect class="mtn-bar-near" x="205" y="305" width="16" height="35" rx="2"/>
+        <rect class="mtn-bar-near" x="320" y="290" width="16" height="50" rx="2"/>
+        <rect class="mtn-bar-near" x="345" y="300" width="16" height="40" rx="2"/>
+        <rect class="mtn-bar-near" x="370" y="310" width="16" height="30" rx="2"/>
+        <rect class="mtn-bar-near" x="500" y="285" width="16" height="55" rx="2"/>
+        <rect class="mtn-bar-near" x="525" y="298" width="16" height="42" rx="2"/>
+        <rect class="mtn-bar-near" x="680" y="280" width="16" height="60" rx="2"/>
+        <rect class="mtn-bar-near" x="705" y="295" width="16" height="45" rx="2"/>
+        <rect class="mtn-bar-near" x="730" y="305" width="16" height="35" rx="2"/>
+        <rect class="mtn-bar-near" x="870" y="278" width="16" height="62" rx="2"/>
+        <rect class="mtn-bar-near" x="895" y="290" width="16" height="50" rx="2"/>
+        <rect class="mtn-bar-near" x="1050" y="285" width="16" height="55" rx="2"/>
+        <rect class="mtn-bar-near" x="1075" y="295" width="16" height="45" rx="2"/>
+        <rect class="mtn-bar-near" x="1220" y="280" width="16" height="60" rx="2"/>
+        <rect class="mtn-bar-near" x="1350" y="275" width="16" height="65" rx="2"/>
+      </svg>
+    </div>
+
+    <!-- Layer 1: Foreground ground -->
+    <div class="parallax-layer plx-foreground" data-speed="0.6">
+      <svg viewBox="0 0 1440 400" preserveAspectRatio="none">
+        <path class="mtn-fill mtn-ground-fill" d="M0,400 L0,370 C120,365 360,375 720,368 C1080,361 1320,370 1440,365 L1440,400 Z"/>
+      </svg>
+    </div>
+
+    <!-- Content -->
+    <div class="parallax-layer parallax-content" data-speed="0.5">
       <h2>Analytics & Intelligence</h2>
       <p>Interactive ML demos, statistical tools, and data stories - all running live in the browser</p>
       <div class="parallax-scroll-hint">
         <span>Scroll to explore</span>
         <i class="fas fa-chevron-down"></i>
-      </div>
-      <div class="formation-indicator" aria-label="Current visualization">
-        <button class="formation-dot active" data-formation="0" title="Scatter Clusters"></button>
-        <button class="formation-dot" data-formation="1" title="Neural Network"></button>
-        <button class="formation-dot" data-formation="2" title="Signal Wave"></button>
-        <button class="formation-dot" data-formation="3" title="Data Galaxy"></button>
       </div>
     </div>
   </section>

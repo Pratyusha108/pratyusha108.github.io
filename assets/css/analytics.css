@@ -3006,13 +3006,13 @@ body.light-mode .reg-stats {
   color: #666;
 }
 
-/* ===== MORPHING DATA UNIVERSE HERO ===== */
+/* ===== DATA LANDSCAPE PARALLAX HERO ===== */
 .parallax-hero {
   position: relative;
   height: 100vh;
   overflow: hidden;
   z-index: 1;
-  background: radial-gradient(ellipse at 50% 40%, rgba(255, 159, 0, 0.06) 0%, transparent 60%);
+  background: linear-gradient(180deg, #0a0e1a 0%, #1a1040 25%, #2d1b4e 50%, #5c2d3e 75%, #ff9f00 100%);
 }
 
 .parallax-layer {
@@ -3024,14 +3024,109 @@ body.light-mode .reg-stats {
   will-change: transform;
 }
 
-/* Canvas Layer */
-#hero-canvas {
-  z-index: 1;
+/* --- Neural Network Layer --- */
+.plx-neural {
+  z-index: 2;
 }
 
-/* Hero Content */
+.plx-neural svg {
+  width: 100%;
+  height: 100%;
+}
+
+.nn-conn {
+  stroke: rgba(255, 169, 40, 0.08);
+  stroke-width: 1;
+  fill: none;
+}
+
+.nn-node {
+  fill: rgba(255, 169, 40, 0.25);
+}
+
+/* 3 staggered pulse animations */
+@keyframes nnPulseA {
+  0%, 100% { opacity: 0.2; }
+  50% { opacity: 0.55; }
+}
+@keyframes nnPulseB {
+  0%, 100% { opacity: 0.15; }
+  60% { opacity: 0.5; }
+}
+@keyframes nnPulseC {
+  0%, 100% { opacity: 0.25; }
+  40% { opacity: 0.6; }
+}
+
+.nn-pulse-a { animation: nnPulseA 4s ease-in-out infinite; }
+.nn-pulse-b { animation: nnPulseB 5.5s ease-in-out infinite 0.8s; }
+.nn-pulse-c { animation: nnPulseC 7s ease-in-out infinite 1.6s; }
+
+/* --- Mountain Layers --- */
+.plx-mountain {
+  bottom: 0;
+  top: auto;
+  height: 60%;
+}
+
+.plx-mountain svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.plx-mtn-far { z-index: 3; }
+.plx-mtn-midfar { z-index: 4; }
+.plx-mtn-mid { z-index: 5; }
+.plx-mtn-near { z-index: 6; }
+
+.mtn-fill { stroke: none; }
+
+.mtn-far-fill { fill: rgba(255, 169, 40, 0.08); }
+.mtn-midfar-fill { fill: rgba(255, 149, 20, 0.14); }
+.mtn-mid-fill { fill: rgba(200, 100, 30, 0.30); }
+.mtn-near-fill { fill: rgba(140, 60, 15, 0.60); }
+
+/* Data elements on mountains */
+.mtn-star {
+  fill: rgba(255, 200, 100, 0.35);
+}
+
+.mtn-scatter {
+  fill: none;
+  stroke: rgba(255, 169, 40, 0.3);
+  stroke-width: 1;
+}
+
+.mtn-bar {
+  fill: rgba(255, 159, 0, 0.18);
+}
+
+.mtn-bar-near {
+  fill: rgba(255, 159, 0, 0.25);
+}
+
+/* --- Foreground Ground --- */
+.plx-foreground {
+  z-index: 7;
+  bottom: 0;
+  top: auto;
+  height: 15%;
+}
+
+.plx-foreground svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.mtn-ground-fill {
+  fill: #121212;
+}
+
+/* --- Hero Content Overlay --- */
 .parallax-content {
-  z-index: 3;
+  z-index: 10;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -3052,6 +3147,7 @@ body.light-mode .reg-stats {
   margin: 0 0 1rem;
   line-height: 1.1;
   animation: heroGlow 4s ease-in-out infinite;
+  text-shadow: none;
 }
 
 @keyframes heroGlow {
@@ -3060,11 +3156,12 @@ body.light-mode .reg-stats {
 }
 
 .parallax-content p {
-  color: #bbb;
+  color: #ddd;
   font-size: clamp(1rem, 2vw, 1.25rem);
   max-width: 600px;
   margin: 0;
   line-height: 1.6;
+  text-shadow: 0 1px 8px rgba(0, 0, 0, 0.6);
 }
 
 /* Scroll Hint */
@@ -3077,7 +3174,7 @@ body.light-mode .reg-stats {
   flex-direction: column;
   align-items: center;
   gap: 0.5rem;
-  color: #888;
+  color: #aaa;
   font-size: 0.85rem;
 }
 
@@ -3092,61 +3189,32 @@ body.light-mode .reg-stats {
   50% { transform: translateY(8px); opacity: 0.5; }
 }
 
-/* Formation Indicator */
-.formation-indicator {
-  position: absolute;
-  bottom: 2rem;
-  left: 50%;
-  transform: translateX(-50%);
-  display: flex;
-  gap: 0.75rem;
-  align-items: center;
-  pointer-events: auto;
-}
-
-.formation-dot {
-  width: 10px;
-  height: 10px;
-  border-radius: 50%;
-  border: 1.5px solid rgba(255, 159, 0, 0.4);
-  background: transparent;
-  cursor: pointer;
-  padding: 0;
-  transition: all 0.3s ease;
-}
-
-.formation-dot:hover {
-  border-color: #ff9f00;
-  background: rgba(255, 159, 0, 0.3);
-}
-
-.formation-dot.active {
-  background: #ff9f00;
-  border-color: #ff9f00;
-  box-shadow: 0 0 8px rgba(255, 159, 0, 0.5);
-}
-
-/* Light Mode */
+/* ===== LIGHT MODE - DATA LANDSCAPE ===== */
 body.light-mode .parallax-hero {
-  background: radial-gradient(ellipse at 50% 40%, rgba(255, 159, 0, 0.08) 0%, transparent 60%);
+  background: linear-gradient(180deg, #d4e4f7 0%, #c0d8f0 25%, #b8cce0 50%, #e8c090 75%, #f5a850 100%);
 }
+
+body.light-mode .mtn-far-fill { fill: rgba(80, 50, 30, 0.12); }
+body.light-mode .mtn-midfar-fill { fill: rgba(70, 45, 25, 0.20); }
+body.light-mode .mtn-mid-fill { fill: rgba(60, 35, 20, 0.40); }
+body.light-mode .mtn-near-fill { fill: rgba(50, 30, 15, 0.65); }
+body.light-mode .mtn-ground-fill { fill: #f9f9f9; }
+
+body.light-mode .nn-conn { stroke: rgba(200, 120, 0, 0.12); }
+body.light-mode .nn-node { fill: rgba(200, 120, 0, 0.35); }
+
+body.light-mode .mtn-star { fill: rgba(150, 100, 50, 0.3); }
+body.light-mode .mtn-scatter { stroke: rgba(150, 90, 30, 0.3); }
+body.light-mode .mtn-bar { fill: rgba(150, 90, 30, 0.2); }
+body.light-mode .mtn-bar-near { fill: rgba(120, 70, 20, 0.3); }
 
 body.light-mode .parallax-content p {
-  color: #666;
+  color: #444;
+  text-shadow: 0 1px 6px rgba(255, 255, 255, 0.5);
 }
 
 body.light-mode .parallax-scroll-hint {
-  color: #999;
-}
-
-body.light-mode .formation-dot {
-  border-color: rgba(200, 120, 0, 0.4);
-}
-
-body.light-mode .formation-dot.active {
-  background: #e68a00;
-  border-color: #e68a00;
-  box-shadow: 0 0 8px rgba(230, 138, 0, 0.4);
+  color: #777;
 }
 
 /* ===== RESPONSIVE: 968px ===== */
@@ -3344,10 +3412,8 @@ body.light-mode .formation-dot.active {
     height: 90vh;
   }
 
-  .formation-dot {
-    width: 8px;
-    height: 8px;
-  }
+  .plx-mtn-midfar { display: none; }
+  .plx-neural .nn-pulse-b { display: none; }
 }
 
 /* ===== RESPONSIVE: 480px ===== */
@@ -3432,8 +3498,6 @@ body.light-mode .formation-dot.active {
     font-size: 1.5rem;
   }
 
-  .formation-dot {
-    width: 7px;
-    height: 7px;
-  }
+  .plx-mtn-mid { display: none; }
+  .plx-neural { display: none; }
 }

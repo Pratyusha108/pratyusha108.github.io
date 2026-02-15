@@ -3432,469 +3432,69 @@
     });
   }
 
-  // ====== MORPHING DATA UNIVERSE ======
+  // ====== DATA LANDSCAPE PARALLAX HERO ======
 
-  function initHeroUniverse() {
-    var canvas = document.getElementById('hero-canvas');
-    if (!canvas) return;
-    var ctx = canvas.getContext('2d');
+  function initDataLandscapeHero() {
+    var hero = document.getElementById('parallax-hero');
+    if (!hero) return;
 
-    // Config
-    var isMobile = window.innerWidth < 768;
-    var PARTICLE_COUNT = isMobile ? 120 : 200;
-    var STREAM_COUNT = 40;
-    var FORMATION_INTERVAL = 6000;
-    var SPRING = 0.035;
-    var DAMPING = 0.92;
-    var MOUSE_RADIUS = 130;
-    var TRAIL_LENGTH = 3;
+    var layers = hero.querySelectorAll('.parallax-layer[data-speed]');
+    if (!layers.length) return;
 
-    // State
-    var particles = [];
-    var streams = [];
-    var currentFormation = 0;
-    var connectionAlpha = 0;
-    var targetConnectionAlpha = 0;
-    var mouseX = -1000;
-    var mouseY = -1000;
-    var isVisible = true;
-    var raf = null;
-    var formationTimer = null;
+    var contentLayer = hero.querySelector('.parallax-content');
+    var ticking = false;
+    var isActive = true;
+    var vh = window.innerHeight;
 
-    // Colors
-    var COLORS = {
-      orange: { r: 255, g: 159, b: 0 },
-      coral: { r: 255, g: 107, b: 107 },
-      amber: { r: 255, g: 191, b: 64 }
-    };
+    function onScroll() {
+      if (!isActive) return;
+      if (ticking) return;
+      ticking = true;
 
-    function colorStr(c, a) {
-      return 'rgba(' + Math.round(c.r) + ',' + Math.round(c.g) + ',' + Math.round(c.b) + ',' + a + ')';
-    }
+      requestAnimationFrame(function () {
+        var scrollY = window.pageYOffset;
 
-    function gaussian() {
-      var u = 0, v = 0;
-      while (u === 0) u = Math.random();
-      while (v === 0) v = Math.random();
-      return Math.sqrt(-2.0 * Math.log(u)) * Math.cos(2.0 * Math.PI * v);
-    }
-
-    // --- Formation Generators ---
-
-    function getScatterTargets(w, h) {
-      var centers = [
-        { x: w * 0.25, y: h * 0.4, color: COLORS.orange },
-        { x: w * 0.55, y: h * 0.6, color: COLORS.coral },
-        { x: w * 0.8, y: h * 0.35, color: COLORS.amber }
-      ];
-      var targets = [];
-      var spread = Math.min(w, h) * 0.15;
-      for (var i = 0; i < PARTICLE_COUNT; i++) {
-        var c = centers[i % 3];
-        targets.push({
-          x: c.x + gaussian() * spread,
-          y: c.y + gaussian() * spread,
-          color: c.color,
-          radius: Math.random() * 1.5 + 1.5
-        });
-      }
-      return targets;
-    }
-
-    function getNeuralNetTargets(w, h) {
-      var layers = [5, 8, 8, 6, 3];
-      var targets = [];
-      var nnNodes = [];
-      var totalLayers = layers.length;
-      var marginX = w * 0.12;
-      var usableW = w - marginX * 2;
-      var marginY = h * 0.18;
-      var usableH = h - marginY * 2;
-
-      for (var l = 0; l < totalLayers; l++) {
-        var layerX = marginX + (usableW * l) / (totalLayers - 1);
-        var count = layers[l];
-        var layerNodes = [];
-        for (var n = 0; n < count; n++) {
-          var nodeY = marginY + (usableH * (n + 0.5)) / count;
-          layerNodes.push({ x: layerX, y: nodeY });
-          targets.push({
-            x: layerX,
-            y: nodeY,
-            color: l === 0 ? COLORS.orange : l === totalLayers - 1 ? COLORS.coral : COLORS.amber,
-            radius: 2.5
-          });
-        }
-        nnNodes.push(layerNodes);
-      }
-
-      var placed = targets.length;
-      var remaining = PARTICLE_COUNT - placed;
-      for (var i = 0; i < remaining; i++) {
-        var l = Math.floor(Math.random() * (totalLayers - 1));
-        var fromNode = nnNodes[l][Math.floor(Math.random() * nnNodes[l].length)];
-        var toNode = nnNodes[l + 1][Math.floor(Math.random() * nnNodes[l + 1].length)];
-        var t = Math.random();
-        targets.push({
-          x: fromNode.x + (toNode.x - fromNode.x) * t + gaussian() * 5,
-          y: fromNode.y + (toNode.y - fromNode.y) * t + gaussian() * 5,
-          color: COLORS.amber,
-          radius: 1.2
-        });
-      }
-      return targets;
-    }
-
-    function getWaveTargets(w, h) {
-      var targets = [];
-      var waves = [
-        { amp: h * 0.15, freq: 2, phase: 0, color: COLORS.orange },
-        { amp: h * 0.09, freq: 2.5, phase: 2, color: COLORS.coral },
-        { amp: h * 0.045, freq: 4, phase: 4, color: COLORS.amber }
-      ];
-      for (var i = 0; i < PARTICLE_COUNT; i++) {
-        var wave = waves[i % 3];
-        var px = (i / PARTICLE_COUNT) * w;
-        var py = h * 0.5 + wave.amp * Math.sin((px / w) * wave.freq * Math.PI * 2 + wave.phase);
-        targets.push({
-          x: px,
-          y: py + gaussian() * 3,
-          color: wave.color,
-          radius: i % 3 === 0 ? 2 : 1.5
-        });
-      }
-      return targets;
-    }
-
-    function getGalaxyTargets(w, h) {
-      var targets = [];
-      var cx = w * 0.5;
-      var cy = h * 0.5;
-      var maxR = Math.min(w, h) * 0.18;
-      for (var i = 0; i < PARTICLE_COUNT; i++) {
-        var theta = (i * 4 * Math.PI / PARTICLE_COUNT) + gaussian() * 0.3;
-        var r = 8 + theta * maxR / (4 * Math.PI);
-        r += gaussian() * (r * 0.12);
-        var x = cx + r * Math.cos(theta);
-        var y = cy + r * Math.sin(theta) * 0.6;
-        var frac = i / PARTICLE_COUNT;
-        var color = frac < 0.33 ? COLORS.orange : frac < 0.66 ? COLORS.coral : COLORS.amber;
-        targets.push({ x: x, y: y, color: color, radius: Math.random() * 1.5 + 1 });
-      }
-      return targets;
-    }
-
-    var formations = [getScatterTargets, getNeuralNetTargets, getWaveTargets, getGalaxyTargets];
-
-    // --- Particle Initialization ---
-
-    var isLight = document.body.classList.contains('light-mode');
-
-    function resize() {
-      canvas.width = canvas.offsetWidth;
-      canvas.height = canvas.offsetHeight;
-    }
-
-    function initParticles() {
-      particles = [];
-      var w = canvas.width;
-      var h = canvas.height;
-      var targets = formations[currentFormation](w, h);
-
-      for (var i = 0; i < PARTICLE_COUNT; i++) {
-        // Start from random edge positions for entrance
-        var edge = Math.floor(Math.random() * 4);
-        var startX, startY;
-        if (edge === 0) { startX = Math.random() * w; startY = -50 - Math.random() * 100; }
-        else if (edge === 1) { startX = w + 50 + Math.random() * 100; startY = Math.random() * h; }
-        else if (edge === 2) { startX = Math.random() * w; startY = h + 50 + Math.random() * 100; }
-        else { startX = -50 - Math.random() * 100; startY = Math.random() * h; }
-
-        particles.push({
-          x: startX,
-          y: startY,
-          targetX: targets[i].x,
-          targetY: targets[i].y,
-          vx: 0,
-          vy: 0,
-          radius: targets[i].radius,
-          color: { r: targets[i].color.r, g: targets[i].color.g, b: targets[i].color.b },
-          targetColor: targets[i].color,
-          trail: []
-        });
-      }
-
-      // Init stream particles (data rain)
-      streams = [];
-      for (var i = 0; i < STREAM_COUNT; i++) {
-        streams.push({
-          x: Math.random() * w,
-          y: Math.random() * h,
-          speed: Math.random() * 0.8 + 0.3,
-          drift: (Math.random() - 0.5) * 0.2,
-          radius: Math.random() * 0.5 + 0.5,
-          alpha: Math.random() * 0.15 + 0.05
-        });
-      }
-    }
-
-    // --- Formation Switching ---
-
-    function setFormation(index) {
-      currentFormation = index;
-      var targets = formations[index](canvas.width, canvas.height);
-      targetConnectionAlpha = index === 1 ? 1 : 0;
-
-      for (var i = 0; i < particles.length; i++) {
-        particles[i].targetX = targets[i].x;
-        particles[i].targetY = targets[i].y;
-        particles[i].targetColor = targets[i].color;
-      }
-
-      var dots = document.querySelectorAll('.formation-dot');
-      for (var i = 0; i < dots.length; i++) {
-        dots[i].classList.toggle('active', i === index);
-      }
-    }
-
-    // --- Neural Network Connections ---
-
-    function drawConnections(w, h) {
-      if (connectionAlpha < 0.01) return;
-
-      var layers = [5, 8, 8, 6, 3];
-      var totalLayers = layers.length;
-      var marginX = w * 0.12;
-      var usableW = w - marginX * 2;
-      var marginY = h * 0.18;
-      var usableH = h - marginY * 2;
-      var light = document.body.classList.contains('light-mode');
-
-      var nnNodes = [];
-      for (var l = 0; l < totalLayers; l++) {
-        var layerX = marginX + (usableW * l) / (totalLayers - 1);
-        var count = layers[l];
-        var layerNodes = [];
-        for (var n = 0; n < count; n++) {
-          layerNodes.push({ x: layerX, y: marginY + (usableH * (n + 0.5)) / count });
-        }
-        nnNodes.push(layerNodes);
-      }
-
-      ctx.lineWidth = 0.5;
-      var drawn = 0;
-      for (var l = 0; l < totalLayers - 1 && drawn < 60; l++) {
-        for (var a = 0; a < nnNodes[l].length && drawn < 60; a++) {
-          for (var b = 0; b < nnNodes[l + 1].length && drawn < 60; b++) {
-            if ((a + b) % 2 !== 0) continue;
-            var alpha = connectionAlpha * 0.08;
-            ctx.beginPath();
-            ctx.moveTo(nnNodes[l][a].x, nnNodes[l][a].y);
-            ctx.lineTo(nnNodes[l + 1][b].x, nnNodes[l + 1][b].y);
-            ctx.strokeStyle = light
-              ? 'rgba(200, 120, 0,' + alpha + ')'
-              : 'rgba(255, 159, 0,' + alpha + ')';
-            ctx.stroke();
-            drawn++;
-          }
-        }
-      }
-    }
-
-    // --- Main Draw Loop ---
-
-    function drawFrame() {
-      if (!isVisible) { raf = null; return; }
-
-      var w = canvas.width;
-      var h = canvas.height;
-      ctx.clearRect(0, 0, w, h);
-
-      var light = document.body.classList.contains('light-mode');
-      var isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
-
-      // Fade connection alpha
-      connectionAlpha += (targetConnectionAlpha - connectionAlpha) * 0.05;
-
-      // Update stream particles (data rain)
-      for (var i = 0; i < streams.length; i++) {
-        var s = streams[i];
-        s.y += s.speed;
-        s.x += s.drift;
-        if (s.y > h) { s.y = -2; s.x = Math.random() * w; }
-        if (s.x < 0) s.x = w;
-        if (s.x > w) s.x = 0;
-      }
-
-      // Update main particles
-      for (var i = 0; i < particles.length; i++) {
-        var p = particles[i];
-
-        // Store trail
-        p.trail.push({ x: p.x, y: p.y });
-        if (p.trail.length > TRAIL_LENGTH) p.trail.shift();
-
-        // Spring physics
-        var ax = (p.targetX - p.x) * SPRING;
-        var ay = (p.targetY - p.y) * SPRING;
-        p.vx += ax;
-        p.vy += ay;
-
-        // Mouse repulsion (desktop only)
-        if (!isTouchDevice && mouseX > -500) {
-          var dx = p.x - mouseX;
-          var dy = p.y - mouseY;
-          var dist = Math.sqrt(dx * dx + dy * dy);
-          if (dist < MOUSE_RADIUS && dist > 1) {
-            var force = Math.min(8, 500 / (dist * dist));
-            p.vx += (dx / dist) * force;
-            p.vy += (dy / dist) * force;
-          }
+        // Early exit if scrolled well past hero
+        if (scrollY > vh * 1.5) {
+          ticking = false;
+          return;
         }
 
-        p.vx *= DAMPING;
-        p.vy *= DAMPING;
-        p.x += p.vx;
-        p.y += p.vy;
-
-        // Color lerp
-        p.color = {
-          r: p.color.r + (p.targetColor.r - p.color.r) * 0.03,
-          g: p.color.g + (p.targetColor.g - p.color.g) * 0.03,
-          b: p.color.b + (p.targetColor.b - p.color.b) * 0.03
-        };
-      }
-
-      // --- Drawing ---
-
-      // 1. Draw stream particles (background data rain)
-      for (var i = 0; i < streams.length; i++) {
-        var s = streams[i];
-        ctx.beginPath();
-        ctx.arc(s.x, s.y, s.radius, 0, Math.PI * 2);
-        ctx.fillStyle = light
-          ? 'rgba(200, 120, 0,' + s.alpha + ')'
-          : 'rgba(255, 159, 0,' + s.alpha + ')';
-        ctx.fill();
-      }
-
-      // 2. Draw connection lines (neural network formation)
-      drawConnections(w, h);
-
-      // 3. Draw particle trails
-      for (var i = 0; i < particles.length; i++) {
-        var p = particles[i];
-        for (var t = 0; t < p.trail.length; t++) {
-          var trailAlpha = ((t + 1) / p.trail.length) * 0.15;
-          var trailRadius = p.radius * ((t + 1) / p.trail.length) * 0.6;
-          ctx.beginPath();
-          ctx.arc(p.trail[t].x, p.trail[t].y, trailRadius, 0, Math.PI * 2);
-          ctx.fillStyle = colorStr(p.color, trailAlpha);
-          ctx.fill();
+        // Apply parallax transform to each layer
+        for (var i = 0; i < layers.length; i++) {
+          var speed = parseFloat(layers[i].getAttribute('data-speed')) || 0;
+          layers[i].style.transform = 'translateY(' + (scrollY * speed) + 'px)';
         }
-      }
 
-      // 4. Draw main particles
-      for (var i = 0; i < particles.length; i++) {
-        var p = particles[i];
-        // Subtle glow
-        ctx.beginPath();
-        ctx.arc(p.x, p.y, p.radius + 3, 0, Math.PI * 2);
-        ctx.fillStyle = colorStr(p.color, 0.08);
-        ctx.fill();
+        // Fade content on scroll
+        if (contentLayer) {
+          contentLayer.style.opacity = Math.max(0, 1 - scrollY / (vh * 0.5));
+        }
 
-        // Main particle
-        ctx.beginPath();
-        ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
-        ctx.fillStyle = colorStr(p.color, light ? 0.7 : 0.6);
-        ctx.fill();
-      }
-
-      raf = requestAnimationFrame(drawFrame);
-    }
-
-    // --- Init & Events ---
-
-    resize();
-    initParticles();
-    raf = requestAnimationFrame(drawFrame);
-
-    // Auto-cycle formations
-    formationTimer = setInterval(function () {
-      setFormation((currentFormation + 1) % 4);
-    }, FORMATION_INTERVAL);
-
-    // Formation indicator click handlers
-    var dots = document.querySelectorAll('.formation-dot');
-    for (var i = 0; i < dots.length; i++) {
-      (function (idx) {
-        dots[idx].addEventListener('click', function () {
-          setFormation(idx);
-          clearInterval(formationTimer);
-          formationTimer = setInterval(function () {
-            setFormation((currentFormation + 1) % 4);
-          }, FORMATION_INTERVAL);
-        });
-      })(i);
-    }
-
-    // Mouse tracking (desktop only)
-    var isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
-    if (!isTouchDevice) {
-      canvas.parentElement.addEventListener('mousemove', function (e) {
-        var rect = canvas.getBoundingClientRect();
-        mouseX = e.clientX - rect.left;
-        mouseY = e.clientY - rect.top;
-      });
-      canvas.parentElement.addEventListener('mouseleave', function () {
-        mouseX = -1000;
-        mouseY = -1000;
+        ticking = false;
       });
     }
 
-    // Pause when off-screen
+    window.addEventListener('scroll', onScroll, { passive: true });
+
+    // Pause parallax when hero is off-screen
     if ('IntersectionObserver' in window) {
       var obs = new IntersectionObserver(function (entries) {
-        isVisible = entries[0].isIntersecting;
-        if (isVisible && !raf) {
-          raf = requestAnimationFrame(drawFrame);
-        }
-      }, { threshold: 0.05 });
-      obs.observe(canvas.parentElement);
+        isActive = entries[0].isIntersecting;
+      }, { threshold: 0.01 });
+      obs.observe(hero);
     }
 
-    // Resize handler (debounced)
+    // Debounced resize to update vh
     var resizeTimer;
     window.addEventListener('resize', function () {
       clearTimeout(resizeTimer);
       resizeTimer = setTimeout(function () {
-        isMobile = window.innerWidth < 768;
-        PARTICLE_COUNT = isMobile ? 120 : 200;
-        resize();
-        initParticles();
+        vh = window.innerHeight;
       }, 200);
     });
   }
 
-  // Parallax scroll handler
-  var heroSection = document.querySelector('.parallax-hero');
-  if (heroSection) {
-    var pCanvas = document.getElementById('hero-canvas');
-    var pContent = document.querySelector('.parallax-content');
-
-    window.addEventListener('scroll', function () {
-      var scrollY = window.pageYOffset;
-      var vh = window.innerHeight;
-      if (scrollY > vh * 1.2) return;
-
-      if (pCanvas) pCanvas.style.transform = 'translateY(' + (scrollY * 0.1) + 'px)';
-      if (pContent) {
-        pContent.style.transform = 'translateY(' + (scrollY * 0.5) + 'px)';
-        pContent.style.opacity = Math.max(0, 1 - scrollY / (vh * 0.6));
-      }
-    }, { passive: true });
-
-    initHeroUniverse();
-  }
+  initDataLandscapeHero();
 
 })();
