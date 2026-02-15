@@ -15,6 +15,15 @@
       panel.classList.toggle('active', panel.id === 'tab-' + tabId);
     });
 
+    // Force fade-in sections visible inside the active tab
+    // (IntersectionObserver misses elements inside display:none panels)
+    var activePanel = document.getElementById('tab-' + tabId);
+    if (activePanel) {
+      activePanel.querySelectorAll('.fade-in').forEach(function (el) {
+        el.classList.add('visible');
+      });
+    }
+
     // Cancel running animations from other tabs
     Object.keys(animFrameIds).forEach(function (key) {
       if (animFrameIds[key]) {
