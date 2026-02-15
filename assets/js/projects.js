@@ -147,7 +147,7 @@ function closeOnBack(e) {
   if (e.target.id === 'modal') closeModal();
 }
 
-/* AUTO-OPEN FROM URL PARAM + FILTER TABS */
+/* AUTO-OPEN FROM URL PARAM + ALL FEATURES */
 document.addEventListener('DOMContentLoaded', function () {
   // Auto-open modal from URL
   var params = new URLSearchParams(window.location.search);
@@ -156,26 +156,218 @@ document.addEventListener('DOMContentLoaded', function () {
     openModal(openKey);
   }
 
-  // Filter tabs
   var filterBtns = document.querySelectorAll('.filter-btn');
   var projectCards = document.querySelectorAll('.project-showcase .project-card');
+  var searchInput = document.querySelector('.project-search');
+  var searchClear = document.querySelector('.search-clear');
+  var noResults = document.querySelector('.no-results');
+  var projectGrid = document.querySelector('.project-grid');
+  var activeTechPill = null;
 
+  // ====== UNIFIED FILTER FUNCTION ======
+  function applyFilters() {
+    var activeFilter = document.querySelector('.filter-btn.active');
+    var category = activeFilter ? activeFilter.dataset.filter : 'all';
+    var query = searchInput ? searchInput.value.trim().toLowerCase() : '';
+    var techFilter = activeTechPill ? activeTechPill.toLowerCase() : '';
+    var visibleCount = 0;
+
+    projectCards.forEach(function (card) {
+      var matchesCategory = (category === 'all' || card.dataset.categories.indexOf(category) !== -1);
+
+      var matchesSearch = true;
+      if (query) {
+        var title = card.querySelector('h3') ? card.querySelector('h3').textContent.toLowerCase() : '';
+        var desc = card.querySelector('.project-content p') ? card.querySelector('.project-content p').textContent.toLowerCase() : '';
+        var tags = card.querySelector('.project-tags') ? card.querySelector('.project-tags').textContent.toLowerCase() : '';
+        matchesSearch = title.indexOf(query) !== -1 || desc.indexOf(query) !== -1 || tags.indexOf(query) !== -1;
+      }
+
+      var matchesTech = true;
+      if (techFilter) {
+        var cardTags = card.querySelector('.project-tags') ? card.querySelector('.project-tags').textContent.toLowerCase() : '';
+        matchesTech = cardTags.indexOf(techFilter) !== -1;
+      }
+
+      if (matchesCategory && matchesSearch && matchesTech) {
+        card.classList.remove('hidden');
+        visibleCount++;
+      } else {
+        card.classList.add('hidden');
+      }
+    });
+
+    if (noResults) {
+      if (visibleCount === 0) {
+        noResults.classList.add('visible');
+      } else {
+        noResults.classList.remove('visible');
+      }
+    }
+
+    triggerStaggerEntrance();
+  }
+
+  // ====== FILTER TABS ======
   if (filterBtns.length > 0) {
     filterBtns.forEach(function (btn) {
       btn.addEventListener('click', function () {
         filterBtns.forEach(function (b) { b.classList.remove('active'); });
         btn.classList.add('active');
-
-        var filter = btn.dataset.filter;
-
-        projectCards.forEach(function (card) {
-          if (filter === 'all' || card.dataset.categories.indexOf(filter) !== -1) {
-            card.classList.remove('hidden');
-          } else {
-            card.classList.add('hidden');
-          }
-        });
+        applyFilters();
       });
+    });
+  }
+
+  // ====== SEARCH BAR ======
+  if (searchInput) {
+    searchInput.addEventListener('input', function () {
+      if (searchClear) {
+        searchClear.classList.toggle('visible', searchInput.value.length > 0);
+      }
+      applyFilters();
+    });
+  }
+
+  if (searchClear) {
+    searchClear.addEventListener('click', function () {
+      searchInput.value = '';
+      searchClear.classList.remove('visible');
+      applyFilters();
+      searchInput.focus();
+    });
+  }
+
+  // ====== STAGGERED CARD ENTRANCE ======
+  function triggerStaggerEntrance() {
+    var visibleCards = [];
+    projectCards.forEach(function (card) {
+      if (!card.classList.contains('hidden')) {
+        visibleCards.push(card);
+      }
+    });
+
+    visibleCards.forEach(function (card) {
+      card.classList.remove('card-visible');
+      card.style.animationDelay = '';
+    });
+
+    // Force reflow
+    if (projectGrid) projectGrid.offsetHeight;
+
+    visibleCards.forEach(function (card, index) {
+      card.style.animationDelay = (index * 0.12) + 's';
+      card.classList.add('card-visible');
+    });
+  }
+
+  // Initial entrance on page load
+  var cardObserver = new IntersectionObserver(function (entries) {
+    entries.forEach(function (entry) {
+      if (entry.isIntersecting) {
+        triggerStaggerEntrance();
+        cardObserver.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.1 });
+
+  if (projectGrid) {
+    cardObserver.observe(projectGrid);
+  }
+
+  // ====== VIEW TOGGLE (Grid / List) ======
+  var viewBtns = document.querySelectorAll('.view-btn');
+  var savedView = localStorage.getItem('projects_view') || 'grid';
+
+  function setView(view) {
+    if (projectGrid) {
+      if (view === 'list') {
+        projectGrid.classList.add('list-view');
+      } else {
+        projectGrid.classList.remove('list-view');
+      }
+    }
+    viewBtns.forEach(function (btn) {
+      btn.classList.toggle('active', btn.dataset.view === view);
+    });
+    localStorage.setItem('projects_view', view);
+    triggerStaggerEntrance();
+  }
+
+  // Restore saved view
+  setView(savedView);
+
+  viewBtns.forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      setView(btn.dataset.view);
+    });
+  });
+
+  // ====== STATS COUNTER ANIMATION ======
+  var statNumbers = document.querySelectorAll('.project-stat-number');
+  if (statNumbers.length > 0) {
+    var statsObserver = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) {
+          var el = entry.target;
+          if (el.dataset.counted) return;
+          el.dataset.counted = 'true';
+
+          var target = parseInt(el.getAttribute('data-target')) || 0;
+          var duration = 1500;
+          var start = performance.now();
+
+          function animateStat(now) {
+            var elapsed = now - start;
+            var progress = Math.min(elapsed / duration, 1);
+            var eased = 1 - Math.pow(1 - progress, 3);
+            el.textContent = Math.floor(eased * target);
+            if (progress < 1) {
+              requestAnimationFrame(animateStat);
+            } else {
+              el.textContent = target;
+            }
+          }
+          requestAnimationFrame(animateStat);
+        }
+      });
+    }, { threshold: 0.5 });
+
+    statNumbers.forEach(function (el) { statsObserver.observe(el); });
+  }
+
+  // ====== TECH STACK PILLS ======
+  var pillsWrap = document.querySelector('.tech-pills-wrap');
+  if (pillsWrap) {
+    var allTags = {};
+    projectCards.forEach(function (card) {
+      var tagSpans = card.querySelectorAll('.project-tags span');
+      tagSpans.forEach(function (span) {
+        var tag = span.textContent.trim();
+        allTags[tag] = true;
+      });
+    });
+
+    var tagList = Object.keys(allTags).sort();
+    tagList.forEach(function (tag, i) {
+      var pill = document.createElement('span');
+      pill.className = 'tech-pill';
+      pill.textContent = tag;
+      pill.style.setProperty('--i', i);
+      pill.addEventListener('click', function () {
+        if (pill.classList.contains('active')) {
+          pill.classList.remove('active');
+          activeTechPill = null;
+        } else {
+          document.querySelectorAll('.tech-pill.active').forEach(function (p) {
+            p.classList.remove('active');
+          });
+          pill.classList.add('active');
+          activeTechPill = tag;
+        }
+        applyFilters();
+      });
+      pillsWrap.appendChild(pill);
     });
   }
 
@@ -190,7 +382,6 @@ document.addEventListener('DOMContentLoaded', function () {
   }
 
   // ====== 3D TILT EFFECT ON PROJECT CARDS ======
-  var projectGrid = document.querySelector('.project-grid');
   if (projectGrid && !('ontouchstart' in window)) {
     projectGrid.addEventListener('mousemove', function (e) {
       var card = e.target.closest('.project-card');
