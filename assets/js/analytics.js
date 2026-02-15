@@ -3432,4 +3432,175 @@
     });
   }
 
+  // ====== PARALLAX DATA SCIENCE HERO ======
+
+  function initParallaxHero() {
+    var canvas = document.getElementById('network-canvas');
+    if (!canvas) return;
+    var ctx = canvas.getContext('2d');
+    var nodes = [];
+    var nodeCount = 50;
+    var connectionDist = 180;
+    var mouseX = -1000;
+    var mouseY = -1000;
+    var isVisible = true;
+    var raf = null;
+    var isLight = document.body.classList.contains('light-mode');
+
+    function resize() {
+      canvas.width = canvas.offsetWidth;
+      canvas.height = canvas.offsetHeight;
+    }
+
+    function initNodes() {
+      nodes = [];
+      for (var i = 0; i < nodeCount; i++) {
+        nodes.push({
+          x: Math.random() * canvas.width,
+          y: Math.random() * canvas.height,
+          baseX: Math.random() * canvas.width,
+          baseY: Math.random() * canvas.height,
+          vx: (Math.random() - 0.5) * 0.3,
+          vy: (Math.random() - 0.5) * 0.3,
+          radius: Math.random() * 2 + 1.5,
+          phase: Math.random() * Math.PI * 2
+        });
+      }
+    }
+
+    function drawFrame(time) {
+      if (!isVisible) return;
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      isLight = document.body.classList.contains('light-mode');
+      var nodeColor = isLight ? 'rgba(230, 138, 0,' : 'rgba(255, 159, 0,';
+      var lineColor = isLight ? 'rgba(230, 138, 0,' : 'rgba(255, 159, 0,';
+      var t = time * 0.001;
+
+      // Update node positions
+      for (var i = 0; i < nodes.length; i++) {
+        var n = nodes[i];
+        n.x = n.baseX + Math.sin(t * 0.5 + n.phase) * 30;
+        n.y = n.baseY + Math.cos(t * 0.3 + n.phase) * 20;
+        n.baseX += n.vx;
+        n.baseY += n.vy;
+
+        // Wrap around edges
+        if (n.baseX < -20) n.baseX = canvas.width + 20;
+        if (n.baseX > canvas.width + 20) n.baseX = -20;
+        if (n.baseY < -20) n.baseY = canvas.height + 20;
+        if (n.baseY > canvas.height + 20) n.baseY = -20;
+      }
+
+      // Draw connections
+      for (var i = 0; i < nodes.length; i++) {
+        for (var j = i + 1; j < nodes.length; j++) {
+          var dx = nodes[i].x - nodes[j].x;
+          var dy = nodes[i].y - nodes[j].y;
+          var dist = Math.sqrt(dx * dx + dy * dy);
+          if (dist < connectionDist) {
+            var alpha = (1 - dist / connectionDist) * 0.25;
+            ctx.beginPath();
+            ctx.moveTo(nodes[i].x, nodes[i].y);
+            ctx.lineTo(nodes[j].x, nodes[j].y);
+            ctx.strokeStyle = lineColor + alpha + ')';
+            ctx.lineWidth = 0.8;
+            ctx.stroke();
+          }
+        }
+      }
+
+      // Draw nodes
+      for (var i = 0; i < nodes.length; i++) {
+        var n = nodes[i];
+        var dxM = n.x - mouseX;
+        var dyM = n.y - mouseY;
+        var distM = Math.sqrt(dxM * dxM + dyM * dyM);
+        var glow = distM < 150 ? (1 - distM / 150) * 0.6 : 0;
+        var alpha = 0.5 + glow;
+
+        // Glow effect
+        if (glow > 0) {
+          ctx.beginPath();
+          ctx.arc(n.x, n.y, n.radius + 6, 0, Math.PI * 2);
+          ctx.fillStyle = nodeColor + (glow * 0.3) + ')';
+          ctx.fill();
+        }
+
+        ctx.beginPath();
+        ctx.arc(n.x, n.y, n.radius, 0, Math.PI * 2);
+        ctx.fillStyle = nodeColor + alpha + ')';
+        ctx.fill();
+      }
+
+      raf = requestAnimationFrame(drawFrame);
+    }
+
+    resize();
+    initNodes();
+    raf = requestAnimationFrame(drawFrame);
+
+    // Mouse tracking (desktop only)
+    var isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+    if (!isTouchDevice) {
+      canvas.parentElement.addEventListener('mousemove', function (e) {
+        var rect = canvas.getBoundingClientRect();
+        mouseX = e.clientX - rect.left;
+        mouseY = e.clientY - rect.top;
+      });
+      canvas.parentElement.addEventListener('mouseleave', function () {
+        mouseX = -1000;
+        mouseY = -1000;
+      });
+    }
+
+    // Pause when off-screen
+    if ('IntersectionObserver' in window) {
+      var obs = new IntersectionObserver(function (entries) {
+        isVisible = entries[0].isIntersecting;
+        if (isVisible && !raf) {
+          raf = requestAnimationFrame(drawFrame);
+        }
+      }, { threshold: 0.05 });
+      obs.observe(canvas.parentElement);
+    }
+
+    // Resize handler
+    var resizeTimer;
+    window.addEventListener('resize', function () {
+      clearTimeout(resizeTimer);
+      resizeTimer = setTimeout(function () {
+        resize();
+        initNodes();
+      }, 200);
+    });
+  }
+
+  // Parallax scroll handler
+  var heroSection = document.querySelector('.parallax-hero');
+  if (heroSection) {
+    var pLayers = {
+      network: document.querySelector('.parallax-network'),
+      floats: document.querySelector('.parallax-floats'),
+      content: document.querySelector('.parallax-content'),
+      lines: document.querySelector('.parallax-lines')
+    };
+
+    window.addEventListener('scroll', function () {
+      var scrollY = window.pageYOffset;
+      var vh = window.innerHeight;
+      if (scrollY > vh * 1.2) return;
+
+      if (pLayers.network) pLayers.network.style.transform = 'translateY(' + (scrollY * 0.1) + 'px)';
+      if (pLayers.floats) pLayers.floats.style.transform = 'translateY(' + (scrollY * 0.35) + 'px)';
+      if (pLayers.content) {
+        pLayers.content.style.transform = 'translateY(' + (scrollY * 0.6) + 'px)';
+        pLayers.content.style.opacity = Math.max(0, 1 - scrollY / (vh * 0.6));
+      }
+      if (pLayers.lines) pLayers.lines.style.transform = 'translateY(' + (scrollY * 0.8) + 'px)';
+    }, { passive: true });
+
+    initParallaxHero();
+  }
+
 })();

@@ -3006,6 +3006,161 @@ body.light-mode .reg-stats {
   color: #666;
 }
 
+/* ===== PARALLAX DATA SCIENCE HERO ===== */
+.parallax-hero {
+  position: relative;
+  height: 100vh;
+  overflow: hidden;
+  z-index: 1;
+}
+
+.parallax-layer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  will-change: transform;
+}
+
+/* Layer 1: Neural Network Canvas */
+.parallax-network {
+  z-index: 1;
+}
+
+/* Layer 2: Floating Data Science Elements */
+.parallax-floats {
+  z-index: 2;
+  pointer-events: none;
+}
+
+.parallax-float {
+  position: absolute;
+  color: #ff9f00;
+  opacity: 0.08;
+  font-family: 'Courier New', Courier, monospace;
+  font-weight: 700;
+  animation: floatBob 5s ease-in-out infinite;
+  animation-delay: calc(var(--i) * 0.4s);
+  pointer-events: none;
+  user-select: none;
+}
+
+.parallax-float:nth-child(3n) {
+  filter: blur(1px);
+}
+
+.parallax-float:nth-child(5n) {
+  filter: blur(1.5px);
+  opacity: 0.06;
+}
+
+@keyframes floatBob {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-18px); }
+}
+
+/* Layer 3: Hero Content */
+.parallax-content {
+  z-index: 3;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 0 2rem;
+}
+
+.parallax-content h2 {
+  font-size: clamp(2.5rem, 6vw, 4.5rem);
+  font-weight: 900;
+  background: linear-gradient(135deg, #ff9f00, #ff6b6b);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  filter: drop-shadow(0 0 30px rgba(255, 159, 0, 0.2));
+  margin: 0 0 1rem;
+  line-height: 1.1;
+}
+
+.parallax-content p {
+  color: #bbb;
+  font-size: clamp(1rem, 2vw, 1.25rem);
+  max-width: 600px;
+  margin: 0;
+  line-height: 1.6;
+}
+
+/* Scroll Hint */
+.parallax-scroll-hint {
+  position: absolute;
+  bottom: 2rem;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  color: #888;
+  font-size: 0.85rem;
+}
+
+.parallax-scroll-hint i {
+  font-size: 1.2rem;
+  color: #ff9f00;
+  animation: scrollBounce 2s ease-in-out infinite;
+}
+
+@keyframes scrollBounce {
+  0%, 100% { transform: translateY(0); opacity: 1; }
+  50% { transform: translateY(8px); opacity: 0.5; }
+}
+
+/* Layer 4: Geometric Foreground Lines */
+.parallax-lines {
+  z-index: 4;
+  pointer-events: none;
+}
+
+.parallax-lines::before,
+.parallax-lines::after {
+  content: '';
+  position: absolute;
+  width: 1px;
+  height: 200%;
+  top: -50%;
+  background: linear-gradient(180deg, transparent 0%, rgba(255, 159, 0, 0.12) 30%, rgba(255, 107, 107, 0.08) 70%, transparent 100%);
+}
+
+.parallax-lines::before {
+  left: 15%;
+  transform: rotate(25deg);
+}
+
+.parallax-lines::after {
+  right: 20%;
+  transform: rotate(-30deg);
+}
+
+/* Light Mode */
+body.light-mode .parallax-float {
+  color: #e68a00;
+  opacity: 0.1;
+}
+
+body.light-mode .parallax-content p {
+  color: #666;
+}
+
+body.light-mode .parallax-scroll-hint {
+  color: #999;
+}
+
+body.light-mode .parallax-lines::before,
+body.light-mode .parallax-lines::after {
+  background: linear-gradient(180deg, transparent 0%, rgba(255, 159, 0, 0.08) 30%, rgba(255, 107, 107, 0.05) 70%, transparent 100%);
+}
+
 /* ===== RESPONSIVE: 968px ===== */
 @media (max-width: 968px) {
   .metrics-grid {
@@ -3108,6 +3263,10 @@ body.light-mode .reg-stats {
     flex: 1;
     min-width: 80px;
   }
+
+  .parallax-content h2 {
+    font-size: clamp(2rem, 5vw, 3.5rem);
+  }
 }
 
 /* ===== RESPONSIVE: 768px ===== */
@@ -3192,6 +3351,18 @@ body.light-mode .reg-stats {
   .reg-stats {
     margin-left: 0;
   }
+
+  .parallax-hero {
+    height: 90vh;
+  }
+
+  .parallax-float:nth-child(n+10) {
+    display: none;
+  }
+
+  .parallax-lines::after {
+    display: none;
+  }
 }
 
 /* ===== RESPONSIVE: 480px ===== */
@@ -3261,6 +3432,27 @@ body.light-mode .reg-stats {
   }
 
   .tab-btn i {
+    display: none;
+  }
+
+  .parallax-hero {
+    height: 80vh;
+  }
+
+  .parallax-float:nth-child(n+8) {
+    display: none;
+  }
+
+  .parallax-scroll-hint span {
+    display: none;
+  }
+
+  .parallax-scroll-hint i {
+    font-size: 1.5rem;
+  }
+
+  .parallax-lines::before,
+  .parallax-lines::after {
     display: none;
   }
 }
