@@ -16,8 +16,7 @@ const modalData = {
     `,
     result: "Consistently demonstrated that seasonality-aware models outperform na\u00efve baselines, with TBATS handling complex multi-seasonality and Holt-Winters excelling in retail/seasonal data.",
     tags: ["Time Series", "ETS", "TBATS", "R", "Forecasting"],
-    github: "https://github.com/Pratyusha108/TIME-SERIES-ANALYSIS-PROJECT",
-    demo: { url: "analytics.html#statistics", label: "Try Time Series Decomposition Demo" }
+    github: "https://github.com/Pratyusha108/TIME-SERIES-ANALYSIS-PROJECT"
   },
 
   covidMortality: {
@@ -36,8 +35,7 @@ const modalData = {
     `,
     result: "Active case counts and confirmed case volumes emerged as strong mortality predictors. Random Forest regression showed best performance with interpretable feature importance.",
     tags: ["COVID-19", "ML", "Regression", "EDA", "Python"],
-    github: "https://github.com/Pratyusha108/COVID-19-MORTALITY-RATE-PREDICTION-ANALYSIS-USING-PYTHON",
-    demo: { url: "analytics.html#ml-lab", label: "Try ML Prediction Demo" }
+    github: "https://github.com/Pratyusha108/COVID-19-MORTALITY-RATE-PREDICTION-ANALYSIS-USING-PYTHON"
   },
 
   predictiveViability: {
@@ -55,8 +53,7 @@ const modalData = {
     `,
     result: "Enabled early identification of data risks, leakage issues, and low-signal datasets - helping avoid unreliable models and ensuring only viable datasets proceed to ML development.",
     tags: ["Python", "EDA", "Data Quality", "Leakage", "Drift", "Governance"],
-    github: "https://github.com/Pratyusha108/predictive-viability-check",
-    demo: { url: "analytics.html#data-tools", label: "Try ETL Pipeline Simulator" }
+    github: "https://github.com/Pratyusha108/predictive-viability-check"
   },
 
   mortgageAnalytics: {
@@ -75,8 +72,7 @@ const modalData = {
     `,
     result: "Lower LTV and rising housing prices significantly increase payoff likelihood; payoff rates peak mid-loan lifecycle, matching observed mortgage economics.",
     tags: ["Finance", "Python", "Random Forest", "PCA", "Clustering"],
-    github: "https://github.com/Pratyusha108/Mortage_payback_Analytics",
-    demo: { url: "analytics.html#ml-lab", label: "Try K-Means Clustering Demo" }
+    github: "https://github.com/Pratyusha108/Mortage_payback_Analytics"
   },
 
   mailingAnalytics: {
@@ -95,8 +91,7 @@ const modalData = {
     `,
     result: "Logistic Regression produced best decile lift and interpretability. High-value deciles showed strong concentration of responders, supporting profit-first mailing strategy.",
     tags: ["Marketing", "R", "Logistic Regression", "Clustering", "PCA"],
-    github: "https://github.com/Pratyusha108/software-mailing-list-response-analytics",
-    demo: { url: "analytics.html#statistics", label: "Try A/B Test Calculator" }
+    github: "https://github.com/Pratyusha108/software-mailing-list-response-analytics"
   },
 
   smartphonePricing: {
@@ -138,18 +133,6 @@ function openModal(key) {
   });
 
   document.getElementById("modal-github").href = m.github;
-
-  // Show interactive demo link if available
-  var demoLink = document.getElementById("modal-demo");
-  if (demoLink) {
-    if (m.demo) {
-      demoLink.href = m.demo.url;
-      demoLink.innerHTML = '<i class="fas fa-play-circle"></i> ' + m.demo.label;
-      demoLink.style.display = 'inline-flex';
-    } else {
-      demoLink.style.display = 'none';
-    }
-  }
 
   document.getElementById("modal").style.display = "flex";
 }
