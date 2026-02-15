@@ -3432,69 +3432,392 @@
     });
   }
 
-  // ====== DATA LANDSCAPE PARALLAX HERO ======
+  // ====== NEURAL DATA FLOW HERO ======
 
-  function initDataLandscapeHero() {
-    var hero = document.getElementById('parallax-hero');
-    if (!hero) return;
+  function initHeroCanvas() {
+    var canvas = document.getElementById('hero-canvas');
+    if (!canvas) return;
+    var ctx = canvas.getContext('2d');
+    var section = document.getElementById('hero-canvas-section');
+    var overlay = section.querySelector('.hero-content-overlay');
 
-    var layers = hero.querySelectorAll('.parallax-layer[data-speed]');
-    if (!layers.length) return;
-
-    var contentLayer = hero.querySelector('.parallax-content');
-    var ticking = false;
+    var W, H, dpr;
+    var mouse = { x: -9999, y: -9999, active: false };
+    var particles = [];
+    var pulses = [];
+    var symbols = [];
+    var frame = 0;
     var isActive = true;
-    var vh = window.innerHeight;
+    var isLightMode = document.body.classList.contains('light-mode');
 
-    function onScroll() {
-      if (!isActive) return;
-      if (ticking) return;
-      ticking = true;
-
-      requestAnimationFrame(function () {
-        var scrollY = window.pageYOffset;
-
-        // Early exit if scrolled well past hero
-        if (scrollY > vh * 1.5) {
-          ticking = false;
-          return;
-        }
-
-        // Apply parallax transform to each layer
-        for (var i = 0; i < layers.length; i++) {
-          var speed = parseFloat(layers[i].getAttribute('data-speed')) || 0;
-          layers[i].style.transform = 'translateY(' + (scrollY * speed) + 'px)';
-        }
-
-        // Fade content on scroll
-        if (contentLayer) {
-          contentLayer.style.opacity = Math.max(0, 1 - scrollY / (vh * 0.5));
-        }
-
-        ticking = false;
-      });
+    // --- Colors ---
+    function colors() {
+      isLightMode = document.body.classList.contains('light-mode');
+      return {
+        bg1: isLightMode ? '#eef2fa' : '#060a14',
+        bg2: isLightMode ? '#e0e8f5' : '#0c1228',
+        bg3: isLightMode ? '#d8dff0' : '#12102a',
+        bg4: isLightMode ? 'rgba(255,159,0,0.06)' : 'rgba(255,159,0,0.08)',
+        particle: isLightMode ? 'rgba(200,120,0,' : 'rgba(255,169,40,',
+        conn: isLightMode ? 'rgba(200,120,0,' : 'rgba(255,159,0,',
+        mouseConn: isLightMode ? 'rgba(200,80,50,' : 'rgba(255,107,107,',
+        aurora1: isLightMode ? 'rgba(255,159,0,0.06)' : 'rgba(255,159,0,0.04)',
+        aurora2: isLightMode ? 'rgba(255,107,107,0.04)' : 'rgba(255,107,107,0.03)',
+        aurora3: isLightMode ? 'rgba(255,140,60,0.05)' : 'rgba(255,112,67,0.03)',
+        symbol: isLightMode ? 'rgba(180,110,30,' : 'rgba(255,200,120,',
+        pulse: isLightMode ? 'rgba(255,140,0,' : 'rgba(255,180,60,'
+      };
     }
 
-    window.addEventListener('scroll', onScroll, { passive: true });
+    // --- Typed text effect ---
+    var phrases = [
+      'Neural Networks', 'Predictive Models', 'Statistical Analysis',
+      'Deep Learning', 'Data Pipelines', 'Feature Engineering',
+      'Time Series', 'Bayesian Inference', 'Clustering Algorithms',
+      'Gradient Descent'
+    ];
+    var typedEl = document.getElementById('hero-typed');
+    var phraseIdx = 0, charIdx = 0, isDeleting = false, typeTimer = null;
 
-    // Pause parallax when hero is off-screen
+    function typeStep() {
+      if (!typedEl) return;
+      var current = phrases[phraseIdx];
+      if (!isDeleting) {
+        charIdx++;
+        typedEl.textContent = current.substring(0, charIdx);
+        if (charIdx === current.length) {
+          typeTimer = setTimeout(function () { isDeleting = true; typeStep(); }, 2200);
+          return;
+        }
+        typeTimer = setTimeout(typeStep, 70 + Math.random() * 40);
+      } else {
+        charIdx--;
+        typedEl.textContent = current.substring(0, charIdx);
+        if (charIdx === 0) {
+          isDeleting = false;
+          phraseIdx = (phraseIdx + 1) % phrases.length;
+          typeTimer = setTimeout(typeStep, 400);
+          return;
+        }
+        typeTimer = setTimeout(typeStep, 35);
+      }
+    }
+    typeStep();
+
+    // --- Resize ---
+    function resize() {
+      dpr = Math.min(window.devicePixelRatio || 1, 2);
+      W = section.offsetWidth;
+      H = section.offsetHeight;
+      canvas.width = W * dpr;
+      canvas.height = H * dpr;
+      canvas.style.width = W + 'px';
+      canvas.style.height = H + 'px';
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      initParticles();
+    }
+
+    // --- Particles ---
+    function Particle() {
+      this.x = Math.random() * W;
+      this.y = Math.random() * H;
+      this.vx = (Math.random() - 0.5) * 0.35;
+      this.vy = (Math.random() - 0.5) * 0.35;
+      this.r = Math.random() * 2 + 0.5;
+      this.alpha = Math.random() * 0.4 + 0.2;
+      this.phase = Math.random() * Math.PI * 2;
+      this.speed = Math.random() * 0.015 + 0.008;
+    }
+
+    function initParticles() {
+      particles = [];
+      var count = Math.min(Math.floor(W * H / 7000), 220);
+      for (var i = 0; i < count; i++) particles.push(new Particle());
+    }
+
+    // --- Data Pulse ---
+    function DataPulse(ax, ay, bx, by) {
+      this.ax = ax; this.ay = ay;
+      this.bx = bx; this.by = by;
+      this.t = 0;
+      this.spd = Math.random() * 0.018 + 0.008;
+    }
+
+    // --- Floating Symbol ---
+    var symChars = ['\u03A3','\u222B','\u03C0','\u03BB','\u2202','\u2207','\u03BC','\u03C3','\u03B8','f(x)','P(A|B)','\u0394','\u221E','{}','[ ]','R\u00B2'];
+    function FloatSymbol() {
+      this.text = symChars[Math.floor(Math.random() * symChars.length)];
+      this.x = Math.random() * W;
+      this.y = H + 30;
+      this.spd = Math.random() * 0.25 + 0.12;
+      this.alpha = 0;
+      this.maxA = Math.random() * 0.12 + 0.04;
+      this.size = Math.random() * 12 + 10;
+      this.drift = (Math.random() - 0.5) * 0.4;
+      this.alive = true;
+    }
+
+    // --- Mouse ---
+    section.addEventListener('mousemove', function (e) {
+      var r = section.getBoundingClientRect();
+      mouse.x = e.clientX - r.left;
+      mouse.y = e.clientY - r.top;
+      mouse.active = true;
+    });
+    section.addEventListener('mouseleave', function () {
+      mouse.active = false;
+    });
+
+    // --- Draw Background ---
+    function drawBg() {
+      var c = colors();
+      var g = ctx.createLinearGradient(0, 0, 0, H);
+      g.addColorStop(0, c.bg1);
+      g.addColorStop(0.35, c.bg2);
+      g.addColorStop(0.65, c.bg3);
+      g.addColorStop(1, c.bg4);
+      ctx.fillStyle = g;
+      ctx.fillRect(0, 0, W, H);
+
+      // Aurora waves
+      var t = frame * 0.0008;
+      ctx.save();
+      ctx.globalCompositeOperation = 'screen';
+      var auroraCols = [c.aurora1, c.aurora2, c.aurora3];
+      for (var w = 0; w < 3; w++) {
+        ctx.beginPath();
+        var yBase = H * (0.25 + w * 0.18);
+        for (var x = 0; x <= W; x += 4) {
+          var y = yBase + Math.sin(x * 0.0025 + t * (0.6 + w * 0.35)) * 50
+                        + Math.sin(x * 0.006 + t * 0.9 + w) * 25;
+          if (x === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
+        }
+        ctx.strokeStyle = auroraCols[w];
+        ctx.lineWidth = 80;
+        ctx.stroke();
+      }
+      ctx.restore();
+    }
+
+    // --- Draw Particles + Connections ---
+    function drawParticles() {
+      var c = colors();
+      var connDist = Math.min(W, H) * 0.13;
+      var mouseDist = 180;
+
+      for (var i = 0; i < particles.length; i++) {
+        var p = particles[i];
+        p.x += p.vx + Math.sin(frame * p.speed + p.phase) * 0.12;
+        p.y += p.vy + Math.cos(frame * p.speed * 0.7 + p.phase) * 0.08;
+
+        if (p.x < -20) p.x = W + 20;
+        if (p.x > W + 20) p.x = -20;
+        if (p.y < -20) p.y = H + 20;
+        if (p.y > H + 20) p.y = -20;
+
+        // Mouse attraction
+        if (mouse.active) {
+          var dx = mouse.x - p.x, dy = mouse.y - p.y;
+          var d = Math.sqrt(dx * dx + dy * dy);
+          if (d < mouseDist && d > 0) {
+            var f = (1 - d / mouseDist) * 0.6;
+            p.x += dx / d * f;
+            p.y += dy / d * f;
+          }
+        }
+
+        var pa = p.alpha + Math.sin(frame * p.speed + p.phase) * 0.15;
+        pa = Math.max(0.05, pa);
+
+        // Glow
+        if (p.r > 1.3) {
+          ctx.beginPath();
+          ctx.arc(p.x, p.y, p.r * 4, 0, Math.PI * 2);
+          ctx.fillStyle = c.particle + (pa * 0.08) + ')';
+          ctx.fill();
+        }
+
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+        ctx.fillStyle = c.particle + pa + ')';
+        ctx.fill();
+      }
+
+      // Connections
+      ctx.lineWidth = 0.5;
+      for (var i = 0; i < particles.length; i++) {
+        for (var j = i + 1; j < particles.length; j++) {
+          var dx = particles[i].x - particles[j].x;
+          var dy = particles[i].y - particles[j].y;
+          var d = dx * dx + dy * dy;
+          if (d < connDist * connDist) {
+            var dist = Math.sqrt(d);
+            var a = (1 - dist / connDist) * 0.18;
+            ctx.beginPath();
+            ctx.moveTo(particles[i].x, particles[i].y);
+            ctx.lineTo(particles[j].x, particles[j].y);
+            ctx.strokeStyle = c.conn + a + ')';
+            ctx.stroke();
+
+            // Spawn pulse
+            if (Math.random() < 0.00015 && pulses.length < 40) {
+              pulses.push(new DataPulse(particles[i].x, particles[i].y, particles[j].x, particles[j].y));
+            }
+          }
+        }
+      }
+
+      // Mouse connections
+      if (mouse.active) {
+        ctx.lineWidth = 0.8;
+        for (var i = 0; i < particles.length; i++) {
+          var dx = mouse.x - particles[i].x;
+          var dy = mouse.y - particles[i].y;
+          var d = Math.sqrt(dx * dx + dy * dy);
+          if (d < mouseDist) {
+            var a = (1 - d / mouseDist) * 0.35;
+            ctx.beginPath();
+            ctx.moveTo(mouse.x, mouse.y);
+            ctx.lineTo(particles[i].x, particles[i].y);
+            ctx.strokeStyle = c.mouseConn + a + ')';
+            ctx.stroke();
+          }
+        }
+
+        // Mouse glow
+        var mg = ctx.createRadialGradient(mouse.x, mouse.y, 0, mouse.x, mouse.y, 120);
+        mg.addColorStop(0, c.mouseConn + '0.08)');
+        mg.addColorStop(1, c.mouseConn + '0)');
+        ctx.fillStyle = mg;
+        ctx.fillRect(mouse.x - 120, mouse.y - 120, 240, 240);
+      }
+    }
+
+    // --- Draw Data Pulses ---
+    function drawPulses() {
+      var c = colors();
+      for (var i = pulses.length - 1; i >= 0; i--) {
+        var p = pulses[i];
+        p.t += p.spd;
+        if (p.t > 1) { pulses.splice(i, 1); continue; }
+        var x = p.ax + (p.bx - p.ax) * p.t;
+        var y = p.ay + (p.by - p.ay) * p.t;
+        var a = Math.sin(p.t * Math.PI);
+
+        var pg = ctx.createRadialGradient(x, y, 0, x, y, 8);
+        pg.addColorStop(0, c.pulse + (a * 0.7) + ')');
+        pg.addColorStop(1, c.pulse + '0)');
+        ctx.fillStyle = pg;
+        ctx.fillRect(x - 8, y - 8, 16, 16);
+
+        ctx.beginPath();
+        ctx.arc(x, y, 2, 0, Math.PI * 2);
+        ctx.fillStyle = c.pulse + a + ')';
+        ctx.fill();
+      }
+    }
+
+    // --- Draw Floating Symbols ---
+    function drawSymbols() {
+      var c = colors();
+      // Spawn
+      if (Math.random() < 0.008 && symbols.length < 15) {
+        symbols.push(new FloatSymbol());
+      }
+
+      ctx.font = '400 12px "Courier New", monospace';
+      for (var i = symbols.length - 1; i >= 0; i--) {
+        var s = symbols[i];
+        s.y -= s.spd;
+        s.x += s.drift;
+
+        var progress = 1 - (s.y + 30) / (H + 60);
+        if (progress < 0.15) s.alpha = Math.min(s.alpha + 0.003, s.maxA);
+        else if (progress > 0.85) s.alpha = Math.max(s.alpha - 0.003, 0);
+        else s.alpha = s.maxA;
+
+        if (s.y < -50) { symbols.splice(i, 1); continue; }
+
+        ctx.font = '400 ' + s.size + 'px "Courier New", monospace';
+        ctx.fillStyle = c.symbol + s.alpha + ')';
+        ctx.fillText(s.text, s.x, s.y);
+      }
+    }
+
+    // --- Draw Grid (subtle) ---
+    function drawGrid() {
+      var c = colors();
+      var spacing = 80;
+      var a = isLightMode ? 0.03 : 0.02;
+      ctx.strokeStyle = c.conn + a + ')';
+      ctx.lineWidth = 0.5;
+      var offsetX = (frame * 0.15) % spacing;
+      var offsetY = (frame * 0.1) % spacing;
+
+      for (var x = -spacing + offsetX; x < W + spacing; x += spacing) {
+        ctx.beginPath();
+        ctx.moveTo(x, 0);
+        ctx.lineTo(x, H);
+        ctx.stroke();
+      }
+      for (var y = -spacing + offsetY; y < H + spacing; y += spacing) {
+        ctx.beginPath();
+        ctx.moveTo(0, y);
+        ctx.lineTo(W, y);
+        ctx.stroke();
+      }
+    }
+
+    // --- Scroll fade ---
+    function scrollFade() {
+      var scrollY = window.pageYOffset;
+      var vh = section.offsetHeight;
+      if (overlay) {
+        overlay.style.opacity = Math.max(0, 1 - scrollY / (vh * 0.45));
+      }
+    }
+    window.addEventListener('scroll', function () {
+      requestAnimationFrame(scrollFade);
+    }, { passive: true });
+
+    // --- Main loop ---
+    function animate() {
+      if (!isActive) { requestAnimationFrame(animate); return; }
+      frame++;
+      ctx.clearRect(0, 0, W, H);
+      drawBg();
+      drawGrid();
+      drawParticles();
+      drawPulses();
+      drawSymbols();
+      requestAnimationFrame(animate);
+    }
+
+    // --- Visibility ---
     if ('IntersectionObserver' in window) {
       var obs = new IntersectionObserver(function (entries) {
         isActive = entries[0].isIntersecting;
       }, { threshold: 0.01 });
-      obs.observe(hero);
+      obs.observe(section);
     }
 
-    // Debounced resize to update vh
+    // --- Theme observer ---
+    var themeObs = new MutationObserver(function () {
+      isLightMode = document.body.classList.contains('light-mode');
+    });
+    themeObs.observe(document.body, { attributes: true, attributeFilter: ['class'] });
+
+    // --- Resize ---
     var resizeTimer;
     window.addEventListener('resize', function () {
       clearTimeout(resizeTimer);
-      resizeTimer = setTimeout(function () {
-        vh = window.innerHeight;
-      }, 200);
+      resizeTimer = setTimeout(resize, 150);
     });
+
+    resize();
+    animate();
   }
 
-  initDataLandscapeHero();
+  initHeroCanvas();
 
 })();
