@@ -1670,6 +1670,22 @@ body.light-mode .tech-item {
   background: rgba(255, 255, 255, 0.35);
 }
 
+.otw-close {
+  background: none;
+  border: none;
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 1.2rem;
+  cursor: pointer;
+  padding: 0 4px;
+  line-height: 1;
+  transition: color 0.2s;
+  flex-shrink: 0;
+}
+
+.otw-close:hover {
+  color: #fff;
+}
+
 /* Push body content down to account for fixed banner */
 body {
   padding-top: 40px;

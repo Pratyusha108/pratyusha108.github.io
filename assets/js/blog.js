@@ -48,7 +48,7 @@
       tags: ['Data Engineering', 'ML'],
       date: 'Feb 1, 2026',
       readTime: '6 min read',
-      image: 'https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=600&h=300&fit=crop',
+      image: 'https://images.unsplash.com/photo-1518186285589-2f7649de83e0?w=600&h=300&fit=crop',
       content: '<p>Nobody posts about ETL pipelines on LinkedIn. There are no viral threads about "how I cleaned 622K records." But data engineering is where most ML projects either succeed or quietly die. I have learned this across every project I have built.</p>' +
         '<h3>The 80/20 Rule Is Real</h3>' +
         '<p>In my mortgage analytics project, 80% of the time went into data preparation. Handling missing values across 60 months of panel data. Reconciling loan-level records with macroeconomic indicators. Engineering temporal features like loan age and maturity status. The actual modeling took maybe two days. The pipeline took three weeks.</p>' +
