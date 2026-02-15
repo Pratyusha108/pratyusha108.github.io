@@ -3068,13 +3068,13 @@ body.light-mode .reg-stats {
   font-weight: 900;
   line-height: 1.05;
   margin: 0 0 1.2rem;
-  background: linear-gradient(135deg, #fff 0%, #ff9f00 50%, #ff6b6b 100%);
+  background: linear-gradient(135deg, #fff 0%, #ffc040 35%, #ff9f00 55%, #ff6b6b 100%);
   background-size: 200% 200%;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
   animation: heroTitleShimmer 6s ease-in-out infinite, heroTitleIn 1s ease-out 0.5s both;
-  filter: drop-shadow(0 0 40px rgba(255, 159, 0, 0.2));
+  filter: drop-shadow(0 0 60px rgba(255, 159, 0, 0.3)) drop-shadow(0 0 120px rgba(255, 100, 50, 0.15));
 }
 
 @keyframes heroTitleShimmer {

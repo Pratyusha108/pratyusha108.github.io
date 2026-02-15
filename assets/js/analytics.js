@@ -3447,7 +3447,6 @@
     var isActive = true;
     var isLightMode = document.body.classList.contains('light-mode');
 
-    // Data structures
     var stars = [];
     var nnNodes = [], nnEdges = [], nnPulses = [];
     var scatterDots = [];
@@ -3455,33 +3454,37 @@
     var treeNodes = [], treeEdges = [];
     var symbols = [];
     var embers = [];
-    var _c; // cached colors per frame
+    var _c;
 
     // ====== PALETTE ======
     function col() {
       isLightMode = document.body.classList.contains('light-mode');
       var lm = isLightMode;
       return {
-        bg: lm ? ['#e8eef8','#dde6f4','#d4dff0','rgba(255,159,0,0.04)']
-               : ['#060a14','#0a0f20','#10152e','rgba(255,159,0,0.05)'],
+        bg: lm ? ['#e4ecf6','#d8e2f0','#cdd8ea','rgba(255,159,0,0.03)']
+               : ['#040810','#080e1c','#0c1428','rgba(255,120,0,0.04)'],
         particle: lm ? 'rgba(200,120,0,' : 'rgba(255,169,40,',
         conn: lm ? 'rgba(180,100,0,' : 'rgba(255,159,0,',
-        mouseC: lm ? 'rgba(200,80,50,' : 'rgba(255,107,107,',
+        mouseC: lm ? 'rgba(220,100,60,' : 'rgba(255,120,80,',
         sym: lm ? 'rgba(160,100,30,' : 'rgba(255,200,120,',
-        pulse: lm ? 'rgba(255,140,0,' : 'rgba(255,180,60,',
-        mtnFar: lm ? 'rgba(100,70,40,0.08)' : 'rgba(255,169,40,0.06)',
-        mtnMid: lm ? 'rgba(80,50,25,0.18)' : 'rgba(200,100,30,0.16)',
-        mtnNear: lm ? 'rgba(60,35,15,0.35)' : 'rgba(140,60,15,0.32)',
+        pulse: lm ? 'rgba(255,150,0,' : 'rgba(255,200,80,',
+        mtnFar: lm ? 'rgba(100,75,50,0.06)' : 'rgba(255,160,40,0.05)',
+        mtnMid: lm ? 'rgba(80,55,30,0.12)' : 'rgba(200,100,30,0.10)',
+        mtnNear: lm ? 'rgba(60,40,20,0.22)' : 'rgba(150,70,20,0.20)',
+        mtnStroke: lm ? 'rgba(200,130,40,' : 'rgba(255,160,40,',
         ground: lm ? '#f0f4fa' : '#0a0e18',
-        bar: lm ? 'rgba(200,120,0,' : 'rgba(255,159,0,',
-        scatter: lm ? 'rgba(180,100,30,' : 'rgba(255,200,100,',
-        tree: lm ? 'rgba(150,90,20,' : 'rgba(255,170,60,',
-        river: lm ? 'rgba(200,120,0,' : 'rgba(255,159,0,',
-        grid: lm ? 'rgba(150,120,80,' : 'rgba(255,159,0,',
-        ember: lm ? 'rgba(220,140,40,' : 'rgba(255,180,80,',
+        bar: lm ? 'rgba(200,130,0,' : 'rgba(255,170,30,',
+        scatter: lm ? 'rgba(190,120,40,' : 'rgba(255,210,100,',
+        tree: lm ? 'rgba(170,110,30,' : 'rgba(255,180,70,',
+        river: lm ? 'rgba(200,130,0,' : 'rgba(255,160,40,',
+        grid: lm ? 'rgba(160,130,90,' : 'rgba(255,159,0,',
+        ember: lm ? 'rgba(230,150,50,' : 'rgba(255,190,90,',
+        blob: lm
+          ? ['rgba(255,159,0,0.04)','rgba(255,107,107,0.03)','rgba(200,120,50,0.035)']
+          : ['rgba(255,120,0,0.04)','rgba(255,80,60,0.03)','rgba(180,80,30,0.035)'],
         aurora: lm
-          ? ['rgba(255,159,0,0.08)','rgba(255,107,107,0.06)','rgba(255,140,60,0.07)','rgba(200,100,50,0.05)']
-          : ['rgba(255,159,0,0.06)','rgba(255,107,107,0.045)','rgba(255,140,60,0.055)','rgba(255,80,80,0.035)']
+          ? ['rgba(255,159,0,0.09)','rgba(255,107,107,0.07)','rgba(255,140,60,0.08)']
+          : ['rgba(255,140,0,0.07)','rgba(255,90,70,0.055)','rgba(255,130,50,0.065)']
       };
     }
 
@@ -3518,548 +3521,489 @@
     });
     section.addEventListener('mouseleave', function() { mouse.active = false; });
 
-    // ====== RIDGELINE FUNCTIONS (continuously morphing) ======
+    // ====== RIDGELINE FUNCTIONS ======
     function farRidge(x, t) {
       return H * 0.63
         + Math.sin(x * 0.004 + t * 0.15) * 20
         + Math.sin(x * 0.009 + t * 0.1) * 10
         + Math.sin(x * 0.002 + t * 0.22) * 12;
     }
-
     function midRidge(x, t) {
-      var norm = x / W;
-      return H * 0.74 - norm * norm * H * 0.06
+      var n = x / W;
+      return H * 0.74 - n * n * H * 0.06
         + Math.sin(x * 0.006 + t * 0.12) * 12
         + Math.sin(x * 0.003 + t * 0.2) * 7;
     }
-
     function nearRidge(x, t) {
-      var stepW = W / 7;
-      var heights = [0.83, 0.80, 0.85, 0.79, 0.82, 0.86, 0.81];
-      var seg = Math.min(Math.floor(x / stepW), 6);
-      var next = Math.min(seg + 1, 6);
-      var local = (x - seg * stepW) / stepW;
-      var edge = Math.max(0, Math.min(1, (local - 0.85) / 0.15));
-      var ease = edge * edge * (3 - 2 * edge);
-      return H * (heights[seg] * (1 - ease) + heights[next] * ease)
-        + Math.sin(t * 0.18 + seg * 1.5) * 4;
+      var sW = W / 7;
+      var ht = [0.83, 0.80, 0.85, 0.79, 0.82, 0.86, 0.81];
+      var s = Math.min(Math.floor(x / sW), 6);
+      var nx = Math.min(s + 1, 6);
+      var lc = (x - s * sW) / sW;
+      var ed = Math.max(0, Math.min(1, (lc - 0.85) / 0.15));
+      var es = ed * ed * (3 - 2 * ed);
+      return H * (ht[s] * (1 - es) + ht[nx] * es) + Math.sin(t * 0.18 + s * 1.5) * 4;
     }
 
-    // ====== INIT DATA STRUCTURES ======
+    // ====== INIT ======
     function initStars() {
       stars = [];
-      var count = Math.min(Math.floor(W / 15), 80);
-      for (var i = 0; i < count; i++) {
-        stars.push({
-          x: Math.random() * W,
-          y: Math.random() * H * 0.5,
-          r: Math.random() * 1.5 + 0.3,
-          phase: Math.random() * Math.PI * 2,
-          spd: Math.random() * 0.02 + 0.008
-        });
+      for (var i = 0; i < Math.min(Math.floor(W / 14), 90); i++) {
+        stars.push({ x: Math.random() * W, y: Math.random() * H * 0.55,
+          r: Math.random() * 1.8 + 0.3, phase: Math.random() * Math.PI * 2,
+          spd: Math.random() * 0.02 + 0.008 });
       }
     }
-
     function initNeuralNet() {
       nnNodes = []; nnEdges = []; nnPulses = [];
       var layers = [2, 4, 5, 4, 3, 2];
-      var xPad = W * 0.12;
-      var xSpan = W * 0.76;
-      var layerGap = xSpan / (layers.length - 1);
+      var xPad = W * 0.12, xSpan = W * 0.76, gap = xSpan / (layers.length - 1);
       for (var l = 0; l < layers.length; l++) {
-        var n = layers[l];
-        var ySpan = H * 0.18;
-        var yStart = H * 0.04;
-        var gap = ySpan / (n + 1);
+        var n = layers[l], yS = H * 0.18, yT = H * 0.04, g = yS / (n + 1);
         for (var i = 0; i < n; i++) {
-          nnNodes.push({
-            x: xPad + l * layerGap + (Math.random() - 0.5) * 20,
-            y: yStart + gap * (i + 1) + (Math.random() - 0.5) * 8,
-            r: Math.random() * 1.2 + 1.5,
-            layer: l,
-            phase: Math.random() * Math.PI * 2
-          });
+          nnNodes.push({ x: xPad + l * gap + (Math.random() - 0.5) * 20,
+            y: yT + g * (i + 1) + (Math.random() - 0.5) * 8,
+            r: Math.random() * 1.3 + 1.8, layer: l, phase: Math.random() * Math.PI * 2 });
         }
       }
-      for (var i = 0; i < nnNodes.length; i++) {
-        for (var j = i + 1; j < nnNodes.length; j++) {
-          if (nnNodes[j].layer === nnNodes[i].layer + 1) {
-            nnEdges.push({ from: i, to: j });
-          }
-        }
-      }
+      for (var i = 0; i < nnNodes.length; i++)
+        for (var j = i + 1; j < nnNodes.length; j++)
+          if (nnNodes[j].layer === nnNodes[i].layer + 1) nnEdges.push({ from: i, to: j });
     }
-
     function initScatter() {
       scatterDots = [];
-      for (var i = 0; i < 20; i++) {
+      for (var i = 0; i < 22; i++) {
         var x = Math.random() * W;
-        scatterDots.push({
-          x: x, baseY: farRidge(x, 0) - Math.random() * 15 - 5,
-          r: Math.random() * 2 + 0.8,
-          phase: Math.random() * Math.PI * 2,
-          drift: (Math.random() - 0.5) * 0.12,
-          bobSpd: Math.random() * 0.015 + 0.006
-        });
+        scatterDots.push({ x: x, baseY: farRidge(x, 0) - Math.random() * 18 - 6,
+          r: Math.random() * 2.2 + 0.8, phase: Math.random() * Math.PI * 2,
+          drift: (Math.random() - 0.5) * 0.1, bobSpd: Math.random() * 0.012 + 0.005 });
       }
     }
-
     function initBars() {
       barGroups = [];
-      var groupCount = 6;
-      var segW = W / groupCount;
-      for (var g = 0; g < groupCount; g++) {
-        var gx = segW * g + segW * 0.3;
-        var bars = [];
-        for (var b = 0; b < 3; b++) {
-          bars.push({
-            x: gx + b * 16,
-            baseH: Math.random() * 22 + 16,
-            phase: Math.random() * Math.PI * 2,
-            speed: Math.random() * 0.02 + 0.01
-          });
-        }
+      var gc = 5, sW = W / gc;
+      for (var g = 0; g < gc; g++) {
+        var gx = sW * g + sW * 0.35, bars = [];
+        for (var b = 0; b < 3; b++)
+          bars.push({ x: gx + b * 18, baseH: Math.random() * 24 + 18,
+            phase: Math.random() * Math.PI * 2, speed: Math.random() * 0.02 + 0.01 });
         barGroups.push(bars);
       }
     }
-
     function initTree() {
       treeNodes = []; treeEdges = [];
-      var rootX = W * 0.22;
-      var rootY = nearRidge(rootX, 0) - 4;
-      function branch(x, y, depth, maxD) {
-        var idx = treeNodes.length;
-        treeNodes.push({ x: x, y: y, r: 3 - depth * 0.35, depth: depth });
-        if (depth < maxD) {
-          var spread = 35 / (depth + 1);
-          var rise = 22;
-          var li = treeNodes.length;
-          treeEdges.push({ from: idx, to: li });
-          branch(x - spread, y - rise, depth + 1, maxD);
-          var ri = treeNodes.length;
-          treeEdges.push({ from: idx, to: ri });
-          branch(x + spread, y - rise, depth + 1, maxD);
+      var rx = W * 0.22, ry = nearRidge(rx, 0) - 4;
+      function br(x, y, d, m) {
+        var i = treeNodes.length;
+        treeNodes.push({ x: x, y: y, r: 3.2 - d * 0.35, depth: d });
+        if (d < m) {
+          var sp = 38 / (d + 1), rs = 24;
+          treeEdges.push({ from: i, to: treeNodes.length }); br(x - sp, y - rs, d + 1, m);
+          treeEdges.push({ from: i, to: treeNodes.length }); br(x + sp, y - rs, d + 1, m);
         }
       }
-      branch(rootX, rootY, 0, 4);
+      br(rx, ry, 0, 4);
     }
 
     // ====== RESIZE ======
     function resize() {
       dpr = Math.min(window.devicePixelRatio || 1, 2);
-      W = section.offsetWidth;
-      H = section.offsetHeight;
-      canvas.width = W * dpr;
-      canvas.height = H * dpr;
-      canvas.style.width = W + 'px';
-      canvas.style.height = H + 'px';
+      W = section.offsetWidth; H = section.offsetHeight;
+      canvas.width = W * dpr; canvas.height = H * dpr;
+      canvas.style.width = W + 'px'; canvas.style.height = H + 'px';
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
       initStars(); initNeuralNet(); initScatter(); initBars(); initTree();
       symbols = []; embers = [];
     }
 
-    // ====== DRAW: BACKGROUND ======
-    function drawBg() {
+    // ====== DRAW: BACKGROUND + GRADIENT BLOBS ======
+    function drawBg(t) {
       var g = ctx.createLinearGradient(0, 0, 0, H);
-      g.addColorStop(0, _c.bg[0]);
-      g.addColorStop(0.3, _c.bg[1]);
-      g.addColorStop(0.6, _c.bg[2]);
-      g.addColorStop(1, _c.bg[3]);
-      ctx.fillStyle = g;
-      ctx.fillRect(0, 0, W, H);
-    }
+      g.addColorStop(0, _c.bg[0]); g.addColorStop(0.3, _c.bg[1]);
+      g.addColorStop(0.6, _c.bg[2]); g.addColorStop(1, _c.bg[3]);
+      ctx.fillStyle = g; ctx.fillRect(0, 0, W, H);
 
-    // ====== DRAW: TWINKLING STARS ======
-    function drawStars(t) {
-      for (var i = 0; i < stars.length; i++) {
-        var s = stars[i];
-        var a = 0.25 + Math.sin(t * 3 + s.phase) * 0.2;
-        ctx.beginPath();
-        ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
-        ctx.fillStyle = _c.scatter + a + ')';
-        ctx.fill();
+      // Drifting gradient orbs for depth
+      var blobs = [
+        { bx: 0.25, by: 0.3, br: 0.22, sx: 0.3, sy: 0.2 },
+        { bx: 0.75, by: 0.4, br: 0.25, sx: 0.2, sy: 0.3 },
+        { bx: 0.5,  by: 0.55, br: 0.20, sx: 0.25, sy: 0.15 }
+      ];
+      for (var i = 0; i < blobs.length; i++) {
+        var b = blobs[i];
+        var bx = W * b.bx + Math.sin(t * b.sx + i * 2) * W * 0.07;
+        var by = H * b.by + Math.cos(t * b.sy + i * 1.5) * H * 0.05;
+        var br = Math.min(W, H) * b.br;
+        var bg = ctx.createRadialGradient(bx, by, 0, bx, by, br);
+        bg.addColorStop(0, _c.blob[i]); bg.addColorStop(1, 'rgba(0,0,0,0)');
+        ctx.fillStyle = bg; ctx.fillRect(bx - br, by - br, br * 2, br * 2);
       }
     }
 
-    // ====== DRAW: AURORA WAVES (prominent, continuous) ======
+    // ====== DRAW: PERSPECTIVE GRID ======
+    function drawGrid(t) {
+      var horizon = H * 0.58;
+      var a = isLightMode ? 0.025 : 0.018;
+      ctx.strokeStyle = _c.grid + a + ')'; ctx.lineWidth = 0.4;
+
+      // Horizontal lines (perspective: closer together near horizon)
+      for (var i = 0; i < 16; i++) {
+        var frac = i / 16;
+        var y = horizon + (H - horizon) * (frac * frac);
+        ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(W, y); ctx.stroke();
+      }
+
+      // Vertical converging lines
+      var vx = W / 2, vy = horizon * 0.7;
+      for (var i = 0; i < 20; i++) {
+        var x = (i / 19) * W;
+        ctx.beginPath(); ctx.moveTo(x, H);
+        ctx.lineTo(vx + (x - vx) * 0.15, vy); ctx.stroke();
+      }
+    }
+
+    // ====== DRAW: STARS ======
+    function drawStars(t) {
+      for (var i = 0; i < stars.length; i++) {
+        var s = stars[i];
+        var a = 0.3 + Math.sin(t * 3 + s.phase) * 0.25;
+        // Star glow
+        if (s.r > 1) {
+          ctx.beginPath(); ctx.arc(s.x, s.y, s.r * 3, 0, Math.PI * 2);
+          ctx.fillStyle = _c.scatter + (a * 0.08) + ')'; ctx.fill();
+        }
+        ctx.beginPath(); ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
+        ctx.fillStyle = _c.scatter + a + ')'; ctx.fill();
+      }
+    }
+
+    // ====== DRAW: AURORA WAVES ======
     function drawAurora(t) {
-      ctx.save();
-      ctx.globalCompositeOperation = 'screen';
-      var waves = [
-        { y: 0.32, amp: 60, freq: 0.0016, spd: 0.5,  w: 100 },
-        { y: 0.42, amp: 50, freq: 0.0022, spd: 0.65, w: 85 },
-        { y: 0.37, amp: 55, freq: 0.0013, spd: 0.38, w: 90 },
-        { y: 0.48, amp: 40, freq: 0.0028, spd: 0.8,  w: 70 }
+      ctx.save(); ctx.globalCompositeOperation = 'screen';
+      var wvs = [
+        { y: 0.34, amp: 55, freq: 0.0016, spd: 0.5,  w: 90 },
+        { y: 0.42, amp: 45, freq: 0.0022, spd: 0.65, w: 75 },
+        { y: 0.38, amp: 50, freq: 0.0013, spd: 0.38, w: 80 }
       ];
-      for (var w = 0; w < waves.length; w++) {
-        var wv = waves[w];
+      for (var w = 0; w < wvs.length; w++) {
+        var wv = wvs[w];
         ctx.beginPath();
         for (var x = 0; x <= W; x += 3) {
-          var y = H * wv.y
-            + Math.sin(x * wv.freq + t * wv.spd) * wv.amp
+          var y = H * wv.y + Math.sin(x * wv.freq + t * wv.spd) * wv.amp
             + Math.sin(x * wv.freq * 2.5 + t * wv.spd * 1.3 + w) * wv.amp * 0.2;
           if (x === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
         }
-        ctx.strokeStyle = _c.aurora[w];
-        ctx.lineWidth = wv.w;
-        ctx.stroke();
+        ctx.strokeStyle = _c.aurora[w]; ctx.lineWidth = wv.w; ctx.stroke();
       }
       ctx.restore();
     }
 
-    // ====== DRAW: SUBTLE GRID ======
-    function drawGrid() {
-      var spacing = 90;
-      var a = isLightMode ? 0.018 : 0.01;
-      ctx.strokeStyle = _c.grid + a + ')';
-      ctx.lineWidth = 0.4;
-      var ox = (frame * 0.12) % spacing;
-      var oy = (frame * 0.08) % spacing;
-      for (var x = -spacing + ox; x < W + spacing; x += spacing) {
-        ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, H); ctx.stroke();
-      }
-      for (var y = -spacing + oy; y < H + spacing; y += spacing) {
-        ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(W, y); ctx.stroke();
-      }
-    }
-
-    // ====== DRAW: NEURAL NETWORK (sky layer) ======
+    // ====== DRAW: NEURAL NETWORK ======
     function drawNeuralNet(t) {
-      // Edges
-      ctx.lineWidth = 0.7;
+      // Edges with pulsing
+      ctx.lineWidth = 0.8;
       for (var i = 0; i < nnEdges.length; i++) {
-        var e = nnEdges[i];
-        var a = nnNodes[e.from], b = nnNodes[e.to];
-        var alpha = 0.03 + Math.sin(t + i * 0.3) * 0.01;
+        var e = nnEdges[i], a = nnNodes[e.from], b = nnNodes[e.to];
+        var al = 0.04 + Math.sin(t + i * 0.3) * 0.02;
         ctx.beginPath(); ctx.moveTo(a.x, a.y); ctx.lineTo(b.x, b.y);
-        ctx.strokeStyle = _c.conn + alpha + ')';
-        ctx.stroke();
+        ctx.strokeStyle = _c.conn + al + ')'; ctx.stroke();
       }
-
-      // Spawn pulses continuously
-      if (Math.random() < 0.05 && nnPulses.length < 30) {
-        var edge = nnEdges[Math.floor(Math.random() * nnEdges.length)];
-        nnPulses.push({ edge: edge, t: 0, spd: Math.random() * 0.014 + 0.007 });
+      // Pulses
+      if (Math.random() < 0.06 && nnPulses.length < 25) {
+        var ed = nnEdges[Math.floor(Math.random() * nnEdges.length)];
+        nnPulses.push({ edge: ed, t: 0, spd: Math.random() * 0.014 + 0.008 });
       }
-
-      // Draw pulses
       for (var i = nnPulses.length - 1; i >= 0; i--) {
-        var p = nnPulses[i];
-        p.t += p.spd;
+        var p = nnPulses[i]; p.t += p.spd;
         if (p.t > 1) { nnPulses.splice(i, 1); continue; }
         var a = nnNodes[p.edge.from], b = nnNodes[p.edge.to];
-        var px = a.x + (b.x - a.x) * p.t;
-        var py = a.y + (b.y - a.y) * p.t;
+        var px = a.x + (b.x - a.x) * p.t, py = a.y + (b.y - a.y) * p.t;
         var al = Math.sin(p.t * Math.PI);
-
-        var rg = ctx.createRadialGradient(px, py, 0, px, py, 14);
-        rg.addColorStop(0, _c.pulse + (al * 0.5) + ')');
+        // Bright glow
+        var rg = ctx.createRadialGradient(px, py, 0, px, py, 16);
+        rg.addColorStop(0, _c.pulse + (al * 0.6) + ')');
         rg.addColorStop(1, _c.pulse + '0)');
-        ctx.fillStyle = rg;
-        ctx.fillRect(px - 14, py - 14, 28, 28);
-
-        ctx.beginPath();
-        ctx.arc(px, py, 2.5, 0, Math.PI * 2);
-        ctx.fillStyle = _c.pulse + al + ')';
-        ctx.fill();
+        ctx.fillStyle = rg; ctx.fillRect(px - 16, py - 16, 32, 32);
+        // Core dot
+        ctx.beginPath(); ctx.arc(px, py, 3, 0, Math.PI * 2);
+        ctx.fillStyle = _c.pulse + al + ')'; ctx.fill();
       }
-
-      // Nodes (pulsing)
+      // Nodes with prominent glow
       for (var i = 0; i < nnNodes.length; i++) {
-        var n = nnNodes[i];
-        var pulse = 0.3 + Math.sin(t * 2 + n.phase) * 0.2;
-
-        var ng = ctx.createRadialGradient(n.x, n.y, 0, n.x, n.y, n.r * 5);
-        ng.addColorStop(0, _c.particle + (pulse * 0.2) + ')');
+        var n = nnNodes[i], pl = 0.4 + Math.sin(t * 2 + n.phase) * 0.2;
+        var ng = ctx.createRadialGradient(n.x, n.y, 0, n.x, n.y, n.r * 6);
+        ng.addColorStop(0, _c.particle + (pl * 0.25) + ')');
         ng.addColorStop(1, _c.particle + '0)');
-        ctx.fillStyle = ng;
-        ctx.fillRect(n.x - n.r * 5, n.y - n.r * 5, n.r * 10, n.r * 10);
-
-        ctx.beginPath();
-        ctx.arc(n.x, n.y, n.r, 0, Math.PI * 2);
-        ctx.fillStyle = _c.particle + pulse + ')';
-        ctx.fill();
+        ctx.fillStyle = ng; ctx.fillRect(n.x - n.r * 6, n.y - n.r * 6, n.r * 12, n.r * 12);
+        ctx.beginPath(); ctx.arc(n.x, n.y, n.r, 0, Math.PI * 2);
+        ctx.fillStyle = _c.particle + pl + ')'; ctx.fill();
       }
     }
 
-    // ====== DRAW: MOUNTAIN LAYER (filled ridgeline) ======
-    function drawMtn(ridgeFn, fill, t) {
-      ctx.beginPath();
-      ctx.moveTo(0, H);
+    // ====== DRAW: MOUNTAIN WITH NEON RIDGELINE ======
+    function drawMtn(ridgeFn, fill, strokeAlpha, t) {
+      // Fill
+      ctx.beginPath(); ctx.moveTo(0, H);
       for (var x = 0; x <= W; x += 2) ctx.lineTo(x, ridgeFn(x, t));
-      ctx.lineTo(W, H);
-      ctx.closePath();
-      ctx.fillStyle = fill;
-      ctx.fill();
+      ctx.lineTo(W, H); ctx.closePath();
+      ctx.fillStyle = fill; ctx.fill();
+
+      // Scan lines (holographic topo lines inside mountain)
+      ctx.save(); ctx.clip();
+      ctx.lineWidth = 0.3;
+      var scanA = isLightMode ? 0.03 : 0.02;
+      ctx.strokeStyle = _c.mtnStroke + scanA + ')';
+      for (var y = Math.floor(H * 0.6); y < H; y += 14) {
+        ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(W, y); ctx.stroke();
+      }
+      ctx.restore();
+
+      // Glowing ridgeline stroke (triple-pass for neon glow)
+      // Pass 1: Wide soft glow
+      ctx.beginPath();
+      for (var x = 0; x <= W; x += 2) {
+        var y = ridgeFn(x, t);
+        if (x === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
+      }
+      ctx.strokeStyle = _c.mtnStroke + (strokeAlpha * 0.15) + ')';
+      ctx.lineWidth = 12; ctx.stroke();
+
+      // Pass 2: Medium glow
+      ctx.beginPath();
+      for (var x = 0; x <= W; x += 2) {
+        var y = ridgeFn(x, t);
+        if (x === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
+      }
+      ctx.strokeStyle = _c.mtnStroke + (strokeAlpha * 0.3) + ')';
+      ctx.lineWidth = 4; ctx.stroke();
+
+      // Pass 3: Core bright line
+      ctx.beginPath();
+      for (var x = 0; x <= W; x += 2) {
+        var y = ridgeFn(x, t);
+        if (x === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
+      }
+      ctx.strokeStyle = _c.mtnStroke + strokeAlpha + ')';
+      ctx.lineWidth = 1.2; ctx.stroke();
     }
 
-    // ====== DRAW: SCATTER DOTS (floating above far mountains) ======
+    // ====== DRAW: SCATTER DOTS ======
     function drawScatter(t) {
       for (var i = 0; i < scatterDots.length; i++) {
         var d = scatterDots[i];
-        var y = d.baseY + Math.sin(t * 2 + d.phase) * 7;
-        var x = d.x + Math.sin(t * 0.5 + d.phase) * 4;
-        var a = 0.2 + Math.sin(t * 3 + d.phase) * 0.15;
-
-        // Glow
-        ctx.beginPath();
-        ctx.arc(x, y, d.r * 3.5, 0, Math.PI * 2);
-        ctx.fillStyle = _c.scatter + (a * 0.12) + ')';
-        ctx.fill();
-
-        ctx.beginPath();
-        ctx.arc(x, y, d.r, 0, Math.PI * 2);
-        ctx.fillStyle = _c.scatter + a + ')';
-        ctx.fill();
+        var y = d.baseY + Math.sin(t * 2 + d.phase) * 6;
+        var x = d.x + Math.sin(t * 0.5 + d.phase) * 3;
+        var a = 0.3 + Math.sin(t * 3 + d.phase) * 0.15;
+        ctx.beginPath(); ctx.arc(x, y, d.r * 4, 0, Math.PI * 2);
+        ctx.fillStyle = _c.scatter + (a * 0.1) + ')'; ctx.fill();
+        ctx.beginPath(); ctx.arc(x, y, d.r, 0, Math.PI * 2);
+        ctx.fillStyle = _c.scatter + a + ')'; ctx.fill();
       }
     }
 
-    // ====== DRAW: BAR CHART SKYLINE (on mid-mountain) ======
+    // ====== DRAW: BAR CHART SKYLINE + REFLECTIONS ======
     function drawBars(t) {
       for (var g = 0; g < barGroups.length; g++) {
         var bars = barGroups[g];
         for (var b = 0; b < bars.length; b++) {
           var bar = bars[b];
           var h = bar.baseH + Math.sin(t * bar.speed * 60 + bar.phase) * 12;
-          var ridgeY = midRidge(bar.x, t);
-
-          // Bar body with gradient
-          var bg = ctx.createLinearGradient(bar.x, ridgeY - h, bar.x, ridgeY);
-          bg.addColorStop(0, _c.bar + '0.3)');
-          bg.addColorStop(1, _c.bar + '0.08)');
-          ctx.fillStyle = bg;
-          ctx.fillRect(bar.x, ridgeY - h, 12, h);
-
-          // Bright top edge
-          ctx.fillStyle = _c.bar + '0.5)';
-          ctx.fillRect(bar.x, ridgeY - h, 12, 1.5);
-
-          // Glow above bar
-          var tg = ctx.createRadialGradient(bar.x + 6, ridgeY - h, 0, bar.x + 6, ridgeY - h, 12);
-          tg.addColorStop(0, _c.bar + '0.12)');
-          tg.addColorStop(1, _c.bar + '0)');
-          ctx.fillStyle = tg;
-          ctx.fillRect(bar.x - 6, ridgeY - h - 12, 24, 24);
+          var ry = midRidge(bar.x, t);
+          // Bar body gradient
+          var bg = ctx.createLinearGradient(bar.x, ry - h, bar.x, ry);
+          bg.addColorStop(0, _c.bar + '0.45)'); bg.addColorStop(1, _c.bar + '0.1)');
+          ctx.fillStyle = bg; ctx.fillRect(bar.x, ry - h, 13, h);
+          // Bright top cap
+          ctx.fillStyle = _c.bar + '0.7)'; ctx.fillRect(bar.x, ry - h, 13, 1.5);
+          // Top glow
+          var tg = ctx.createRadialGradient(bar.x + 6.5, ry - h, 0, bar.x + 6.5, ry - h, 14);
+          tg.addColorStop(0, _c.bar + '0.15)'); tg.addColorStop(1, _c.bar + '0)');
+          ctx.fillStyle = tg; ctx.fillRect(bar.x - 8, ry - h - 14, 29, 28);
+          // Reflection below
+          var rf = ctx.createLinearGradient(bar.x, ry, bar.x, ry + h * 0.35);
+          rf.addColorStop(0, _c.bar + '0.06)'); rf.addColorStop(1, _c.bar + '0)');
+          ctx.fillStyle = rf; ctx.fillRect(bar.x, ry, 13, h * 0.35);
         }
       }
     }
 
-    // ====== DRAW: DECISION TREE (on near-mountain) ======
+    // ====== DRAW: DECISION TREE ======
     function drawTree(t) {
-      // Edges (pulsing)
-      ctx.lineWidth = 1.2;
+      // Edges
       for (var i = 0; i < treeEdges.length; i++) {
-        var e = treeEdges[i];
-        var a = treeNodes[e.from], b = treeNodes[e.to];
-        var alpha = 0.14 + Math.sin(t * 1.5 + i * 0.5) * 0.06;
-        ctx.beginPath(); ctx.moveTo(a.x, a.y); ctx.lineTo(b.x, b.y);
-        ctx.strokeStyle = _c.tree + alpha + ')';
-        ctx.stroke();
+        var e = treeEdges[i], a = treeNodes[e.from], b = treeNodes[e.to];
+        var al = 0.2 + Math.sin(t * 1.5 + i * 0.5) * 0.08;
+        // Edge glow
+        ctx.lineWidth = 4; ctx.strokeStyle = _c.tree + (al * 0.15) + ')';
+        ctx.beginPath(); ctx.moveTo(a.x, a.y); ctx.lineTo(b.x, b.y); ctx.stroke();
+        // Edge core
+        ctx.lineWidth = 1.2; ctx.strokeStyle = _c.tree + al + ')';
+        ctx.beginPath(); ctx.moveTo(a.x, a.y); ctx.lineTo(b.x, b.y); ctx.stroke();
       }
-
-      // Nodes with glow
+      // Nodes
       for (var i = 0; i < treeNodes.length; i++) {
-        var n = treeNodes[i];
-        var pulse = 0.3 + Math.sin(t * 2 + n.depth * 1.2) * 0.15;
-
-        var ng = ctx.createRadialGradient(n.x, n.y, 0, n.x, n.y, n.r * 4);
-        ng.addColorStop(0, _c.tree + (pulse * 0.2) + ')');
-        ng.addColorStop(1, _c.tree + '0)');
-        ctx.fillStyle = ng;
-        ctx.fillRect(n.x - n.r * 4, n.y - n.r * 4, n.r * 8, n.r * 8);
-
-        ctx.beginPath();
-        ctx.arc(n.x, n.y, n.r, 0, Math.PI * 2);
-        ctx.fillStyle = _c.tree + pulse + ')';
-        ctx.fill();
+        var n = treeNodes[i], pl = 0.4 + Math.sin(t * 2 + n.depth * 1.2) * 0.15;
+        var ng = ctx.createRadialGradient(n.x, n.y, 0, n.x, n.y, n.r * 5);
+        ng.addColorStop(0, _c.tree + (pl * 0.25) + ')'); ng.addColorStop(1, _c.tree + '0)');
+        ctx.fillStyle = ng; ctx.fillRect(n.x - n.r * 5, n.y - n.r * 5, n.r * 10, n.r * 10);
+        ctx.beginPath(); ctx.arc(n.x, n.y, n.r, 0, Math.PI * 2);
+        ctx.fillStyle = _c.tree + pl + ')'; ctx.fill();
       }
-
       // Leaf labels
-      ctx.font = '600 7px monospace';
-      var labels = ['T','F'];
-      var li = 0;
+      ctx.font = '700 8px monospace';
+      var lb = ['T','F'], li = 0;
       for (var i = 0; i < treeNodes.length; i++) {
-        var n = treeNodes[i];
-        if (n.depth === 4) {
-          var a = 0.18 + Math.sin(t * 1.5 + i) * 0.08;
+        if (treeNodes[i].depth === 4) {
+          var a = 0.25 + Math.sin(t * 1.5 + i) * 0.1;
           ctx.fillStyle = _c.tree + a + ')';
-          ctx.fillText(labels[li % 2], n.x - 3, n.y - 7);
-          li++;
+          ctx.fillText(lb[li % 2], treeNodes[i].x - 3, treeNodes[i].y - 8); li++;
         }
       }
     }
 
-    // ====== DRAW: DATA RIVER (continuously flowing waves) ======
+    // ====== DRAW: DATA RIVER ======
     function drawDataRiver(t) {
-      var riverBase = H * 0.91;
-      var waves = [
-        { amp: 10, freq: 0.007, spd: 1.3,  alpha: 0.14, w: 2.5 },
-        { amp: 6,  freq: 0.011, spd: 0.95, alpha: 0.10, w: 1.8 },
-        { amp: 14, freq: 0.004, spd: 1.6,  alpha: 0.07, w: 3.5 },
-        { amp: 4,  freq: 0.016, spd: 2.2,  alpha: 0.05, w: 1.2 }
+      var rb = H * 0.91;
+      var wvs = [
+        { amp: 10, freq: 0.007, spd: 1.3,  al: 0.18, w: 3 },
+        { amp: 6,  freq: 0.011, spd: 0.95, al: 0.12, w: 2 },
+        { amp: 14, freq: 0.004, spd: 1.6,  al: 0.08, w: 4 }
       ];
-      for (var w = 0; w < waves.length; w++) {
-        var wv = waves[w];
+      for (var w = 0; w < wvs.length; w++) {
+        var wv = wvs[w];
+        // River glow
         ctx.beginPath();
         for (var x = 0; x <= W; x += 2) {
-          var y = riverBase + w * 7
-            + Math.sin(x * wv.freq + t * wv.spd) * wv.amp
+          var y = rb + w * 8 + Math.sin(x * wv.freq + t * wv.spd) * wv.amp
             + Math.sin(x * wv.freq * 2.3 + t * wv.spd * 1.4) * wv.amp * 0.3;
           if (x === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
         }
-        ctx.strokeStyle = _c.river + wv.alpha + ')';
-        ctx.lineWidth = wv.w;
-        ctx.stroke();
+        ctx.strokeStyle = _c.river + (wv.al * 0.3) + ')'; ctx.lineWidth = wv.w * 4; ctx.stroke();
+        // River core
+        ctx.beginPath();
+        for (var x = 0; x <= W; x += 2) {
+          var y = rb + w * 8 + Math.sin(x * wv.freq + t * wv.spd) * wv.amp
+            + Math.sin(x * wv.freq * 2.3 + t * wv.spd * 1.4) * wv.amp * 0.3;
+          if (x === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
+        }
+        ctx.strokeStyle = _c.river + wv.al + ')'; ctx.lineWidth = wv.w; ctx.stroke();
       }
     }
 
-    // ====== DRAW: FOREGROUND GROUND ======
-    function drawForeground() {
-      // Gradient fade into ground
-      var fg = ctx.createLinearGradient(0, H * 0.92, 0, H * 0.98);
-      fg.addColorStop(0, 'rgba(0,0,0,0)');
-      fg.addColorStop(1, _c.ground);
-      ctx.fillStyle = fg;
-      ctx.fillRect(0, H * 0.92, W, H * 0.06);
-
-      // Solid ground
-      ctx.fillStyle = _c.ground;
-      ctx.fillRect(0, H * 0.97, W, H * 0.03);
-    }
-
-    // ====== DRAW: EMBERS (rising heat particles from mountains) ======
+    // ====== DRAW: EMBERS ======
     function drawEmbers(t) {
-      // Spawn
-      if (Math.random() < 0.02 && embers.length < 12) {
+      if (Math.random() < 0.025 && embers.length < 15) {
         var ex = Math.random() * W;
-        embers.push({
-          x: ex, y: midRidge(ex, t),
-          vx: (Math.random() - 0.5) * 0.3,
-          vy: -(Math.random() * 0.5 + 0.2),
-          r: Math.random() * 1.5 + 0.5,
-          life: 1,
-          decay: Math.random() * 0.005 + 0.003
-        });
+        embers.push({ x: ex, y: midRidge(ex, t), vx: (Math.random() - 0.5) * 0.3,
+          vy: -(Math.random() * 0.5 + 0.2), r: Math.random() * 1.5 + 0.5, life: 1,
+          decay: Math.random() * 0.004 + 0.002 });
       }
-
       for (var i = embers.length - 1; i >= 0; i--) {
-        var e = embers[i];
-        e.x += e.vx + Math.sin(t * 2 + i) * 0.15;
-        e.y += e.vy;
+        var e = embers[i]; e.x += e.vx + Math.sin(t * 2 + i) * 0.12; e.y += e.vy;
         e.life -= e.decay;
         if (e.life <= 0) { embers.splice(i, 1); continue; }
-
-        var a = e.life * 0.35;
-        ctx.beginPath();
-        ctx.arc(e.x, e.y, e.r * 3, 0, Math.PI * 2);
-        ctx.fillStyle = _c.ember + (a * 0.15) + ')';
-        ctx.fill();
-
-        ctx.beginPath();
-        ctx.arc(e.x, e.y, e.r, 0, Math.PI * 2);
-        ctx.fillStyle = _c.ember + a + ')';
-        ctx.fill();
+        var a = e.life * 0.45;
+        ctx.beginPath(); ctx.arc(e.x, e.y, e.r * 3, 0, Math.PI * 2);
+        ctx.fillStyle = _c.ember + (a * 0.15) + ')'; ctx.fill();
+        ctx.beginPath(); ctx.arc(e.x, e.y, e.r, 0, Math.PI * 2);
+        ctx.fillStyle = _c.ember + a + ')'; ctx.fill();
       }
+    }
+
+    // ====== DRAW: FOREGROUND ======
+    function drawForeground() {
+      var fg = ctx.createLinearGradient(0, H * 0.92, 0, H * 0.98);
+      fg.addColorStop(0, 'rgba(0,0,0,0)'); fg.addColorStop(1, _c.ground);
+      ctx.fillStyle = fg; ctx.fillRect(0, H * 0.92, W, H * 0.06);
+      ctx.fillStyle = _c.ground; ctx.fillRect(0, H * 0.97, W, H * 0.03);
     }
 
     // ====== DRAW: FLOATING SYMBOLS ======
-    var symChars = ['\u03A3','\u222B','\u03C0','\u03BB','\u2202','\u2207','\u03BC','\u03C3','\u03B8','f(x)','P(A|B)','\u0394','\u221E','{}','[ ]','R\u00B2'];
-    function FloatSym() {
-      this.text = symChars[Math.floor(Math.random() * symChars.length)];
-      this.x = Math.random() * W;
-      this.y = H + 30;
-      this.spd = Math.random() * 0.28 + 0.1;
-      this.alpha = 0;
-      this.maxA = Math.random() * 0.1 + 0.03;
-      this.size = Math.random() * 12 + 10;
-      this.drift = (Math.random() - 0.5) * 0.35;
+    var symC = ['\u03A3','\u222B','\u03C0','\u03BB','\u2202','\u2207','\u03BC','\u03C3','\u03B8','f(x)','P(A|B)','\u0394','\u221E','{}','R\u00B2'];
+    function FS() {
+      this.text = symC[Math.floor(Math.random() * symC.length)];
+      this.x = Math.random() * W; this.y = H + 30;
+      this.spd = Math.random() * 0.28 + 0.1; this.alpha = 0;
+      this.maxA = Math.random() * 0.1 + 0.03; this.size = Math.random() * 12 + 10;
+      this.drift = (Math.random() - 0.5) * 0.3;
     }
-
     function drawSymbols() {
-      if (Math.random() < 0.006 && symbols.length < 10) symbols.push(new FloatSym());
+      if (Math.random() < 0.007 && symbols.length < 12) symbols.push(new FS());
       for (var i = symbols.length - 1; i >= 0; i--) {
-        var s = symbols[i];
-        s.y -= s.spd;
-        s.x += s.drift;
-        var progress = 1 - (s.y + 30) / (H + 60);
-        if (progress < 0.15) s.alpha = Math.min(s.alpha + 0.003, s.maxA);
-        else if (progress > 0.85) s.alpha = Math.max(s.alpha - 0.003, 0);
+        var s = symbols[i]; s.y -= s.spd; s.x += s.drift;
+        var pr = 1 - (s.y + 30) / (H + 60);
+        if (pr < 0.15) s.alpha = Math.min(s.alpha + 0.003, s.maxA);
+        else if (pr > 0.85) s.alpha = Math.max(s.alpha - 0.003, 0);
         else s.alpha = s.maxA;
         if (s.y < -50) { symbols.splice(i, 1); continue; }
         ctx.font = '400 ' + s.size + 'px "Courier New", monospace';
-        ctx.fillStyle = _c.sym + s.alpha + ')';
-        ctx.fillText(s.text, s.x, s.y);
+        ctx.fillStyle = _c.sym + s.alpha + ')'; ctx.fillText(s.text, s.x, s.y);
       }
     }
 
-    // ====== DRAW: MOUSE EFFECTS ======
-    function drawMouse() {
+    // ====== DRAW: TITLE GLOW (dramatic backdrop) ======
+    function drawTitleGlow(t) {
+      var cx = W / 2, cy = H * 0.32;
+      var r = Math.min(W, H) * 0.3;
+      var pulse = 1 + Math.sin(t * 0.5) * 0.08;
+      var g = ctx.createRadialGradient(cx, cy, 0, cx, cy, r * pulse);
+      g.addColorStop(0, isLightMode ? 'rgba(255,159,0,0.05)' : 'rgba(255,140,40,0.06)');
+      g.addColorStop(0.5, isLightMode ? 'rgba(255,100,60,0.02)' : 'rgba(255,80,40,0.025)');
+      g.addColorStop(1, 'rgba(0,0,0,0)');
+      ctx.fillStyle = g; ctx.fillRect(cx - r * pulse, cy - r * pulse, r * 2 * pulse, r * 2 * pulse);
+    }
+
+    // ====== DRAW: MOUSE EFFECTS + RIPPLE RINGS ======
+    function drawMouse(t) {
       if (!mouse.active) return;
-      var radius = 170;
+      var R = 180;
 
-      // Connect to scatter dots
-      for (var i = 0; i < scatterDots.length; i++) {
-        var d = scatterDots[i];
-        var dx = mouse.x - d.x, dy = mouse.y - d.baseY;
-        var dist = Math.sqrt(dx * dx + dy * dy);
-        if (dist < radius) {
-          ctx.beginPath(); ctx.moveTo(mouse.x, mouse.y); ctx.lineTo(d.x, d.baseY);
-          ctx.strokeStyle = _c.mouseC + ((1 - dist / radius) * 0.25) + ')';
-          ctx.lineWidth = 0.8; ctx.stroke();
+      // Connections to all data elements
+      var targets = [];
+      for (var i = 0; i < scatterDots.length; i++) targets.push({ x: scatterDots[i].x, y: scatterDots[i].baseY });
+      for (var i = 0; i < nnNodes.length; i++) targets.push({ x: nnNodes[i].x, y: nnNodes[i].y });
+      for (var i = 0; i < treeNodes.length; i++) targets.push({ x: treeNodes[i].x, y: treeNodes[i].y });
+
+      ctx.lineWidth = 0.7;
+      for (var i = 0; i < targets.length; i++) {
+        var dx = mouse.x - targets[i].x, dy = mouse.y - targets[i].y;
+        var d = Math.sqrt(dx * dx + dy * dy);
+        if (d < R) {
+          var a = (1 - d / R) * 0.3;
+          ctx.beginPath(); ctx.moveTo(mouse.x, mouse.y); ctx.lineTo(targets[i].x, targets[i].y);
+          ctx.strokeStyle = _c.mouseC + a + ')'; ctx.stroke();
         }
       }
 
-      // Connect to neural net nodes
-      for (var i = 0; i < nnNodes.length; i++) {
-        var n = nnNodes[i];
-        var dx = mouse.x - n.x, dy = mouse.y - n.y;
-        var dist = Math.sqrt(dx * dx + dy * dy);
-        if (dist < radius) {
-          ctx.beginPath(); ctx.moveTo(mouse.x, mouse.y); ctx.lineTo(n.x, n.y);
-          ctx.strokeStyle = _c.mouseC + ((1 - dist / radius) * 0.2) + ')';
-          ctx.lineWidth = 0.6; ctx.stroke();
-        }
-      }
+      // Ripple rings
+      var r1 = 50 + Math.sin(t * 3) * 8;
+      ctx.beginPath(); ctx.arc(mouse.x, mouse.y, r1, 0, Math.PI * 2);
+      ctx.strokeStyle = _c.mouseC + '0.15)'; ctx.lineWidth = 1.5; ctx.stroke();
+      ctx.beginPath(); ctx.arc(mouse.x, mouse.y, r1 * 1.7, 0, Math.PI * 2);
+      ctx.strokeStyle = _c.mouseC + '0.06)'; ctx.lineWidth = 1; ctx.stroke();
 
-      // Connect to tree nodes
-      for (var i = 0; i < treeNodes.length; i++) {
-        var n = treeNodes[i];
-        var dx = mouse.x - n.x, dy = mouse.y - n.y;
-        var dist = Math.sqrt(dx * dx + dy * dy);
-        if (dist < radius * 0.8) {
-          ctx.beginPath(); ctx.moveTo(mouse.x, mouse.y); ctx.lineTo(n.x, n.y);
-          ctx.strokeStyle = _c.mouseC + ((1 - dist / (radius * 0.8)) * 0.2) + ')';
-          ctx.lineWidth = 0.6; ctx.stroke();
-        }
-      }
-
-      // Mouse glow
-      var mg = ctx.createRadialGradient(mouse.x, mouse.y, 0, mouse.x, mouse.y, 140);
-      mg.addColorStop(0, _c.mouseC + '0.1)');
-      mg.addColorStop(0.4, _c.mouseC + '0.03)');
+      // Glow
+      var mg = ctx.createRadialGradient(mouse.x, mouse.y, 0, mouse.x, mouse.y, 150);
+      mg.addColorStop(0, _c.mouseC + '0.12)');
+      mg.addColorStop(0.3, _c.mouseC + '0.04)');
       mg.addColorStop(1, _c.mouseC + '0)');
-      ctx.fillStyle = mg;
-      ctx.fillRect(mouse.x - 140, mouse.y - 140, 280, 280);
+      ctx.fillStyle = mg; ctx.fillRect(mouse.x - 150, mouse.y - 150, 300, 300);
     }
 
     // ====== DRAW: VIGNETTE ======
     function drawVignette() {
-      var vg = ctx.createRadialGradient(W / 2, H / 2, W * 0.25, W / 2, H / 2, W * 0.75);
+      var vg = ctx.createRadialGradient(W / 2, H * 0.4, W * 0.2, W / 2, H * 0.4, W * 0.8);
       vg.addColorStop(0, 'rgba(0,0,0,0)');
-      vg.addColorStop(1, isLightMode ? 'rgba(200,210,230,0.2)' : 'rgba(0,0,0,0.25)');
-      ctx.fillStyle = vg;
-      ctx.fillRect(0, 0, W, H);
+      vg.addColorStop(1, isLightMode ? 'rgba(190,200,220,0.25)' : 'rgba(0,0,0,0.35)');
+      ctx.fillStyle = vg; ctx.fillRect(0, 0, W, H);
     }
 
     // ====== SCROLL FADE ======
     function scrollFade() {
-      var scrollY = window.pageYOffset;
-      var vh = section.offsetHeight;
-      if (overlay) overlay.style.opacity = Math.max(0, 1 - scrollY / (vh * 0.45));
+      var sY = window.pageYOffset, vh = section.offsetHeight;
+      if (overlay) overlay.style.opacity = Math.max(0, 1 - sY / (vh * 0.45));
     }
-    window.addEventListener('scroll', function() {
-      requestAnimationFrame(scrollFade);
-    }, { passive: true });
+    window.addEventListener('scroll', function() { requestAnimationFrame(scrollFade); }, { passive: true });
 
     // ====== MAIN RENDER LOOP ======
     function animate() {
@@ -4067,65 +4011,38 @@
       frame++;
       var t = frame * 0.01;
       _c = col();
-
       ctx.clearRect(0, 0, W, H);
 
-      // Layer 0: Sky
-      drawBg();
-      drawGrid();
-      drawStars(t);
-
-      // Layer 1: Aurora (prominent, always flowing)
-      drawAurora(t);
-
-      // Layer 2: Neural network in sky
-      drawNeuralNet(t);
-
-      // Layer 3: Far mountain (sine wave ridgeline) + scatter constellation
-      drawMtn(farRidge, _c.mtnFar, t);
-      drawScatter(t);
-
-      // Layer 4: Mid mountain (exponential curve) + bar chart skyline
-      drawMtn(midRidge, _c.mtnMid, t);
-      drawBars(t);
-
-      // Layer 5: Near mountain (step function) + decision tree
-      drawMtn(nearRidge, _c.mtnNear, t);
-      drawTree(t);
-
-      // Layer 6: Data river + embers
-      drawDataRiver(t);
-      drawEmbers(t);
-
-      // Layer 7: Ground
-      drawForeground();
-
-      // Layer 8: Overlays
-      drawSymbols();
-      drawMouse();
-      drawVignette();
+      drawBg(t);                             // Sky + gradient blobs
+      drawGrid(t);                           // Perspective grid
+      drawStars(t);                          // Twinkling stars
+      drawAurora(t);                         // Flowing aurora waves
+      drawTitleGlow(t);                      // Dramatic glow behind title
+      drawNeuralNet(t);                      // Network + data pulses
+      drawMtn(farRidge, _c.mtnFar, 0.3, t); // Far mountain + neon ridge
+      drawScatter(t);                        // Scatter constellation
+      drawMtn(midRidge, _c.mtnMid, 0.45, t);// Mid mountain + neon ridge
+      drawBars(t);                           // Animated bar chart skyline
+      drawMtn(nearRidge, _c.mtnNear, 0.5, t);// Near mountain + neon ridge
+      drawTree(t);                           // Decision tree
+      drawDataRiver(t);                      // Flowing data river
+      drawEmbers(t);                         // Rising embers
+      drawForeground();                      // Ground
+      drawSymbols();                         // Floating math
+      drawMouse(t);                          // Mouse effects + ripples
+      drawVignette();                        // Edge focus
 
       requestAnimationFrame(animate);
     }
 
     // ====== OBSERVERS ======
     if ('IntersectionObserver' in window) {
-      var obs = new IntersectionObserver(function(entries) {
-        isActive = entries[0].isIntersecting;
-      }, { threshold: 0.01 });
+      var obs = new IntersectionObserver(function(e) { isActive = e[0].isIntersecting; }, { threshold: 0.01 });
       obs.observe(section);
     }
-
-    var themeObs = new MutationObserver(function() {
-      isLightMode = document.body.classList.contains('light-mode');
-    });
-    themeObs.observe(document.body, { attributes: true, attributeFilter: ['class'] });
-
-    var resizeTimer;
-    window.addEventListener('resize', function() {
-      clearTimeout(resizeTimer);
-      resizeTimer = setTimeout(resize, 150);
-    });
+    var tObs = new MutationObserver(function() { isLightMode = document.body.classList.contains('light-mode'); });
+    tObs.observe(document.body, { attributes: true, attributeFilter: ['class'] });
+    var rT; window.addEventListener('resize', function() { clearTimeout(rT); rT = setTimeout(resize, 150); });
 
     resize();
     animate();
