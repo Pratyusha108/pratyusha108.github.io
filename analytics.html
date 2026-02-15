@@ -55,26 +55,9 @@
     </button>
   </header>
 
-  <!-- Parallax Data Science Hero -->
+  <!-- Morphing Data Universe Hero -->
   <section class="parallax-hero">
-    <canvas id="network-canvas" class="parallax-layer parallax-network"></canvas>
-
-    <div class="parallax-layer parallax-floats" aria-hidden="true">
-      <span class="parallax-float" style="--i:0; top:8%; left:6%; font-size:2.2rem;">&sigma;</span>
-      <span class="parallax-float" style="--i:1; top:18%; left:78%; font-size:1.4rem;">f(x)</span>
-      <span class="parallax-float" style="--i:2; top:72%; left:12%; font-size:1.6rem;">P(A|B)</span>
-      <span class="parallax-float" style="--i:3; top:30%; left:90%; font-size:1.2rem;">&theta;</span>
-      <span class="parallax-float" style="--i:4; top:55%; left:82%; font-size:2rem;">R<sup>2</sup></span>
-      <span class="parallax-float" style="--i:5; top:85%; left:45%; font-size:1.3rem;">&Delta;</span>
-      <span class="parallax-float" style="--i:6; top:40%; left:5%; font-size:1.8rem;">&Sigma;</span>
-      <span class="parallax-float" style="--i:7; top:12%; left:42%; font-size:1.1rem;">y = mx + b</span>
-      <span class="parallax-float" style="--i:8; top:65%; left:55%; font-size:1.5rem;">&int;</span>
-      <span class="parallax-float" style="--i:9; top:48%; left:65%; font-size:1rem;">0 1 0 1</span>
-      <span class="parallax-float" style="--i:10; top:25%; left:25%; font-size:1.7rem;">AUC</span>
-      <span class="parallax-float" style="--i:11; top:78%; left:72%; font-size:1.3rem;">{ }</span>
-      <span class="parallax-float" style="--i:12; top:35%; left:50%; font-size:1.4rem;">SQL</span>
-      <span class="parallax-float" style="--i:13; top:60%; left:30%; font-size:1.1rem;">&nabla;</span>
-    </div>
+    <canvas id="hero-canvas" class="parallax-layer"></canvas>
 
     <div class="parallax-layer parallax-content">
       <h2>Analytics & Intelligence</h2>
@@ -83,9 +66,13 @@
         <span>Scroll to explore</span>
         <i class="fas fa-chevron-down"></i>
       </div>
+      <div class="formation-indicator" aria-label="Current visualization">
+        <button class="formation-dot active" data-formation="0" title="Scatter Clusters"></button>
+        <button class="formation-dot" data-formation="1" title="Neural Network"></button>
+        <button class="formation-dot" data-formation="2" title="Signal Wave"></button>
+        <button class="formation-dot" data-formation="3" title="Data Galaxy"></button>
+      </div>
     </div>
-
-    <div class="parallax-layer parallax-lines" aria-hidden="true"></div>
   </section>
 
   <!-- Section 1: Animated Impact Metrics Hero (ALWAYS VISIBLE) -->
