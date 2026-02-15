@@ -252,7 +252,14 @@ body.light-mode .modal-box {
   margin-bottom: 5px;
 }
 
-/* ===== GITHUB BUTTON ===== */
+/* ===== MODAL ACTION BUTTONS ===== */
+.modal-actions {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-top: 12px;
+}
+
 .modal-github-btn {
   display: inline-flex;
   align-items: center;
@@ -261,10 +268,28 @@ body.light-mode .modal-box {
   color: #fff;
   padding: 8px 14px;
   border-radius: 6px;
-  margin-top: 12px;
   text-decoration: none;
   font-size: 0.9rem;
   white-space: nowrap;
+}
+
+.modal-demo-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: linear-gradient(135deg, #ff9f00, #ff6b6b);
+  color: #fff;
+  padding: 8px 14px;
+  border-radius: 6px;
+  text-decoration: none;
+  font-size: 0.9rem;
+  white-space: nowrap;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.modal-demo-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(255, 159, 0, 0.3);
 }
 
 /* Filter Tabs */

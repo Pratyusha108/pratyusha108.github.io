@@ -114,9 +114,9 @@
   text-align: center;
 }
 
-/* ===== SKILLS PROGRESS BARS ===== */
+/* ===== SKILLS / ACHIEVEMENTS SECTION ===== */
 .skills-section {
-  max-width: 800px;
+  max-width: 1000px;
   margin: 2rem auto;
   padding: 2rem;
   border-radius: 15px;
@@ -132,6 +132,49 @@
   margin-bottom: 2rem;
 }
 
+/* Achievement Stats Grid (replaces skill bars) */
+.achievements-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1.5rem;
+}
+
+.achievement-stat {
+  padding: 1.5rem;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 12px;
+  border-left: 4px solid #ff9f00;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.achievement-stat:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 20px rgba(255, 159, 0, 0.15);
+}
+
+.achievement-icon {
+  margin-bottom: 0.8rem;
+}
+
+.achievement-icon i {
+  font-size: 1.8rem;
+  color: #ff9f00;
+}
+
+.achievement-stat h4 {
+  font-size: 1.1rem;
+  color: #fff;
+  margin-bottom: 0.4rem;
+  font-weight: 700;
+}
+
+.achievement-stat p {
+  font-size: 0.9rem;
+  color: #bbb;
+  line-height: 1.5;
+}
+
+/* Legacy skill bar support (kept for backwards compat) */
 .skills-container {
   display: flex;
   flex-direction: column;
@@ -505,11 +548,24 @@ body.light-mode .competency-item:hover {
   background: rgba(255, 159, 0, 0.08);
 }
 
-/* Skills Section */
+/* Skills / Achievements Section */
 body.light-mode .skills-section {
   background: #ffffff;
   box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
   border: 1px solid #e6e6e6;
+}
+
+body.light-mode .achievement-stat {
+  background: #f8f8f8;
+  border-left: 4px solid #ff9f00;
+}
+
+body.light-mode .achievement-stat h4 {
+  color: #333;
+}
+
+body.light-mode .achievement-stat p {
+  color: #666;
 }
 
 body.light-mode .skill-info {
@@ -607,6 +663,10 @@ body.light-mode .availability-banner {
     grid-template-columns: 1fr;
   }
 
+  .achievements-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+
   .learning-grid {
     grid-template-columns: repeat(2, 1fr);
   }
@@ -633,6 +693,10 @@ body.light-mode .availability-banner {
 }
 
 @media (max-width: 480px) {
+  .achievements-grid {
+    grid-template-columns: 1fr;
+  }
+
   .learning-grid {
     grid-template-columns: 1fr;
   }

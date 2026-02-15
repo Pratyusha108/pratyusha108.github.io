@@ -1612,3 +1612,69 @@ body.light-mode .tech-item {
     min-height: 44px;
   }
 }
+
+/* ====== OPEN TO WORK BANNER ====== */
+.open-to-work-banner {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  background: linear-gradient(135deg, #ff9f00, #ff6b6b);
+  padding: 8px 20px;
+  text-align: center;
+}
+
+.otw-content {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.otw-dot {
+  width: 8px;
+  height: 8px;
+  background: #00ff88;
+  border-radius: 50%;
+  animation: otw-pulse 2s infinite;
+  flex-shrink: 0;
+}
+
+@keyframes otw-pulse {
+  0%, 100% { opacity: 1; box-shadow: 0 0 0 0 rgba(0, 255, 136, 0.7); }
+  50% { opacity: 0.8; box-shadow: 0 0 0 6px rgba(0, 255, 136, 0); }
+}
+
+.otw-text {
+  color: #fff;
+  font-size: 0.85rem;
+  font-weight: 600;
+  letter-spacing: 0.3px;
+}
+
+.otw-cta {
+  background: rgba(255, 255, 255, 0.2);
+  color: #fff;
+  padding: 4px 14px;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-decoration: none;
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  transition: background 0.3s;
+}
+
+.otw-cta:hover {
+  background: rgba(255, 255, 255, 0.35);
+}
+
+/* Push body content down to account for fixed banner */
+body {
+  padding-top: 40px;
+}
+
+body.light-mode .open-to-work-banner {
+  background: linear-gradient(135deg, #ff9f00, #ff6b6b);
+}

@@ -2,6 +2,65 @@
   // ====== BLOG POST DATA ======
   var posts = [
     {
+      id: 'neural-network-from-scratch',
+      title: 'I Built a Neural Network That Trains in Your Browser - Here Is What I Learned',
+      excerpt: 'Real backpropagation, real gradient descent, real learning - all running in vanilla JavaScript. No TensorFlow, no PyTorch, just math.',
+      tags: ['Deep Learning', 'JavaScript'],
+      date: 'Feb 14, 2026',
+      readTime: '8 min read',
+      image: 'https://images.unsplash.com/photo-1620712943543-bcc4688e7485?w=600&h=300&fit=crop',
+      content: '<p>Most neural network tutorials show you how to call model.fit() in Keras. That is fine for production, but it teaches you nothing about what is actually happening. So I built one from scratch - in JavaScript, running entirely in the browser.</p>' +
+        '<h3>Why JavaScript?</h3>' +
+        '<p>Two reasons. First, I wanted anyone to use it without installing Python or setting up environments. Second, building in a language without NumPy forces you to implement every matrix operation yourself. You cannot hide behind library abstractions when you are writing your own dot products.</p>' +
+        '<h3>What I Implemented</h3>' +
+        '<p>The full forward pass with configurable hidden layers and neurons. Leaky ReLU activation (not just sigmoid - I wanted to handle the vanishing gradient problem). Cross-entropy loss for classification. And complete backpropagation with gradient computation for every weight and bias in the network.</p>' +
+        '<p>The hardest part was getting the chain rule right across multiple layers. One sign error in the gradient computation and the network learns in the wrong direction. I spent two days debugging a single minus sign.</p>' +
+        '<h3>The Cool Parts</h3>' +
+        '<p>The architecture diagram shows live activations flowing through neurons during training. Bias nodes light up green or red based on their values. You can watch the decision boundary form in real-time on a 2D canvas as the network separates spiral, circle, or XOR patterns.</p>' +
+        '<p>You can adjust the learning rate mid-training and see what happens. Set it too high and the loss explodes. Set it too low and training crawls. That instant feedback loop teaches more about optimization than any textbook.</p>' +
+        '<h3>What I Learned</h3>' +
+        '<p>Building from scratch gave me a visceral understanding of why certain architectures work. Why batch normalization helps. Why learning rate scheduling matters. Why deep networks need careful initialization. These are not just theoretical concepts anymore - I have watched them succeed and fail in real-time.</p>' +
+        '<p>You can try it yourself on my <a href="analytics.html#deep-learning">analytics page</a>. Train a network, break it, fix it. That is how you learn.</p>'
+    },
+    {
+      id: 'ab-testing-statistics',
+      title: 'A/B Testing Done Right: The Statistics Most Teams Get Wrong',
+      excerpt: 'Most A/B tests are underpowered, stopped too early, or misinterpreted. Here is how to avoid the most common statistical mistakes.',
+      tags: ['Statistics', 'Data Science'],
+      date: 'Feb 8, 2026',
+      readTime: '7 min read',
+      image: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=600&h=300&fit=crop',
+      content: '<p>I have seen teams celebrate a "winning" A/B test that was not statistically significant. I have seen others kill a test too early because p dropped below 0.05 on day two. Both mistakes cost real money. Here is what I have learned about doing it right.</p>' +
+        '<h3>The Sample Size Problem</h3>' +
+        '<p>Most teams do not calculate sample size before starting. They run the test "until it looks significant." This is called p-hacking, and it inflates your false positive rate from 5% to sometimes 20-30%. Before you start any test, compute the minimum sample size for your desired effect size and power. There are formulas for this. Use them.</p>' +
+        '<h3>Statistical Significance vs. Practical Significance</h3>' +
+        '<p>A p-value of 0.03 means there is a 3% chance of seeing this result if the null hypothesis is true. It does NOT mean there is a 97% chance your variant is better. And even if the difference is "significant," a 0.1% conversion lift might not justify the engineering effort to implement it. Always pair statistical significance with practical impact.</p>' +
+        '<h3>The Confidence Interval Matters More</h3>' +
+        '<p>Instead of fixating on p-values, look at the confidence interval for the difference. If it ranges from -0.5% to +3.2%, the true effect could be negative. That is important context that a binary "significant/not significant" label hides.</p>' +
+        '<h3>What I Built</h3>' +
+        '<p>I created an interactive A/B test calculator on my <a href="analytics.html#statistics">analytics page</a>. Input your sample sizes and conversions, and it computes the z-statistic, p-value, confidence interval, and power estimate in real-time. It also shows a visualization comparing the two groups with error bars, so you can see the uncertainty visually.</p>' +
+        '<p>The goal is to make these statistics intuitive, not intimidating. Because every data-driven decision starts with understanding your uncertainty.</p>'
+    },
+    {
+      id: 'etl-pipelines-lessons',
+      title: 'What Building ETL Pipelines Taught Me About Data Quality',
+      excerpt: 'The unglamorous work of data engineering is where most ML projects succeed or fail. Here are the lessons I learned the hard way.',
+      tags: ['Data Engineering', 'ML'],
+      date: 'Feb 1, 2026',
+      readTime: '6 min read',
+      image: 'https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=600&h=300&fit=crop',
+      content: '<p>Nobody posts about ETL pipelines on LinkedIn. There are no viral threads about "how I cleaned 622K records." But data engineering is where most ML projects either succeed or quietly die. I have learned this across every project I have built.</p>' +
+        '<h3>The 80/20 Rule Is Real</h3>' +
+        '<p>In my mortgage analytics project, 80% of the time went into data preparation. Handling missing values across 60 months of panel data. Reconciling loan-level records with macroeconomic indicators. Engineering temporal features like loan age and maturity status. The actual modeling took maybe two days. The pipeline took three weeks.</p>' +
+        '<h3>Schema Errors Will Find You</h3>' +
+        '<p>In production ETL, the upstream schema will change without warning. A column gets renamed. A date format switches from MM/DD/YYYY to YYYY-MM-DD. A numeric field suddenly contains string values. If your pipeline does not validate schemas at ingestion, you will discover the problem three stages later when your model produces garbage predictions.</p>' +
+        '<h3>Logging Is Not Optional</h3>' +
+        '<p>Every stage of your pipeline should log what it received, what it dropped, and why. In my COVID-19 analysis, I logged null rates, outlier counts, and transformation summaries at each step. When the final model results looked suspicious, those logs let me trace the issue back to a specific country-level data quality problem in under an hour.</p>' +
+        '<h3>What Good Looks Like</h3>' +
+        '<p>I built an ETL pipeline simulator on my <a href="analytics.html#data-tools">analytics page</a> that demonstrates the stages visually: ingestion, cleaning, transformation, validation, and loading. Each stage logs realistic events like schema errors, dropped records, and validation failures. It is a simplified version of what real data engineering looks like.</p>' +
+        '<p>The takeaway: if you want to be a better data scientist, get comfortable with the plumbing. The model is the easy part.</p>'
+    },
+    {
       id: 'feature-engineering',
       title: 'Why Feature Engineering Is Still the Most Underrated Skill in ML',
       excerpt: 'Everyone talks about model architecture, but the real competitive edge in machine learning comes from understanding your data deeply enough to craft meaningful features.',
@@ -312,7 +371,7 @@
   }
 
   function handleShare(type, post, btn) {
-    var url = 'https://pratyusha108.github.io/blog.html#post-' + post.id;
+    var url = 'https://www.pratyushagorapalli.com/blog.html#post-' + post.id;
     var text = post.title + ' by Sai Pratyusha Gorapalli';
 
     if (type === 'linkedin') {
