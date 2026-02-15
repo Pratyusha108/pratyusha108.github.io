@@ -155,7 +155,7 @@
       </div>
       <div class="sql-chips">
         <button class="sql-chip" data-query="SELECT * FROM skills ORDER BY proficiency DESC">Top Skills</button>
-        <button class="sql-chip" data-query="SELECT * FROM projects WHERE domain = 'Machine Learning'">ML Projects</button>
+        <button class="sql-chip" data-query="SELECT name, domain, auc FROM projects WHERE auc > 0 ORDER BY auc DESC">Top AUC Scores</button>
         <button class="sql-chip" data-query="SELECT COUNT(*) FROM projects">Project Count</button>
         <button class="sql-chip" data-query="SELECT * FROM experience ORDER BY start_year DESC">Experience</button>
         <button class="sql-chip" data-query="SELECT * FROM education">Education</button>

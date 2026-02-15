@@ -1671,19 +1671,27 @@ body.light-mode .tech-item {
 }
 
 .otw-close {
-  background: none;
-  border: none;
-  color: rgba(255, 255, 255, 0.7);
-  font-size: 1.2rem;
+  background: rgba(255, 255, 255, 0.15);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  color: #fff;
+  font-size: 1rem;
   cursor: pointer;
-  padding: 0 4px;
+  padding: 2px 8px;
   line-height: 1;
-  transition: color 0.2s;
+  border-radius: 50%;
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.3s, transform 0.2s;
   flex-shrink: 0;
+  margin-left: 4px;
 }
 
 .otw-close:hover {
-  color: #fff;
+  background: rgba(255, 255, 255, 0.3);
+  transform: scale(1.1);
 }
 
 /* Push body content down to account for fixed banner */
