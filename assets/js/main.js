@@ -162,6 +162,41 @@ document.addEventListener('DOMContentLoaded', function () {
     statNumbers.forEach(function (el) { counterObserver.observe(el); });
   }
 
+  // ====== GENERIC METRIC NUMBER COUNTERS ======
+  var metricNumbers = document.querySelectorAll('.metric-number');
+  if (metricNumbers.length > 0) {
+    var metricObserver = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) {
+          var el = entry.target;
+          if (el.dataset.counted) return;
+          el.dataset.counted = 'true';
+
+          var target = parseFloat(el.getAttribute('data-target')) || 0;
+          var decimals = parseInt(el.getAttribute('data-decimals')) || 0;
+          var suffix = el.getAttribute('data-suffix') || '';
+          var duration = 2000;
+          var start = performance.now();
+
+          function animateMetric(now) {
+            var elapsed = now - start;
+            var progress = Math.min(elapsed / duration, 1);
+            var eased = 1 - Math.pow(1 - progress, 3);
+            var current = eased * target;
+            el.textContent = current.toFixed(decimals) + suffix;
+            if (progress < 1) {
+              requestAnimationFrame(animateMetric);
+            } else {
+              el.textContent = target.toFixed(decimals) + suffix;
+            }
+          }
+          requestAnimationFrame(animateMetric);
+        }
+      });
+    }, { threshold: 0.5 });
+    metricNumbers.forEach(function (el) { metricObserver.observe(el); });
+  }
+
   // ====== TYPEWRITER EFFECT ======
   var typewriterEl = document.getElementById('typewriter');
   if (typewriterEl) {

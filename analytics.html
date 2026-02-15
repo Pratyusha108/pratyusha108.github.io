@@ -1,0 +1,1070 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta property="og:title" content="Live Analytics - Sai Pratyusha Gorapalli">
+  <meta property="og:description" content="Interactive data science analytics: charts, ML demo, SQL terminal, and more">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://pratyusha108.github.io/analytics.html">
+  <meta property="og:image" content="https://pratyusha108.github.io/assets/images/profile-pic.png">
+  <title>Live Analytics - Sai Pratyusha Gorapalli</title>
+  <link rel="icon" type="image/svg+xml" href="assets/images/favicon.svg">
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#ff9f00">
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-68HP6VR0T6"></script>
+  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-68HP6VR0T6');</script>
+  <link rel="stylesheet" href="assets/css/base.css">
+  <link rel="stylesheet" href="assets/css/layout.css">
+  <link rel="stylesheet" href="assets/css/analytics.css">
+  <link rel="stylesheet" href="assets/css/chatbot.css">
+  <link rel="stylesheet" href="assets/css/stats.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+
+<body>
+
+  <!-- Page Loader -->
+  <div class="page-loader">
+    <div class="loader-spinner"></div>
+  </div>
+
+  <div class="scroll-progress"></div>
+
+  <!-- Full-page particle canvas -->
+  <canvas id="page-particle-canvas"></canvas>
+
+  <!-- Header -->
+  <header>
+    <h1>Live Analytics</h1>
+    <button class="hamburger"><i class="fas fa-bars"></i></button>
+    <nav>
+      <a href="index.html">Home</a> |
+      <a href="about.html">About</a> |
+      <a href="projects.html">Projects</a> |
+      <a href="analytics.html">Analytics</a> |
+      <a href="blog.html">Blog</a> |
+      <a href="contact.html">Contact</a> |
+      <a href="https://drive.google.com/file/d/18MX4_zaDu7gWHV5CO3ZDHE2YTWmbgXRm/view?usp=sharing"
+        target="_blank">Resume</a>
+    </nav>
+    <button id="dark-mode-toggle" class="dark-mode-toggle">
+      <span class="toggle-icon">&#127769;</span>
+    </button>
+  </header>
+
+  <!-- Section 1: Animated Impact Metrics Hero (ALWAYS VISIBLE) -->
+  <section class="analytics-hero fade-in">
+    <h2>Portfolio at a Glance</h2>
+    <p class="section-subtitle">Key metrics that define my data science journey</p>
+    <div class="metrics-grid">
+      <div class="metric-card">
+        <div class="metric-icon"><i class="fas fa-bullseye"></i></div>
+        <span class="metric-number" data-target="0.902" data-decimals="3">0</span>
+        <span class="metric-label">Best AUC Score</span>
+        <span class="metric-context">Direct Mail Response Model</span>
+      </div>
+      <div class="metric-card">
+        <div class="metric-icon"><i class="fas fa-project-diagram"></i></div>
+        <span class="metric-number" data-target="50" data-decimals="0" data-suffix="+">0</span>
+        <span class="metric-label">Projects Completed</span>
+        <span class="metric-context">ML, Analytics, DL, NLP</span>
+      </div>
+      <div class="metric-card">
+        <div class="metric-icon"><i class="fas fa-industry"></i></div>
+        <span class="metric-number" data-target="5" data-decimals="0">0</span>
+        <span class="metric-label">Industries Covered</span>
+        <span class="metric-context">Healthcare, Finance, Retail, Cyber, IoT</span>
+      </div>
+      <div class="metric-card">
+        <div class="metric-icon"><i class="fas fa-graduation-cap"></i></div>
+        <span class="metric-number" data-target="3" data-decimals="0">0</span>
+        <span class="metric-label">Degrees Earned</span>
+        <span class="metric-context">M.S., MBA, B.Tech</span>
+      </div>
+      <div class="metric-card">
+        <div class="metric-icon"><i class="fab fa-python"></i></div>
+        <span class="metric-number" data-target="92" data-decimals="0" data-suffix="%">0</span>
+        <span class="metric-label">Python Proficiency</span>
+        <span class="metric-context">Pandas, NumPy, Scikit-learn</span>
+      </div>
+      <div class="metric-card">
+        <div class="metric-icon"><i class="fas fa-certificate"></i></div>
+        <span class="metric-number" data-target="5" data-decimals="0" data-suffix="+">0</span>
+        <span class="metric-label">Certifications</span>
+        <span class="metric-context">Azure DP-100, Python, ML</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- Tab Navigation Bar -->
+  <div class="analytics-tabs" id="analytics-tabs">
+    <button class="tab-btn active" data-tab="dashboard"><i class="fas fa-chart-pie"></i> Dashboard</button>
+    <button class="tab-btn" data-tab="ml-lab"><i class="fas fa-brain"></i> ML Lab</button>
+    <button class="tab-btn" data-tab="deep-learning"><i class="fas fa-network-wired"></i> Deep Learning</button>
+    <button class="tab-btn" data-tab="statistics"><i class="fas fa-calculator"></i> Statistics</button>
+    <button class="tab-btn" data-tab="data-story"><i class="fas fa-book-open"></i> Data Story</button>
+    <button class="tab-btn" data-tab="data-tools"><i class="fas fa-terminal"></i> Data Tools</button>
+  </div>
+
+  <!-- ==================== DASHBOARD TAB ==================== -->
+  <div class="tab-panel active" id="tab-dashboard">
+
+    <!-- Interactive Charts -->
+    <section class="analytics-charts fade-in">
+      <h2>Skills & Growth Visualized</h2>
+      <p class="section-subtitle">Interactive charts powered by Chart.js</p>
+      <div class="charts-grid">
+        <div class="chart-card">
+          <h3><i class="fas fa-chart-bar"></i> Technical Skills</h3>
+          <div class="chart-wrapper">
+            <canvas id="skills-bar-chart"></canvas>
+          </div>
+        </div>
+        <div class="chart-card">
+          <h3><i class="fas fa-chart-pie"></i> Projects by Domain</h3>
+          <div class="chart-wrapper">
+            <canvas id="domain-doughnut-chart"></canvas>
+          </div>
+        </div>
+        <div class="chart-card">
+          <h3><i class="fas fa-broadcast-tower"></i> Technology Radar</h3>
+          <div class="chart-wrapper">
+            <canvas id="tech-radar-chart"></canvas>
+          </div>
+        </div>
+        <div class="chart-card">
+          <h3><i class="fas fa-chart-line"></i> Career Growth Timeline</h3>
+          <div class="chart-wrapper">
+            <canvas id="career-timeline-chart"></canvas>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Power BI Embed -->
+    <section class="analytics-powerbi fade-in">
+      <h2>Business Intelligence Dashboards</h2>
+      <p class="section-subtitle">Real dashboards built with Power BI and Tableau</p>
+      <div class="powerbi-frame">
+        <div class="powerbi-placeholder">
+          <i class="fas fa-chart-area"></i>
+          <h3>Power BI Dashboard</h3>
+          <p>Interactive dashboard embed coming soon. In the meantime, explore my published dashboards below.</p>
+          <div class="powerbi-links">
+            <a href="https://drive.google.com/file/d/1GHm2IiOPHY2E20npWVpYM4LzpuWO0a5o/view?usp=sharing" target="_blank" class="powerbi-link">
+              <i class="fas fa-file-pdf"></i> Ninja Warriors Dashboard (PDF)
+            </a>
+            <a href="https://github.com/Pratyusha108/data-visualization-tableau" target="_blank" class="powerbi-link">
+              <i class="fab fa-github"></i> Tableau Projects on GitHub
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </div>
+
+  <!-- ==================== ML LAB TAB ==================== -->
+  <div class="tab-panel" id="tab-ml-lab">
+
+    <!-- ML Prediction Demo (existing) -->
+    <section class="analytics-ml fade-in">
+      <h2>ML in Action: Smartphone Resale Pricing</h2>
+      <p class="section-subtitle">Client-side linear regression with pre-computed coefficients</p>
+      <div class="ml-demo-container">
+        <div class="ml-input-panel">
+          <h3><i class="fas fa-sliders-h"></i> Input Features</h3>
+          <div class="ml-form">
+            <div class="ml-field">
+              <label for="ml-brand">Brand</label>
+              <select id="ml-brand">
+                <option value="samsung">Samsung</option>
+                <option value="apple">Apple</option>
+                <option value="xiaomi">Xiaomi</option>
+                <option value="oneplus">OnePlus</option>
+                <option value="google">Google</option>
+              </select>
+            </div>
+            <div class="ml-field">
+              <label for="ml-ram">RAM (GB)</label>
+              <select id="ml-ram">
+                <option value="4">4 GB</option>
+                <option value="6">6 GB</option>
+                <option value="8" selected>8 GB</option>
+                <option value="12">12 GB</option>
+                <option value="16">16 GB</option>
+              </select>
+            </div>
+            <div class="ml-field">
+              <label for="ml-storage">Storage (GB)</label>
+              <select id="ml-storage">
+                <option value="64">64 GB</option>
+                <option value="128" selected>128 GB</option>
+                <option value="256">256 GB</option>
+                <option value="512">512 GB</option>
+                <option value="1024">1 TB</option>
+              </select>
+            </div>
+            <div class="ml-field">
+              <label for="ml-age">Age (Years)</label>
+              <select id="ml-age">
+                <option value="0.5">6 months</option>
+                <option value="1" selected>1 year</option>
+                <option value="2">2 years</option>
+                <option value="3">3 years</option>
+                <option value="4">4 years</option>
+                <option value="5">5 years</option>
+              </select>
+            </div>
+            <div class="ml-field">
+              <label for="ml-condition">Condition (1-5)</label>
+              <select id="ml-condition">
+                <option value="1">1 - Poor</option>
+                <option value="2">2 - Fair</option>
+                <option value="3">3 - Good</option>
+                <option value="4" selected>4 - Very Good</option>
+                <option value="5">5 - Excellent</option>
+              </select>
+            </div>
+            <button id="ml-predict-btn" class="ml-predict-btn">
+              <i class="fas fa-magic"></i> Predict Price
+            </button>
+          </div>
+        </div>
+        <div class="ml-output-panel">
+          <h3><i class="fas fa-chart-line"></i> Prediction Result</h3>
+          <div class="ml-result" id="ml-result">
+            <div class="ml-price-display">
+              <span class="ml-price-label">Estimated Resale Price</span>
+              <span class="ml-price-value" id="ml-price">$---</span>
+            </div>
+            <div class="ml-confidence-section">
+              <span class="ml-conf-label">Model Confidence</span>
+              <canvas id="ml-confidence-gauge" width="160" height="90"></canvas>
+              <span class="ml-conf-value" id="ml-conf-text">---%</span>
+            </div>
+            <div class="ml-factors" id="ml-factors">
+              <h4>Factor Breakdown</h4>
+              <table class="ml-factors-table">
+                <thead><tr><th>Factor</th><th>Impact</th></tr></thead>
+                <tbody id="ml-factors-body">
+                  <tr><td colspan="2" class="ml-placeholder-text">Click "Predict Price" to see results</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Confusion Matrix Explorer -->
+    <section class="feature-section fade-in" id="confusion-matrix-section">
+      <h2>Confusion Matrix Explorer</h2>
+      <p class="section-subtitle">Adjust the classification threshold and watch metrics change in real-time</p>
+      <div class="feature-container">
+        <div class="feature-controls">
+          <div class="threshold-control">
+            <label for="cm-threshold">Classification Threshold: <span id="cm-threshold-val">0.50</span></label>
+            <input type="range" id="cm-threshold" min="0" max="1" step="0.01" value="0.50">
+          </div>
+          <div class="cm-metrics-grid">
+            <div class="cm-metric"><span class="cm-metric-val" id="cm-accuracy">--</span><span class="cm-metric-lbl">Accuracy</span></div>
+            <div class="cm-metric"><span class="cm-metric-val" id="cm-precision">--</span><span class="cm-metric-lbl">Precision</span></div>
+            <div class="cm-metric"><span class="cm-metric-val" id="cm-recall">--</span><span class="cm-metric-lbl">Recall</span></div>
+            <div class="cm-metric"><span class="cm-metric-val" id="cm-f1">--</span><span class="cm-metric-lbl">F1 Score</span></div>
+          </div>
+        </div>
+        <div class="cm-visuals">
+          <div class="cm-matrix-wrap">
+            <h4>Confusion Matrix</h4>
+            <div class="cm-matrix">
+              <div class="cm-labels-left">
+                <span>Actual 1</span>
+                <span>Actual 0</span>
+              </div>
+              <div class="cm-grid">
+                <div class="cm-header-row">
+                  <span>Pred 1</span>
+                  <span>Pred 0</span>
+                </div>
+                <div class="cm-cell cm-tp" id="cm-tp">TP: 0</div>
+                <div class="cm-cell cm-fn" id="cm-fn">FN: 0</div>
+                <div class="cm-cell cm-fp" id="cm-fp">FP: 0</div>
+                <div class="cm-cell cm-tn" id="cm-tn">TN: 0</div>
+              </div>
+            </div>
+          </div>
+          <div class="cm-roc-wrap">
+            <h4>ROC Curve <span class="cm-auc-badge" id="cm-auc-badge">AUC: --</span></h4>
+            <canvas id="cm-roc-canvas" width="300" height="300"></canvas>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- K-Means Clustering Playground -->
+    <section class="feature-section fade-in" id="kmeans-section">
+      <h2>K-Means Clustering Playground</h2>
+      <p class="section-subtitle">Click on the canvas to place data points, then run K-Means to see clustering in action</p>
+      <div class="feature-container">
+        <div class="kmeans-controls">
+          <div class="kmeans-k-select">
+            <label>Number of Clusters (K):</label>
+            <div class="kmeans-k-btns">
+              <button class="kmeans-k-btn" data-k="2">2</button>
+              <button class="kmeans-k-btn active" data-k="3">3</button>
+              <button class="kmeans-k-btn" data-k="4">4</button>
+              <button class="kmeans-k-btn" data-k="5">5</button>
+              <button class="kmeans-k-btn" data-k="6">6</button>
+            </div>
+          </div>
+          <div class="kmeans-actions">
+            <button id="kmeans-run" class="feature-btn primary"><i class="fas fa-play"></i> Run K-Means</button>
+            <button id="kmeans-random" class="feature-btn"><i class="fas fa-random"></i> Random Points</button>
+            <button id="kmeans-clear" class="feature-btn"><i class="fas fa-trash"></i> Clear</button>
+          </div>
+          <div class="kmeans-status" id="kmeans-status">Click canvas to add points</div>
+        </div>
+        <div class="kmeans-canvas-wrap">
+          <canvas id="kmeans-canvas" width="600" height="400"></canvas>
+        </div>
+      </div>
+    </section>
+
+    <!-- Decision Tree Builder -->
+    <section class="feature-section fade-in" id="dtree-section">
+      <h2>Decision Tree Builder</h2>
+      <p class="section-subtitle">Watch a machine learning algorithm learn simple rules to predict whether to play tennis</p>
+      <div class="feature-container">
+
+        <!-- How it works explainer -->
+        <div class="dtree-explainer">
+          <div class="dtree-explainer-icon"><i class="fas fa-lightbulb"></i></div>
+          <div class="dtree-explainer-text">
+            <strong>How does a Decision Tree work?</strong>
+            It asks a series of yes/no questions about the data (like "Is it sunny?") to make a prediction.
+            The algorithm picks the question that best separates the outcomes at each step.
+            Think of it like a game of 20 Questions, but the computer finds the most useful questions automatically.
+          </div>
+        </div>
+
+        <!-- Controls -->
+        <div class="dtree-controls">
+          <button id="dtree-auto" class="feature-btn primary"><i class="fas fa-play"></i> Build Tree Step-by-Step</button>
+          <button id="dtree-instant" class="feature-btn"><i class="fas fa-bolt"></i> Build Instantly</button>
+          <button id="dtree-reset" class="feature-btn"><i class="fas fa-undo"></i> Reset</button>
+        </div>
+
+        <!-- Step narrator -->
+        <div class="dtree-narrator" id="dtree-narrator" style="display:none;">
+          <div class="dtree-narrator-icon"><i class="fas fa-robot"></i></div>
+          <div class="dtree-narrator-text" id="dtree-narrator-text"></div>
+        </div>
+
+        <div class="dtree-layout">
+          <div class="dtree-data-wrap">
+            <h4><i class="fas fa-table"></i> Training Data: Should We Play Tennis?</h4>
+            <div class="dtree-table-scroll">
+              <table class="dtree-dataset" id="dtree-dataset">
+                <thead>
+                  <tr><th>Outlook</th><th>Temp</th><th>Humidity</th><th>Wind</th><th>Play?</th></tr>
+                </thead>
+                <tbody></tbody>
+              </table>
+            </div>
+            <div class="dtree-data-summary" id="dtree-data-summary">14 days of weather data with outcomes</div>
+          </div>
+          <div class="dtree-tree-wrap">
+            <h4><i class="fas fa-sitemap"></i> Decision Rules Learned</h4>
+            <div class="dtree-tree" id="dtree-tree">
+              <div class="dtree-prompt" id="dtree-prompt">Click "Build Tree Step-by-Step" to watch the algorithm learn rules from the data</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Bias/Fairness Detector -->
+    <section class="feature-section fade-in" id="bias-section">
+      <h2>Bias & Fairness Detector</h2>
+      <p class="section-subtitle">Analyze ML model fairness across demographic groups in a loan approval scenario</p>
+      <div class="feature-container">
+        <div class="bias-controls">
+          <div class="bias-scenario-select">
+            <label for="bias-scenario">Scenario:</label>
+            <select id="bias-scenario">
+              <option value="default">Default Model</option>
+              <option value="biased">Biased Model</option>
+              <option value="fair">Fair Model</option>
+            </select>
+          </div>
+        </div>
+        <div class="bias-results">
+          <div class="bias-metrics-row">
+            <div class="bias-metric-card">
+              <div class="bias-traffic-light" id="bias-di-light"></div>
+              <span class="bias-metric-val" id="bias-di-val">--</span>
+              <span class="bias-metric-name">Disparate Impact Ratio</span>
+              <span class="bias-metric-tip" title="Ratio of approval rates between groups. Fair range: 0.8 - 1.25"><i class="fas fa-info-circle"></i> Should be 0.8 - 1.25</span>
+            </div>
+            <div class="bias-metric-card">
+              <div class="bias-traffic-light" id="bias-spd-light"></div>
+              <span class="bias-metric-val" id="bias-spd-val">--</span>
+              <span class="bias-metric-name">Statistical Parity Diff</span>
+              <span class="bias-metric-tip" title="Difference in approval rates between groups. Fair range: -0.1 to 0.1"><i class="fas fa-info-circle"></i> Should be within +/-0.1</span>
+            </div>
+            <div class="bias-metric-card">
+              <div class="bias-traffic-light" id="bias-eod-light"></div>
+              <span class="bias-metric-val" id="bias-eod-val">--</span>
+              <span class="bias-metric-name">Equal Opportunity Diff</span>
+              <span class="bias-metric-tip" title="Difference in true positive rates between groups. Fair range: -0.1 to 0.1"><i class="fas fa-info-circle"></i> Should be within +/-0.1</span>
+            </div>
+          </div>
+          <div class="bias-chart-row">
+            <div class="bias-chart-card">
+              <h4>Approval Rates by Group</h4>
+              <canvas id="bias-approval-chart"></canvas>
+            </div>
+            <div class="bias-chart-card">
+              <h4>True Positive Rates by Group</h4>
+              <canvas id="bias-tpr-chart"></canvas>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Regression Playground -->
+    <section class="feature-section fade-in" id="regression-section">
+      <h2>Regression Playground</h2>
+      <p class="section-subtitle">Click to add data points, then see how different regression models fit the data</p>
+      <div class="feature-container">
+        <div class="reg-controls">
+          <div class="reg-type-select">
+            <label>Regression Type:</label>
+            <div class="reg-type-btns">
+              <button class="reg-type-btn active" data-type="linear">Linear</button>
+              <button class="reg-type-btn" data-type="quadratic">Quadratic</button>
+              <button class="reg-type-btn" data-type="cubic">Cubic</button>
+            </div>
+          </div>
+          <div class="reg-actions">
+            <button id="reg-random" class="feature-btn"><i class="fas fa-random"></i> Random Points</button>
+            <button id="reg-clear" class="feature-btn"><i class="fas fa-trash"></i> Clear</button>
+          </div>
+          <div class="reg-stats" id="reg-stats">
+            <span class="reg-stat-item"><strong>Equation:</strong> <span id="reg-equation">y = ?</span></span>
+            <span class="reg-stat-item"><strong>R&sup2;:</strong> <span id="reg-r2">--</span></span>
+          </div>
+        </div>
+        <div class="reg-canvas-wrap">
+          <canvas id="reg-canvas" width="700" height="400"></canvas>
+        </div>
+      </div>
+    </section>
+
+  </div>
+
+  <!-- ==================== DEEP LEARNING TAB ==================== -->
+  <div class="tab-panel" id="tab-deep-learning">
+
+    <!-- Neural Network Playground -->
+    <section class="feature-section fade-in" id="neural-net-section">
+      <h2>Neural Network Playground</h2>
+      <p class="section-subtitle">Build a network, pick a dataset, and watch it learn decision boundaries in real-time</p>
+      <div class="feature-container">
+
+        <div class="dtree-explainer">
+          <div class="dtree-explainer-icon"><i class="fas fa-lightbulb"></i></div>
+          <div class="dtree-explainer-text">
+            <strong>What is a Neural Network?</strong>
+            A neural network is layers of artificial "neurons" that learn to recognize patterns by adjusting the connections between them.
+            Here, the network learns to separate orange dots from blue dots by drawing a <strong>decision boundary</strong>.
+            Try "Spiral" for a challenge that requires more layers to solve. Watch how adding neurons and layers helps it learn more complex shapes.
+          </div>
+        </div>
+
+        <div class="nn-controls">
+          <div class="nn-config-group">
+            <div class="nn-field">
+              <label for="nn-dataset">Dataset:</label>
+              <select id="nn-dataset">
+                <option value="circles">Circles</option>
+                <option value="xor">XOR</option>
+                <option value="spiral">Spiral</option>
+              </select>
+            </div>
+            <div class="nn-field">
+              <label for="nn-hidden">Hidden Layers:</label>
+              <select id="nn-hidden">
+                <option value="1">1 Layer</option>
+                <option value="2" selected>2 Layers</option>
+                <option value="3">3 Layers</option>
+              </select>
+            </div>
+            <div class="nn-field">
+              <label for="nn-neurons">Neurons/Layer:</label>
+              <select id="nn-neurons">
+                <option value="3">3</option>
+                <option value="4" selected>4</option>
+                <option value="6">6</option>
+                <option value="8">8</option>
+              </select>
+            </div>
+            <div class="nn-field">
+              <label for="nn-lr">Learning Rate:</label>
+              <select id="nn-lr">
+                <option value="0.01">0.01</option>
+                <option value="0.03" selected>0.03</option>
+                <option value="0.1">0.1</option>
+                <option value="0.3">0.3</option>
+              </select>
+            </div>
+          </div>
+          <div class="nn-actions">
+            <button id="nn-train" class="feature-btn primary"><i class="fas fa-play"></i> Train</button>
+            <button id="nn-reset" class="feature-btn"><i class="fas fa-undo"></i> Reset</button>
+          </div>
+          <div class="nn-metrics">
+            <span class="nn-metric-item">Epoch: <strong id="nn-epoch">0</strong></span>
+            <span class="nn-metric-item">Loss: <strong id="nn-loss">--</strong></span>
+            <span class="nn-metric-item" id="nn-status">Ready</span>
+          </div>
+        </div>
+        <div class="nn-visuals">
+          <div class="nn-canvas-wrap">
+            <canvas id="nn-canvas" width="400" height="400"></canvas>
+          </div>
+          <div class="nn-arch-wrap">
+            <h4>Network Architecture</h4>
+            <canvas id="nn-arch-canvas" width="300" height="300"></canvas>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Live Sentiment Analyzer -->
+    <section class="feature-section fade-in" id="sentiment-section">
+      <h2>Live Sentiment Analyzer</h2>
+      <p class="section-subtitle">Type any text and watch NLP break it down word by word</p>
+      <div class="feature-container">
+
+        <div class="dtree-explainer">
+          <div class="dtree-explainer-icon"><i class="fas fa-lightbulb"></i></div>
+          <div class="dtree-explainer-text">
+            <strong>What is Sentiment Analysis?</strong>
+            Sentiment analysis is how machines understand emotions in text. Each word carries a positive, negative, or neutral weight.
+            The model also handles <strong>negation</strong> ("not good" flips the score).
+            In real projects, I use this with BERT and transformer models for customer feedback analysis, social media monitoring, and brand tracking.
+          </div>
+        </div>
+
+        <div class="sent-input-wrap">
+          <textarea id="sentiment-input" class="sent-textarea" placeholder="Type a sentence here... e.g. 'I absolutely love this amazing product but the delivery was terrible'" rows="3"></textarea>
+          <button id="sentiment-analyze" class="feature-btn primary full-width"><i class="fas fa-search"></i> Analyze Sentiment</button>
+        </div>
+        <div class="sent-results" id="sent-results" style="display:none;">
+          <div class="sent-gauge-wrap">
+            <canvas id="sentiment-gauge" width="200" height="120"></canvas>
+            <div class="sent-score-label">
+              <span class="sent-verdict" id="sent-verdict">--</span>
+              <span class="sent-score-num" id="sent-score">0.00</span>
+            </div>
+          </div>
+          <div class="sent-breakdown">
+            <h4>Word-by-Word Breakdown</h4>
+            <div class="sent-words" id="sent-words"></div>
+          </div>
+          <div class="sent-stats-row">
+            <div class="sent-stat"><span class="sent-stat-val" id="sent-pos-count">0</span><span class="sent-stat-lbl">Positive Words</span></div>
+            <div class="sent-stat"><span class="sent-stat-val" id="sent-neg-count">0</span><span class="sent-stat-lbl">Negative Words</span></div>
+            <div class="sent-stat"><span class="sent-stat-val" id="sent-neu-count">0</span><span class="sent-stat-lbl">Neutral Words</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Gradient Descent Visualizer -->
+    <section class="feature-section fade-in" id="gradient-section">
+      <h2>Gradient Descent Visualizer</h2>
+      <p class="section-subtitle">Watch how gradient descent navigates a loss surface to find the minimum</p>
+      <div class="feature-container">
+
+        <div class="dtree-explainer">
+          <div class="dtree-explainer-icon"><i class="fas fa-lightbulb"></i></div>
+          <div class="dtree-explainer-text">
+            <strong>What is Gradient Descent?</strong>
+            Gradient descent is the engine behind almost all machine learning. Think of it like rolling a ball downhill to find the lowest point.
+            The "loss surface" is a landscape where lower = better model performance.
+            The <strong>learning rate</strong> controls step size: too big and it overshoots, too small and it takes forever. Try different values to see the tradeoff.
+          </div>
+        </div>
+
+        <div class="gd-controls">
+          <div class="gd-field">
+            <label for="gd-function">Loss Function:</label>
+            <select id="gd-function">
+              <option value="bowl">Simple Bowl (x&sup2; + y&sup2;)</option>
+              <option value="rosenbrock">Rosenbrock Valley</option>
+              <option value="saddle">Saddle Point (x&sup2; - y&sup2;)</option>
+            </select>
+          </div>
+          <div class="gd-field">
+            <label for="gd-lr">Learning Rate: <span id="gd-lr-val">0.05</span></label>
+            <input type="range" id="gd-lr" min="0.001" max="0.2" step="0.001" value="0.05">
+          </div>
+          <div class="gd-actions">
+            <button id="gd-start" class="feature-btn primary"><i class="fas fa-play"></i> Start Descent</button>
+            <button id="gd-reset" class="feature-btn"><i class="fas fa-undo"></i> Reset</button>
+          </div>
+          <div class="gd-metrics">
+            <span class="gd-metric-item">Steps: <strong id="gd-steps">0</strong></span>
+            <span class="gd-metric-item">Loss: <strong id="gd-loss">--</strong></span>
+            <span class="gd-metric-item">Position: (<strong id="gd-pos-x">--</strong>, <strong id="gd-pos-y">--</strong>)</span>
+          </div>
+        </div>
+        <div class="gd-canvas-wrap">
+          <canvas id="gd-canvas" width="600" height="400"></canvas>
+        </div>
+      </div>
+    </section>
+
+  </div>
+
+  <!-- ==================== STATISTICS TAB ==================== -->
+  <div class="tab-panel" id="tab-statistics">
+
+    <!-- A/B Test Calculator -->
+    <section class="feature-section fade-in" id="abtest-section">
+      <h2>A/B Test Calculator</h2>
+      <p class="section-subtitle">Enter your experiment data and determine statistical significance</p>
+      <div class="feature-container">
+        <div class="abtest-inputs">
+          <div class="abtest-group">
+            <h4><i class="fas fa-flask"></i> Control (A)</h4>
+            <div class="abtest-field">
+              <label for="ab-sampleA">Sample Size</label>
+              <input type="number" id="ab-sampleA" value="5000" min="1">
+            </div>
+            <div class="abtest-field">
+              <label for="ab-convA">Conversions</label>
+              <input type="number" id="ab-convA" value="250" min="0">
+            </div>
+          </div>
+          <div class="abtest-vs"><span>VS</span></div>
+          <div class="abtest-group">
+            <h4><i class="fas fa-vial"></i> Variant (B)</h4>
+            <div class="abtest-field">
+              <label for="ab-sampleB">Sample Size</label>
+              <input type="number" id="ab-sampleB" value="5000" min="1">
+            </div>
+            <div class="abtest-field">
+              <label for="ab-convB">Conversions</label>
+              <input type="number" id="ab-convB" value="310" min="0">
+            </div>
+          </div>
+        </div>
+        <button id="ab-calculate" class="feature-btn primary full-width"><i class="fas fa-calculator"></i> Calculate Significance</button>
+        <div class="abtest-results" id="abtest-results">
+          <div class="abtest-verdict" id="ab-verdict"></div>
+          <div class="abtest-stats-grid">
+            <div class="abtest-stat"><span class="abtest-stat-val" id="ab-rateA">--</span><span class="abtest-stat-lbl">Rate A</span></div>
+            <div class="abtest-stat"><span class="abtest-stat-val" id="ab-rateB">--</span><span class="abtest-stat-lbl">Rate B</span></div>
+            <div class="abtest-stat"><span class="abtest-stat-val" id="ab-lift">--</span><span class="abtest-stat-lbl">Relative Lift</span></div>
+            <div class="abtest-stat"><span class="abtest-stat-val" id="ab-pvalue">--</span><span class="abtest-stat-lbl">p-value</span></div>
+            <div class="abtest-stat"><span class="abtest-stat-val" id="ab-zstat">--</span><span class="abtest-stat-lbl">Z-statistic</span></div>
+            <div class="abtest-stat"><span class="abtest-stat-val" id="ab-ci">--</span><span class="abtest-stat-lbl">95% CI</span></div>
+          </div>
+          <div class="abtest-chart-wrap">
+            <canvas id="ab-chart"></canvas>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Monte Carlo Simulator -->
+    <section class="feature-section fade-in" id="montecarlo-section">
+      <h2>Monte Carlo Simulator</h2>
+      <p class="section-subtitle">Simulate investment portfolio returns using random walks</p>
+      <div class="feature-container">
+        <div class="mc-inputs">
+          <div class="mc-field">
+            <label for="mc-investment">Initial Investment ($)</label>
+            <input type="number" id="mc-investment" value="10000" min="100">
+          </div>
+          <div class="mc-field">
+            <label for="mc-return">Expected Annual Return (%)</label>
+            <input type="number" id="mc-return" value="8" step="0.5">
+          </div>
+          <div class="mc-field">
+            <label for="mc-volatility">Volatility (%)</label>
+            <input type="number" id="mc-volatility" value="15" step="0.5">
+          </div>
+          <div class="mc-field">
+            <label for="mc-years">Investment Years</label>
+            <input type="number" id="mc-years" value="10" min="1" max="30">
+          </div>
+          <div class="mc-field">
+            <label for="mc-sims">Simulations</label>
+            <input type="number" id="mc-sims" value="200" min="50" max="1000" step="50">
+          </div>
+        </div>
+        <button id="mc-run" class="feature-btn primary full-width"><i class="fas fa-play"></i> Run Simulation</button>
+        <div class="mc-visuals">
+          <div class="mc-canvas-wrap">
+            <canvas id="mc-paths-canvas" width="700" height="350"></canvas>
+          </div>
+          <div class="mc-results" id="mc-results">
+            <div class="mc-stat"><span class="mc-stat-val" id="mc-mean">--</span><span class="mc-stat-lbl">Mean Final Value</span></div>
+            <div class="mc-stat"><span class="mc-stat-val" id="mc-median">--</span><span class="mc-stat-lbl">Median Final Value</span></div>
+            <div class="mc-stat"><span class="mc-stat-val" id="mc-p5">--</span><span class="mc-stat-lbl">5th Percentile</span></div>
+            <div class="mc-stat"><span class="mc-stat-val" id="mc-p95">--</span><span class="mc-stat-lbl">95th Percentile</span></div>
+            <div class="mc-stat"><span class="mc-stat-val" id="mc-loss-prob">--</span><span class="mc-stat-lbl">Prob. of Loss</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Bayesian Visualizer -->
+    <section class="feature-section fade-in" id="bayesian-section">
+      <h2>Bayesian Visualizer</h2>
+      <p class="section-subtitle">See how prior beliefs update with evidence using Beta-Binomial conjugacy</p>
+      <div class="feature-container">
+        <div class="bayes-controls">
+          <div class="bayes-group">
+            <h4>Prior: Beta(alpha, beta)</h4>
+            <div class="bayes-slider">
+              <label>Alpha: <span id="bayes-alpha-val">2</span></label>
+              <input type="range" id="bayes-alpha" min="1" max="30" value="2">
+            </div>
+            <div class="bayes-slider">
+              <label>Beta: <span id="bayes-beta-val">5</span></label>
+              <input type="range" id="bayes-beta" min="1" max="30" value="5">
+            </div>
+          </div>
+          <div class="bayes-group">
+            <h4>Observed Evidence</h4>
+            <div class="bayes-field">
+              <label for="bayes-successes">Successes:</label>
+              <input type="number" id="bayes-successes" value="8" min="0" max="500">
+            </div>
+            <div class="bayes-field">
+              <label for="bayes-trials">Total Trials:</label>
+              <input type="number" id="bayes-trials" value="20" min="0" max="500">
+            </div>
+          </div>
+          <div class="bayes-params" id="bayes-params">
+            <div><strong>Prior:</strong> Beta(<span id="bp-prior-a">2</span>, <span id="bp-prior-b">5</span>)</div>
+            <div><strong>Posterior:</strong> Beta(<span id="bp-post-a">10</span>, <span id="bp-post-b">17</span>)</div>
+            <div><strong>Posterior Mean:</strong> <span id="bp-post-mean">0.370</span></div>
+          </div>
+        </div>
+        <div class="bayes-canvas-wrap">
+          <canvas id="bayes-canvas" width="700" height="350"></canvas>
+          <div class="bayes-legend">
+            <span class="bayes-legend-item"><span class="bayes-dot prior"></span> Prior</span>
+            <span class="bayes-legend-item"><span class="bayes-dot likelihood"></span> Likelihood</span>
+            <span class="bayes-legend-item"><span class="bayes-dot posterior"></span> Posterior</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Time Series Decomposition -->
+    <section class="feature-section fade-in" id="timeseries-section">
+      <h2>Time Series Decomposition</h2>
+      <p class="section-subtitle">Decompose airline passenger data into trend, seasonal, and residual components</p>
+      <div class="feature-container">
+        <div class="ts-controls">
+          <div class="ts-slider">
+            <label>Moving Average Window: <span id="ts-window-val">12</span> months</label>
+            <input type="range" id="ts-window" min="6" max="24" value="12">
+          </div>
+        </div>
+        <div class="ts-charts">
+          <div class="ts-chart-card">
+            <h4>Original + Forecast</h4>
+            <div class="ts-chart-wrap"><canvas id="ts-original-chart"></canvas></div>
+          </div>
+          <div class="ts-chart-card">
+            <h4>Trend</h4>
+            <div class="ts-chart-wrap"><canvas id="ts-trend-chart"></canvas></div>
+          </div>
+          <div class="ts-chart-card">
+            <h4>Seasonal</h4>
+            <div class="ts-chart-wrap"><canvas id="ts-seasonal-chart"></canvas></div>
+          </div>
+          <div class="ts-chart-card">
+            <h4>Residual</h4>
+            <div class="ts-chart-wrap"><canvas id="ts-residual-chart"></canvas></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Correlation Heatmap Explorer -->
+    <section class="feature-section fade-in" id="correlation-section">
+      <h2>Correlation Heatmap Explorer</h2>
+      <p class="section-subtitle">Explore variable relationships visually -- click any cell to see the scatter plot</p>
+      <div class="feature-container">
+        <div class="corr-controls">
+          <div class="corr-dataset-select">
+            <label for="corr-dataset">Dataset:</label>
+            <select id="corr-dataset">
+              <option value="auto">Auto MPG (cars)</option>
+              <option value="health">Health Metrics</option>
+              <option value="housing">Housing Prices</option>
+            </select>
+          </div>
+          <div class="corr-info" id="corr-info">Hover over cells to see correlation values. Click to view scatter plot.</div>
+        </div>
+        <div class="corr-visuals">
+          <div class="corr-heatmap-wrap">
+            <canvas id="corr-canvas" width="420" height="420"></canvas>
+          </div>
+          <div class="corr-scatter-wrap">
+            <h4 id="corr-scatter-title">Select a cell to view scatter plot</h4>
+            <canvas id="corr-scatter-canvas" width="350" height="300"></canvas>
+            <div class="corr-scatter-stats" id="corr-scatter-stats"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </div>
+
+  <!-- ==================== DATA STORY TAB ==================== -->
+  <div class="tab-panel" id="tab-data-story">
+
+    <section class="analytics-story fade-in">
+      <h2>Data Story: Direct Mail Response Optimization</h2>
+      <p class="section-subtitle">Scroll through a real ML project from problem to result</p>
+      <div class="story-progress-bar">
+        <div class="story-progress-fill" id="story-progress-fill"></div>
+        <div class="story-steps">
+          <span class="story-step active" data-step="0">Problem</span>
+          <span class="story-step" data-step="1">Data</span>
+          <span class="story-step" data-step="2">Features</span>
+          <span class="story-step" data-step="3">Model</span>
+          <span class="story-step" data-step="4">Result</span>
+        </div>
+      </div>
+      <div class="story-chapters">
+        <div class="story-chapter" data-chapter="0">
+          <div class="chapter-icon"><i class="fas fa-exclamation-triangle"></i></div>
+          <h3>The Problem</h3>
+          <p>A software company was spending heavily on direct mail campaigns but seeing diminishing returns. Only 5.1% of recipients were responding, wasting budget on uninterested prospects. The goal: build a model to predict who will respond, maximizing ROI.</p>
+          <div class="chapter-metric">
+            <span class="chapter-metric-value">5.1%</span>
+            <span class="chapter-metric-label">Baseline Response Rate</span>
+          </div>
+        </div>
+        <div class="story-chapter" data-chapter="1">
+          <div class="chapter-icon"><i class="fas fa-database"></i></div>
+          <h3>The Data</h3>
+          <p>Collected 9,517 customer records with 41 features including demographics, purchase history, web activity, and prior campaign responses. Cleaned missing values, handled outliers, and performed stratified sampling to maintain class balance.</p>
+          <div class="chapter-metric">
+            <span class="chapter-metric-value">9,517</span>
+            <span class="chapter-metric-label">Customer Records Analyzed</span>
+          </div>
+        </div>
+        <div class="story-chapter" data-chapter="2">
+          <div class="chapter-icon"><i class="fas fa-cogs"></i></div>
+          <h3>Feature Engineering</h3>
+          <p>Applied PCA to reduce 41 features to 12 principal components capturing 87% of variance. Created interaction terms, applied log transforms to skewed distributions, and used clustering to segment customers into 4 behavioral groups.</p>
+          <div class="chapter-metric">
+            <span class="chapter-metric-value">87%</span>
+            <span class="chapter-metric-label">Variance Captured (12 PCs)</span>
+          </div>
+        </div>
+        <div class="story-chapter" data-chapter="3">
+          <div class="chapter-icon"><i class="fas fa-brain"></i></div>
+          <h3>The Model</h3>
+          <p>Compared logistic regression, random forest, and gradient boosting. Tuned hyperparameters with 5-fold cross-validation. Logistic regression with PCA features delivered the best balance of interpretability and performance. Used decile ranking for targeting.</p>
+          <div class="chapter-metric">
+            <span class="chapter-metric-value">5-Fold</span>
+            <span class="chapter-metric-label">Cross-Validation Strategy</span>
+          </div>
+        </div>
+        <div class="story-chapter glow-chapter" data-chapter="4">
+          <div class="chapter-icon"><i class="fas fa-trophy"></i></div>
+          <h3>The Result</h3>
+          <p>Achieved 0.902 AUC, meaning the model correctly ranks responders above non-responders 90.2% of the time. The top 2 deciles captured 62% of all responders, allowing the company to cut mailing costs by 80% while retaining most conversions.</p>
+          <div class="chapter-metric chapter-metric-highlight">
+            <span class="chapter-metric-value">0.902</span>
+            <span class="chapter-metric-label">AUC Score Achieved</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </div>
+
+  <!-- ==================== DATA TOOLS TAB ==================== -->
+  <div class="tab-panel" id="tab-data-tools">
+
+    <section class="analytics-sql fade-in">
+      <h2>Query My Portfolio</h2>
+      <p class="section-subtitle">Try SQL queries against my portfolio database</p>
+      <div class="sql-terminal">
+        <div class="terminal-header">
+          <div class="terminal-dots">
+            <span class="dot red"></span>
+            <span class="dot yellow"></span>
+            <span class="dot green"></span>
+          </div>
+          <span class="terminal-title">portfolio_db -- SQL Terminal</span>
+        </div>
+        <div class="terminal-body" id="terminal-body">
+          <div class="terminal-output" id="terminal-output">
+            <div class="terminal-line">Welcome to Pratyusha's Portfolio SQL Terminal</div>
+            <div class="terminal-line">Type HELP for available commands, or try the queries below.</div>
+            <div class="terminal-line">---</div>
+          </div>
+          <div class="terminal-input-line">
+            <span class="terminal-prompt">portfolio_db&gt;</span>
+            <input type="text" id="sql-input" class="terminal-input" placeholder="Enter SQL query..." autocomplete="off" spellcheck="false">
+          </div>
+        </div>
+      </div>
+      <div class="sql-chips">
+        <button class="sql-chip" data-query="SELECT * FROM skills ORDER BY proficiency DESC">Top Skills</button>
+        <button class="sql-chip" data-query="SELECT * FROM projects WHERE domain = 'Machine Learning'">ML Projects</button>
+        <button class="sql-chip" data-query="SELECT COUNT(*) FROM projects">Project Count</button>
+        <button class="sql-chip" data-query="SELECT * FROM experience ORDER BY start_year DESC">Experience</button>
+        <button class="sql-chip" data-query="SELECT * FROM education">Education</button>
+        <button class="sql-chip" data-query="SELECT * FROM certifications ORDER BY year DESC">Certifications</button>
+        <button class="sql-chip" data-query="SHOW TABLES">Show Tables</button>
+      </div>
+    </section>
+
+    <!-- Data Pipeline Simulator -->
+    <section class="feature-section fade-in" id="pipeline-section">
+      <h2>Data Pipeline Simulator</h2>
+      <p class="section-subtitle">Watch data flow through a real-world ETL pipeline with live processing metrics</p>
+      <div class="feature-container">
+
+        <div class="dtree-explainer">
+          <div class="dtree-explainer-icon"><i class="fas fa-lightbulb"></i></div>
+          <div class="dtree-explainer-text">
+            <strong>Why did I build this?</strong>
+            This is a <strong>simulation</strong> of the ETL (Extract, Transform, Load) pipelines I've built in real projects.
+            In production, I use tools like Apache Airflow, Azure Data Factory, and Python to move data through these exact stages.
+            This demo shows the flow visually: raw data gets ingested, cleaned (bad records dropped), transformed (feature engineering), validated (schema checks), and loaded into a warehouse.
+            Watch the log for realistic events like schema errors and dropped records.
+          </div>
+        </div>
+
+        <div class="pipe-controls">
+          <div class="pipe-actions">
+            <button id="pipeline-start" class="feature-btn primary"><i class="fas fa-play"></i> Start Pipeline</button>
+            <button id="pipeline-reset" class="feature-btn"><i class="fas fa-undo"></i> Reset</button>
+          </div>
+          <div class="pipe-speed-wrap">
+            <label for="pipe-speed">Speed:</label>
+            <select id="pipe-speed">
+              <option value="slow">Slow</option>
+              <option value="normal" selected>Normal</option>
+              <option value="fast">Fast</option>
+            </select>
+          </div>
+        </div>
+        <div class="pipe-flow" id="pipeline-flow">
+          <div class="pipe-stage" data-stage="ingest">
+            <div class="pipe-stage-icon"><i class="fas fa-database"></i></div>
+            <div class="pipe-stage-name">Ingest</div>
+            <div class="pipe-stage-count" id="pipe-count-ingest">0</div>
+            <div class="pipe-stage-status" id="pipe-status-ingest">Waiting</div>
+          </div>
+          <div class="pipe-arrow"><i class="fas fa-arrow-right"></i></div>
+          <div class="pipe-stage" data-stage="clean">
+            <div class="pipe-stage-icon"><i class="fas fa-broom"></i></div>
+            <div class="pipe-stage-name">Clean</div>
+            <div class="pipe-stage-count" id="pipe-count-clean">0</div>
+            <div class="pipe-stage-status" id="pipe-status-clean">Waiting</div>
+          </div>
+          <div class="pipe-arrow"><i class="fas fa-arrow-right"></i></div>
+          <div class="pipe-stage" data-stage="transform">
+            <div class="pipe-stage-icon"><i class="fas fa-exchange-alt"></i></div>
+            <div class="pipe-stage-name">Transform</div>
+            <div class="pipe-stage-count" id="pipe-count-transform">0</div>
+            <div class="pipe-stage-status" id="pipe-status-transform">Waiting</div>
+          </div>
+          <div class="pipe-arrow"><i class="fas fa-arrow-right"></i></div>
+          <div class="pipe-stage" data-stage="validate">
+            <div class="pipe-stage-icon"><i class="fas fa-check-circle"></i></div>
+            <div class="pipe-stage-name">Validate</div>
+            <div class="pipe-stage-count" id="pipe-count-validate">0</div>
+            <div class="pipe-stage-status" id="pipe-status-validate">Waiting</div>
+          </div>
+          <div class="pipe-arrow"><i class="fas fa-arrow-right"></i></div>
+          <div class="pipe-stage" data-stage="load">
+            <div class="pipe-stage-icon"><i class="fas fa-warehouse"></i></div>
+            <div class="pipe-stage-name">Load</div>
+            <div class="pipe-stage-count" id="pipe-count-load">0</div>
+            <div class="pipe-stage-status" id="pipe-status-load">Waiting</div>
+          </div>
+        </div>
+        <div class="pipe-stats" id="pipeline-stats">
+          <div class="pipe-stat"><span class="pipe-stat-val" id="pipe-total">0</span><span class="pipe-stat-lbl">Records Processed</span></div>
+          <div class="pipe-stat"><span class="pipe-stat-val" id="pipe-dropped">0</span><span class="pipe-stat-lbl">Records Dropped</span></div>
+          <div class="pipe-stat"><span class="pipe-stat-val" id="pipe-errors">0</span><span class="pipe-stat-lbl">Errors</span></div>
+          <div class="pipe-stat"><span class="pipe-stat-val" id="pipe-throughput">0/s</span><span class="pipe-stat-lbl">Throughput</span></div>
+          <div class="pipe-stat"><span class="pipe-stat-val" id="pipe-uptime">0s</span><span class="pipe-stat-lbl">Runtime</span></div>
+        </div>
+        <div class="pipe-log-wrap">
+          <h4><i class="fas fa-scroll"></i> Pipeline Log</h4>
+          <div class="pipe-log" id="pipeline-log"></div>
+        </div>
+      </div>
+    </section>
+
+  </div>
+
+  <!-- Footer -->
+  <footer>
+    <p>Connect with me:</p>
+    <div class="social-links">
+      <a href="https://www.linkedin.com/in/pratyusha-g-a92915229/" target="_blank">
+        <i class="fab fa-linkedin"></i>
+        <span>LinkedIn</span>
+      </a>
+      <a href="https://github.com/Pratyusha108" target="_blank">
+        <i class="fab fa-github"></i>
+        <span>GitHub</span>
+      </a>
+      <a href="mailto:saipratyushagorapalli@gmail.com">
+        <i class="fas fa-envelope"></i>
+        <span>Email</span>
+      </a>
+    </div>
+  </footer>
+
+  <button class="back-to-top"><i class="fas fa-chevron-up"></i></button>
+
+  <div class="floating-social">
+    <a href="https://www.linkedin.com/in/pratyusha-g-a92915229/" target="_blank" class="icon linkedin" title="LinkedIn">
+      <i class="fab fa-linkedin-in"></i>
+    </a>
+    <a href="https://github.com/Pratyusha108" target="_blank" class="icon github" title="GitHub">
+      <i class="fab fa-github"></i>
+    </a>
+    <a href="https://www.kaggle.com/saipgorapalli" target="_blank" class="icon kaggle" title="Kaggle">
+      <i class="fab fa-kaggle"></i>
+    </a>
+    <a href="mailto:saipratyushagorapalli@gmail.com" class="icon email" title="Email Me">
+      <i class="fas fa-envelope"></i>
+    </a>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
+  <script src="assets/js/main.js"></script>
+  <script src="assets/js/analytics.js"></script>
+  <script src="assets/js/chatbot.js"></script>
+  <script src="assets/js/stats.js"></script>
+
+</body>
+
+</html>

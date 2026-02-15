@@ -73,22 +73,18 @@
     }
   ];
 
-  // ====== STORAGE FOR LIKES (per-post keys) ======
-  var LIKES_PREFIX = 'blog_like_';
+  // ====== STORAGE FOR LIKES (per-post, fresh prefix) ======
+  var LIKES_PREFIX = 'bloglk_';
 
-  // Migrate old shared-object format to individual keys
-  (function migrateLikes() {
+  // Purge all old corrupted keys on every load
+  (function purgeOldLikes() {
     try {
-      var old = localStorage.getItem('blog_likes');
-      if (old) {
-        var data = JSON.parse(old);
-        if (data && typeof data === 'object' && !Array.isArray(data)) {
-          Object.keys(data).forEach(function (id) {
-            if (data[id]) localStorage.setItem(LIKES_PREFIX + id, '1');
-          });
-        }
-        localStorage.removeItem('blog_likes');
-      }
+      localStorage.removeItem('blog_likes');
+      localStorage.removeItem('blog_likes_cleaned');
+      var postIds = posts.map(function (p) { return p.id; });
+      postIds.forEach(function (id) {
+        localStorage.removeItem('blog_like_' + id);
+      });
     } catch (e) { }
   })();
 
@@ -141,9 +137,12 @@
 
     blogGridEl.innerHTML = '';
     filtered.forEach(function (post) {
+      var liked = isPostLiked(post.id);
       var card = document.createElement('div');
       card.className = 'blog-card';
+      card.setAttribute('data-post-id', post.id);
       card.innerHTML =
+        (liked ? '<span class="blog-card-heart"><i class="fas fa-heart"></i></span>' : '') +
         '<img class="blog-card-image" src="' + post.image + '" alt="' + post.title + '" loading="lazy">' +
         '<div class="blog-card-body">' +
           '<div class="blog-card-tags">' + post.tags.map(function (t) { return '<span>' + t + '</span>'; }).join('') + '</div>' +
@@ -168,6 +167,7 @@
 
     overlayEl.innerHTML =
       '<div class="blog-expanded">' +
+        '<div class="blog-reading-progress"><div class="blog-reading-fill"></div></div>' +
         '<button class="blog-expanded-close"><i class="fas fa-times"></i></button>' +
         '<div class="blog-expanded-tags">' + post.tags.map(function (t) { return '<span>' + t + '</span>'; }).join('') + '</div>' +
         '<h2>' + post.title + '</h2>' +
@@ -187,9 +187,24 @@
             '<button class="blog-share-btn" data-share="copy" title="Copy Link"><i class="fas fa-link"></i></button>' +
           '</div>' +
         '</div>' +
-        '<div class="blog-disqus-container">' +
-          '<h4><i class="fas fa-comments"></i> Discussion</h4>' +
-          '<div id="disqus_thread"></div>' +
+        '<div class="blog-reactions-container">' +
+          '<h4><i class="fas fa-smile"></i> Reactions</h4>' +
+          '<div class="blog-reactions" data-post-id="' + id + '">' +
+            buildReactionButtons(id) +
+          '</div>' +
+        '</div>' +
+        '<div class="blog-comments-container">' +
+          '<h4><i class="fas fa-comments"></i> Comments <span class="comment-count" id="comment-count-' + id + '"></span></h4>' +
+          '<div class="blog-comments-list" id="comments-list-' + id + '">' +
+            buildCommentsList(id) +
+          '</div>' +
+          '<div class="blog-comment-form">' +
+            '<input type="text" class="comment-name-input" id="comment-name-' + id + '" placeholder="Your name" maxlength="50">' +
+            '<textarea class="comment-text-input" id="comment-text-' + id + '" placeholder="Write a comment..." rows="3" maxlength="500"></textarea>' +
+            '<button class="comment-submit-btn" data-post-id="' + id + '">' +
+              '<i class="fas fa-paper-plane"></i> Post Comment' +
+            '</button>' +
+          '</div>' +
         '</div>' +
       '</div>';
 
@@ -220,18 +235,66 @@
       });
     });
 
-    // Load Disqus
-    loadDisqus(id, post.title);
+    // Reading progress bar
+    var readingFill = overlayEl.querySelector('.blog-reading-fill');
+    if (readingFill) {
+      overlayEl.addEventListener('scroll', function () {
+        var scrollTop = overlayEl.scrollTop;
+        var scrollHeight = overlayEl.scrollHeight - overlayEl.clientHeight;
+        var pct = scrollHeight > 0 ? (scrollTop / scrollHeight) * 100 : 0;
+        readingFill.style.width = pct + '%';
+      });
+    }
+
+    // Reaction buttons
+    var reactionBtns = overlayEl.querySelectorAll('.blog-reaction-btn');
+    reactionBtns.forEach(function (btn) {
+      btn.addEventListener('click', function (e) {
+        e.stopPropagation();
+        handleReaction(btn);
+      });
+    });
+
+    // Comment submit
+    var commentBtn = overlayEl.querySelector('.comment-submit-btn');
+    if (commentBtn) {
+      commentBtn.addEventListener('click', function (e) {
+        e.stopPropagation();
+        var pid = commentBtn.getAttribute('data-post-id');
+        var nameInput = document.getElementById('comment-name-' + pid);
+        var textInput = document.getElementById('comment-text-' + pid);
+        var name = (nameInput.value || '').trim();
+        var text = (textInput.value || '').trim();
+        if (!name || !text) {
+          if (!name) nameInput.classList.add('input-error');
+          if (!text) textInput.classList.add('input-error');
+          setTimeout(function () {
+            nameInput.classList.remove('input-error');
+            textInput.classList.remove('input-error');
+          }, 1500);
+          return;
+        }
+        saveComment(pid, name, text);
+        nameInput.value = '';
+        textInput.value = '';
+        refreshComments(pid);
+      });
+    }
+
+    // Bind delete buttons on existing comments
+    var commentsList = document.getElementById('comments-list-' + id);
+    if (commentsList) {
+      bindCommentDeleteButtons(commentsList, id);
+    }
+    updateCommentCount(id);
   }
 
   function closePost() {
     if (!overlayEl) return;
     overlayEl.classList.remove('open');
     document.body.style.overflow = '';
-    // Reset Disqus
-    if (window.DISQUS) {
-      try { window.DISQUS.reset({}); } catch (e) { }
-    }
+    // Refresh card grid to update heart indicators
+    renderPostGrid();
   }
 
   function handleLike(btn) {
@@ -270,27 +333,145 @@
     }
   }
 
-  function loadDisqus(id, title) {
-    // Use the deployed GitHub Pages URL so Disqus works consistently
-    var baseUrl = 'https://pratyusha108.github.io/blog.html';
+  // ====== PER-POST EMOJI REACTIONS ======
+  var REACTIONS_PREFIX = 'blog_react_';
+  var reactionEmojis = [
+    { key: 'fire', emoji: '\uD83D\uDD25', label: 'Insightful' },
+    { key: 'clap', emoji: '\uD83D\uDC4F', label: 'Well Written' },
+    { key: 'bulb', emoji: '\uD83D\uDCA1', label: 'Learned Something' },
+    { key: 'rocket', emoji: '\uD83D\uDE80', label: 'Inspiring' },
+    { key: 'heart', emoji: '\u2764\uFE0F', label: 'Love It' }
+  ];
 
-    window.disqus_config = function () {
-      this.page.url = baseUrl + '#post-' + id;
-      this.page.identifier = 'blog-' + id;
-      this.page.title = title;
-    };
+  function getReactions(postId) {
+    try {
+      var data = localStorage.getItem(REACTIONS_PREFIX + postId);
+      return data ? JSON.parse(data) : {};
+    } catch (e) { return {}; }
+  }
 
-    if (window.DISQUS) {
-      window.DISQUS.reset({
-        reload: true,
-        config: window.disqus_config
-      });
+  function saveReactions(postId, reactions) {
+    try { localStorage.setItem(REACTIONS_PREFIX + postId, JSON.stringify(reactions)); } catch (e) { }
+  }
+
+  function buildReactionButtons(postId) {
+    var reactions = getReactions(postId);
+    return reactionEmojis.map(function (r) {
+      var count = reactions[r.key] || 0;
+      var active = count > 0 ? ' active' : '';
+      return '<button class="blog-reaction-btn' + active + '" data-post-id="' + postId + '" data-key="' + r.key + '" title="' + r.label + '">' +
+        '<span class="reaction-emoji">' + r.emoji + '</span>' +
+        '<span class="reaction-count">' + (count > 0 ? count : '') + '</span>' +
+      '</button>';
+    }).join('');
+  }
+
+  function handleReaction(btn) {
+    var postId = btn.getAttribute('data-post-id');
+    var key = btn.getAttribute('data-key');
+    if (!postId || !key) return;
+
+    var reactions = getReactions(postId);
+    if (reactions[key]) {
+      delete reactions[key];
+      btn.classList.remove('active');
+      btn.querySelector('.reaction-count').textContent = '';
     } else {
-      var d = document.createElement('script');
-      d.src = 'https://pratyusha-portfolio.disqus.com/embed.js';
-      d.setAttribute('data-timestamp', +new Date());
-      (document.head || document.body).appendChild(d);
+      reactions[key] = 1;
+      btn.classList.add('active');
+      btn.querySelector('.reaction-count').textContent = '1';
+      // Pop animation
+      btn.style.transform = 'scale(1.3)';
+      setTimeout(function () { btn.style.transform = ''; }, 200);
     }
+    saveReactions(postId, reactions);
+  }
+
+  // ====== PER-POST COMMENTS (localStorage) ======
+  var COMMENTS_PREFIX = 'blog_comments_';
+
+  function getComments(postId) {
+    try {
+      var data = localStorage.getItem(COMMENTS_PREFIX + postId);
+      return data ? JSON.parse(data) : [];
+    } catch (e) { return []; }
+  }
+
+  function saveComment(postId, name, text) {
+    var comments = getComments(postId);
+    comments.push({
+      id: Date.now(),
+      name: name,
+      text: text,
+      date: new Date().toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })
+    });
+    try { localStorage.setItem(COMMENTS_PREFIX + postId, JSON.stringify(comments)); } catch (e) { }
+    return comments;
+  }
+
+  function deleteComment(postId, commentId) {
+    var comments = getComments(postId);
+    comments = comments.filter(function (c) { return c.id !== commentId; });
+    try { localStorage.setItem(COMMENTS_PREFIX + postId, JSON.stringify(comments)); } catch (e) { }
+    return comments;
+  }
+
+  function buildCommentsList(postId) {
+    var comments = getComments(postId);
+    if (comments.length === 0) {
+      return '<div class="blog-no-comments"><i class="far fa-comment-dots"></i> No comments yet. Be the first to share your thoughts!</div>';
+    }
+    return comments.map(function (c) {
+      var initial = (c.name || 'A').charAt(0).toUpperCase();
+      return '<div class="blog-comment-item" data-comment-id="' + c.id + '">' +
+        '<div class="blog-comment-avatar">' + initial + '</div>' +
+        '<div class="blog-comment-body">' +
+          '<div class="blog-comment-header">' +
+            '<span class="blog-comment-name">' + escapeHtml(c.name) + '</span>' +
+            '<span class="blog-comment-date">' + c.date + '</span>' +
+          '</div>' +
+          '<p class="blog-comment-text">' + escapeHtml(c.text) + '</p>' +
+          '<button class="blog-comment-delete" data-post-id="' + postId + '" data-comment-id="' + c.id + '" title="Delete">' +
+            '<i class="fas fa-trash-alt"></i>' +
+          '</button>' +
+        '</div>' +
+      '</div>';
+    }).join('');
+  }
+
+  function escapeHtml(str) {
+    var div = document.createElement('div');
+    div.appendChild(document.createTextNode(str));
+    return div.innerHTML;
+  }
+
+  function updateCommentCount(postId) {
+    var countEl = document.getElementById('comment-count-' + postId);
+    if (countEl) {
+      var count = getComments(postId).length;
+      countEl.textContent = count > 0 ? '(' + count + ')' : '';
+    }
+  }
+
+  function refreshComments(postId) {
+    var listEl = document.getElementById('comments-list-' + postId);
+    if (listEl) {
+      listEl.innerHTML = buildCommentsList(postId);
+      bindCommentDeleteButtons(listEl, postId);
+    }
+    updateCommentCount(postId);
+  }
+
+  function bindCommentDeleteButtons(container, postId) {
+    var deleteBtns = container.querySelectorAll('.blog-comment-delete');
+    deleteBtns.forEach(function (btn) {
+      btn.addEventListener('click', function (e) {
+        e.stopPropagation();
+        var commentId = parseInt(btn.getAttribute('data-comment-id'));
+        deleteComment(postId, commentId);
+        refreshComments(postId);
+      });
+    });
   }
 
   // ====== INITIALIZE ======

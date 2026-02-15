@@ -75,6 +75,7 @@
       <a href="index.html">Home</a> |
       <a href="about.html">About</a> |
       <a href="projects.html">Projects</a> |
+      <a href="analytics.html">Analytics</a> |
       <a href="blog.html">Blog</a> |
       <a href="#contact">Contact</a> |
       <a href="https://drive.google.com/file/d/18MX4_zaDu7gWHV5CO3ZDHE2YTWmbgXRm/view?usp=sharing"
@@ -107,6 +108,47 @@
       </div>
       <div class="hero-image">
         <img src="assets/images/profile-pic.png" alt="Pratyusha G - Data Scientist" />
+      </div>
+    </section>
+
+    <!-- SQL Terminal + Analytics CTA -->
+    <section class="home-sql-section fade-in">
+      <h2>Query My Portfolio</h2>
+      <p class="section-subtitle">Try SQL queries against my portfolio database</p>
+      <div class="sql-terminal">
+        <div class="terminal-header">
+          <div class="terminal-dots">
+            <span class="dot red"></span>
+            <span class="dot yellow"></span>
+            <span class="dot green"></span>
+          </div>
+          <span class="terminal-title">portfolio_db -- SQL Terminal</span>
+        </div>
+        <div class="terminal-body" id="terminal-body">
+          <div class="terminal-output" id="terminal-output">
+            <div class="terminal-line">Welcome to Pratyusha's Portfolio SQL Terminal</div>
+            <div class="terminal-line">Type HELP for available commands, or try the queries below.</div>
+            <div class="terminal-line">---</div>
+          </div>
+          <div class="terminal-input-line">
+            <span class="terminal-prompt">portfolio_db&gt;</span>
+            <input type="text" id="sql-input" class="terminal-input" placeholder="Enter SQL query..." autocomplete="off" spellcheck="false">
+          </div>
+        </div>
+      </div>
+      <div class="sql-chips">
+        <button class="sql-chip" data-query="SELECT * FROM skills ORDER BY proficiency DESC">Top Skills</button>
+        <button class="sql-chip" data-query="SELECT * FROM projects WHERE domain = 'Machine Learning'">ML Projects</button>
+        <button class="sql-chip" data-query="SELECT COUNT(*) FROM projects">Project Count</button>
+        <button class="sql-chip" data-query="SELECT * FROM experience ORDER BY start_year DESC">Experience</button>
+        <button class="sql-chip" data-query="SELECT * FROM education">Education</button>
+        <button class="sql-chip" data-query="SELECT * FROM certifications ORDER BY year DESC">Certifications</button>
+        <button class="sql-chip" data-query="SHOW TABLES">Show Tables</button>
+      </div>
+      <div class="home-sql-cta">
+        <a href="analytics.html" class="impact-cta">
+          <i class="fas fa-chart-line"></i> Explore Live Analytics
+        </a>
       </div>
     </section>
 
@@ -583,6 +625,7 @@
     </div>
 
     <script src="assets/js/main.js"></script>
+    <script src="assets/js/analytics.js"></script>
     <script src="assets/js/chatbot.js"></script>
     <script src="assets/js/stats.js"></script>
     <script src="assets/js/contact.js"></script>
