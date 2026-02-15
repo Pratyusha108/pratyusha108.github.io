@@ -3537,9 +3537,12 @@
     function nearRidge(x, t) {
       var sW = W / 7;
       var ht = [0.83, 0.80, 0.85, 0.79, 0.82, 0.86, 0.81];
-      var s = Math.min(Math.floor(x / sW), 6);
+      // Scroll leftward: offset x by time
+      var totalW = sW * 7;
+      var sx = ((x + t * 40) % totalW + totalW) % totalW;
+      var s = Math.min(Math.floor(sx / sW), 6);
       var nx = Math.min(s + 1, 6);
-      var lc = (x - s * sW) / sW;
+      var lc = (sx - s * sW) / sW;
       var ed = Math.max(0, Math.min(1, (lc - 0.85) / 0.15));
       var es = ed * ed * (3 - 2 * ed);
       return H * (ht[s] * (1 - es) + ht[nx] * es) + Math.sin(t * 0.18 + s * 1.5) * 4;
