@@ -3520,35 +3520,35 @@
 
     // ====== RIDGELINE FUNCTIONS (continuously morphing) ======
     function farRidge(x, t) {
-      return H * 0.53
-        + Math.sin(x * 0.004 + t * 0.15) * 28
-        + Math.sin(x * 0.009 + t * 0.1) * 14
-        + Math.sin(x * 0.002 + t * 0.22) * 18;
+      return H * 0.63
+        + Math.sin(x * 0.004 + t * 0.15) * 20
+        + Math.sin(x * 0.009 + t * 0.1) * 10
+        + Math.sin(x * 0.002 + t * 0.22) * 12;
     }
 
     function midRidge(x, t) {
       var norm = x / W;
-      return H * 0.65 - norm * norm * H * 0.1
-        + Math.sin(x * 0.006 + t * 0.12) * 16
-        + Math.sin(x * 0.003 + t * 0.2) * 9;
+      return H * 0.74 - norm * norm * H * 0.06
+        + Math.sin(x * 0.006 + t * 0.12) * 12
+        + Math.sin(x * 0.003 + t * 0.2) * 7;
     }
 
     function nearRidge(x, t) {
       var stepW = W / 7;
-      var heights = [0.74, 0.69, 0.76, 0.67, 0.73, 0.78, 0.71];
+      var heights = [0.83, 0.80, 0.85, 0.79, 0.82, 0.86, 0.81];
       var seg = Math.min(Math.floor(x / stepW), 6);
       var next = Math.min(seg + 1, 6);
       var local = (x - seg * stepW) / stepW;
       var edge = Math.max(0, Math.min(1, (local - 0.85) / 0.15));
       var ease = edge * edge * (3 - 2 * edge);
       return H * (heights[seg] * (1 - ease) + heights[next] * ease)
-        + Math.sin(t * 0.18 + seg * 1.5) * 5;
+        + Math.sin(t * 0.18 + seg * 1.5) * 4;
     }
 
     // ====== INIT DATA STRUCTURES ======
     function initStars() {
       stars = [];
-      var count = Math.min(Math.floor(W / 10), 130);
+      var count = Math.min(Math.floor(W / 15), 80);
       for (var i = 0; i < count; i++) {
         stars.push({
           x: Math.random() * W,
@@ -3562,20 +3562,20 @@
 
     function initNeuralNet() {
       nnNodes = []; nnEdges = []; nnPulses = [];
-      var layers = [3, 5, 6, 5, 4, 2];
-      var xPad = W * 0.08;
-      var xSpan = W * 0.84;
+      var layers = [2, 4, 5, 4, 3, 2];
+      var xPad = W * 0.12;
+      var xSpan = W * 0.76;
       var layerGap = xSpan / (layers.length - 1);
       for (var l = 0; l < layers.length; l++) {
         var n = layers[l];
-        var ySpan = H * 0.26;
-        var yStart = H * 0.06;
+        var ySpan = H * 0.18;
+        var yStart = H * 0.04;
         var gap = ySpan / (n + 1);
         for (var i = 0; i < n; i++) {
           nnNodes.push({
-            x: xPad + l * layerGap + (Math.random() - 0.5) * 25,
-            y: yStart + gap * (i + 1) + (Math.random() - 0.5) * 12,
-            r: Math.random() * 1.5 + 2,
+            x: xPad + l * layerGap + (Math.random() - 0.5) * 20,
+            y: yStart + gap * (i + 1) + (Math.random() - 0.5) * 8,
+            r: Math.random() * 1.2 + 1.5,
             layer: l,
             phase: Math.random() * Math.PI * 2
           });
@@ -3592,14 +3592,14 @@
 
     function initScatter() {
       scatterDots = [];
-      for (var i = 0; i < 30; i++) {
+      for (var i = 0; i < 20; i++) {
         var x = Math.random() * W;
         scatterDots.push({
-          x: x, baseY: farRidge(x, 0) - Math.random() * 25 - 8,
-          r: Math.random() * 2.5 + 1,
+          x: x, baseY: farRidge(x, 0) - Math.random() * 15 - 5,
+          r: Math.random() * 2 + 0.8,
           phase: Math.random() * Math.PI * 2,
-          drift: (Math.random() - 0.5) * 0.15,
-          bobSpd: Math.random() * 0.018 + 0.008
+          drift: (Math.random() - 0.5) * 0.12,
+          bobSpd: Math.random() * 0.015 + 0.006
         });
       }
     }
@@ -3626,13 +3626,13 @@
     function initTree() {
       treeNodes = []; treeEdges = [];
       var rootX = W * 0.22;
-      var rootY = nearRidge(rootX, 0) - 6;
+      var rootY = nearRidge(rootX, 0) - 4;
       function branch(x, y, depth, maxD) {
         var idx = treeNodes.length;
-        treeNodes.push({ x: x, y: y, r: 3.5 - depth * 0.4, depth: depth });
+        treeNodes.push({ x: x, y: y, r: 3 - depth * 0.35, depth: depth });
         if (depth < maxD) {
-          var spread = 45 / (depth + 1);
-          var rise = 28;
+          var spread = 35 / (depth + 1);
+          var rise = 22;
           var li = treeNodes.length;
           treeEdges.push({ from: idx, to: li });
           branch(x - spread, y - rise, depth + 1, maxD);
@@ -3686,10 +3686,10 @@
       ctx.save();
       ctx.globalCompositeOperation = 'screen';
       var waves = [
-        { y: 0.18, amp: 100, freq: 0.0016, spd: 0.5,  w: 140 },
-        { y: 0.30, amp: 75,  freq: 0.0022, spd: 0.65, w: 120 },
-        { y: 0.24, amp: 90,  freq: 0.0013, spd: 0.38, w: 130 },
-        { y: 0.38, amp: 60,  freq: 0.0028, spd: 0.8,  w: 100 }
+        { y: 0.32, amp: 60, freq: 0.0016, spd: 0.5,  w: 100 },
+        { y: 0.42, amp: 50, freq: 0.0022, spd: 0.65, w: 85 },
+        { y: 0.37, amp: 55, freq: 0.0013, spd: 0.38, w: 90 },
+        { y: 0.48, amp: 40, freq: 0.0028, spd: 0.8,  w: 70 }
       ];
       for (var w = 0; w < waves.length; w++) {
         var wv = waves[w];
@@ -3697,8 +3697,7 @@
         for (var x = 0; x <= W; x += 3) {
           var y = H * wv.y
             + Math.sin(x * wv.freq + t * wv.spd) * wv.amp
-            + Math.sin(x * wv.freq * 2.7 + t * wv.spd * 1.4 + w) * wv.amp * 0.35
-            + Math.cos(x * wv.freq * 0.5 + t * wv.spd * 0.6) * wv.amp * 0.2;
+            + Math.sin(x * wv.freq * 2.5 + t * wv.spd * 1.3 + w) * wv.amp * 0.2;
           if (x === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
         }
         ctx.strokeStyle = _c.aurora[w];
@@ -3711,7 +3710,7 @@
     // ====== DRAW: SUBTLE GRID ======
     function drawGrid() {
       var spacing = 90;
-      var a = isLightMode ? 0.025 : 0.015;
+      var a = isLightMode ? 0.018 : 0.01;
       ctx.strokeStyle = _c.grid + a + ')';
       ctx.lineWidth = 0.4;
       var ox = (frame * 0.12) % spacing;
@@ -3731,7 +3730,7 @@
       for (var i = 0; i < nnEdges.length; i++) {
         var e = nnEdges[i];
         var a = nnNodes[e.from], b = nnNodes[e.to];
-        var alpha = 0.04 + Math.sin(t + i * 0.3) * 0.015;
+        var alpha = 0.03 + Math.sin(t + i * 0.3) * 0.01;
         ctx.beginPath(); ctx.moveTo(a.x, a.y); ctx.lineTo(b.x, b.y);
         ctx.strokeStyle = _c.conn + alpha + ')';
         ctx.stroke();
@@ -3892,7 +3891,7 @@
 
     // ====== DRAW: DATA RIVER (continuously flowing waves) ======
     function drawDataRiver(t) {
-      var riverBase = H * 0.88;
+      var riverBase = H * 0.91;
       var waves = [
         { amp: 10, freq: 0.007, spd: 1.3,  alpha: 0.14, w: 2.5 },
         { amp: 6,  freq: 0.011, spd: 0.95, alpha: 0.10, w: 1.8 },
@@ -3917,21 +3916,21 @@
     // ====== DRAW: FOREGROUND GROUND ======
     function drawForeground() {
       // Gradient fade into ground
-      var fg = ctx.createLinearGradient(0, H * 0.87, 0, H * 0.96);
+      var fg = ctx.createLinearGradient(0, H * 0.92, 0, H * 0.98);
       fg.addColorStop(0, 'rgba(0,0,0,0)');
       fg.addColorStop(1, _c.ground);
       ctx.fillStyle = fg;
-      ctx.fillRect(0, H * 0.87, W, H * 0.09);
+      ctx.fillRect(0, H * 0.92, W, H * 0.06);
 
       // Solid ground
       ctx.fillStyle = _c.ground;
-      ctx.fillRect(0, H * 0.95, W, H * 0.05);
+      ctx.fillRect(0, H * 0.97, W, H * 0.03);
     }
 
     // ====== DRAW: EMBERS (rising heat particles from mountains) ======
     function drawEmbers(t) {
       // Spawn
-      if (Math.random() < 0.04 && embers.length < 25) {
+      if (Math.random() < 0.02 && embers.length < 12) {
         var ex = Math.random() * W;
         embers.push({
           x: ex, y: midRidge(ex, t),
@@ -3977,7 +3976,7 @@
     }
 
     function drawSymbols() {
-      if (Math.random() < 0.01 && symbols.length < 18) symbols.push(new FloatSym());
+      if (Math.random() < 0.006 && symbols.length < 10) symbols.push(new FloatSym());
       for (var i = symbols.length - 1; i >= 0; i--) {
         var s = symbols[i];
         s.y -= s.spd;
@@ -4047,7 +4046,7 @@
     function drawVignette() {
       var vg = ctx.createRadialGradient(W / 2, H / 2, W * 0.25, W / 2, H / 2, W * 0.75);
       vg.addColorStop(0, 'rgba(0,0,0,0)');
-      vg.addColorStop(1, isLightMode ? 'rgba(200,210,230,0.3)' : 'rgba(0,0,0,0.35)');
+      vg.addColorStop(1, isLightMode ? 'rgba(200,210,230,0.2)' : 'rgba(0,0,0,0.25)');
       ctx.fillStyle = vg;
       ctx.fillRect(0, 0, W, H);
     }
