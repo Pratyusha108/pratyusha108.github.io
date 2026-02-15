@@ -1,11 +1,12 @@
 (function () {
   'use strict';
 
-  var sqlInput = document.getElementById('sql-input');
-  var terminalOutput = document.getElementById('terminal-output');
-  var terminalBody = document.getElementById('terminal-body');
+  function initSQLTerminal() {
+    var sqlInput = document.getElementById('sql-input');
+    var terminalOutput = document.getElementById('terminal-output');
+    var terminalBody = document.getElementById('terminal-body');
 
-  if (!sqlInput || !terminalOutput) return;
+    if (!sqlInput || !terminalOutput) return;
 
   // Mock database
   var db = {
@@ -287,13 +288,21 @@
     });
   }
 
-  var sqlChips = document.querySelectorAll('.sql-chip');
-  sqlChips.forEach(function (chip) {
-    chip.addEventListener('click', function () {
-      var query = chip.getAttribute('data-query');
-      if (query) {
-        executeQuery(query);
-      }
+    var sqlChips = document.querySelectorAll('.sql-chip');
+    sqlChips.forEach(function (chip) {
+      chip.addEventListener('click', function () {
+        var query = chip.getAttribute('data-query');
+        if (query) {
+          executeQuery(query);
+        }
+      });
     });
-  });
+  }
+
+  // Initialize when DOM is ready (handles both early and late loading)
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initSQLTerminal);
+  } else {
+    initSQLTerminal();
+  }
 })();
