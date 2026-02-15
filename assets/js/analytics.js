@@ -3450,7 +3450,7 @@
     var stars = [];
     var nnNodes = [], nnEdges = [], nnPulses = [];
     var scatterDots = [];
-    var barGroups = [];
+    // barGroups removed - replaced by trainBars (scrolling)
     var treeNodes = [], treeEdges = [];
     var symbols = [];
     var embers = [];
@@ -3579,15 +3579,18 @@
           drift: (Math.random() - 0.5) * 0.1, bobSpd: Math.random() * 0.012 + 0.005 });
       }
     }
+    var trainBars = [];
     function initBars() {
-      barGroups = [];
-      var gc = 5, sW = W / gc;
-      for (var g = 0; g < gc; g++) {
-        var gx = sW * g + sW * 0.35, bars = [];
-        for (var b = 0; b < 3; b++)
-          bars.push({ x: gx + b * 18, baseH: Math.random() * 24 + 18,
-            phase: Math.random() * Math.PI * 2, speed: Math.random() * 0.02 + 0.01 });
-        barGroups.push(bars);
+      trainBars = [];
+      var spacing = 22;
+      var count = Math.ceil(W / spacing) + 8;
+      for (var i = 0; i < count; i++) {
+        trainBars.push({
+          offset: i * spacing,
+          baseH: Math.random() * 26 + 14,
+          phase: Math.random() * Math.PI * 2,
+          speed: Math.random() * 0.03 + 0.015
+        });
       }
     }
     function initTree() {
@@ -3640,27 +3643,8 @@
       }
     }
 
-    // ====== DRAW: PERSPECTIVE GRID ======
-    function drawGrid(t) {
-      var horizon = H * 0.58;
-      var a = isLightMode ? 0.025 : 0.018;
-      ctx.strokeStyle = _c.grid + a + ')'; ctx.lineWidth = 0.4;
-
-      // Horizontal lines (perspective: closer together near horizon)
-      for (var i = 0; i < 16; i++) {
-        var frac = i / 16;
-        var y = horizon + (H - horizon) * (frac * frac);
-        ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(W, y); ctx.stroke();
-      }
-
-      // Vertical converging lines
-      var vx = W / 2, vy = horizon * 0.7;
-      for (var i = 0; i < 20; i++) {
-        var x = (i / 19) * W;
-        ctx.beginPath(); ctx.moveTo(x, H);
-        ctx.lineTo(vx + (x - vx) * 0.15, vy); ctx.stroke();
-      }
-    }
+    // ====== (grid removed) ======
+    function drawGrid() {}
 
     // ====== DRAW: STARS ======
     function drawStars(t) {
@@ -3801,62 +3785,75 @@
       }
     }
 
-    // ====== DRAW: BAR CHART SKYLINE + REFLECTIONS ======
+    // ====== DRAW: BAR CHART TRAIN (scrolling left-to-right) ======
     function drawBars(t) {
-      for (var g = 0; g < barGroups.length; g++) {
-        var bars = barGroups[g];
-        for (var b = 0; b < bars.length; b++) {
-          var bar = bars[b];
-          var h = bar.baseH + Math.sin(t * bar.speed * 60 + bar.phase) * 12;
-          var ry = midRidge(bar.x, t);
-          // Bar body gradient
-          var bg = ctx.createLinearGradient(bar.x, ry - h, bar.x, ry);
-          bg.addColorStop(0, _c.bar + '0.45)'); bg.addColorStop(1, _c.bar + '0.1)');
-          ctx.fillStyle = bg; ctx.fillRect(bar.x, ry - h, 13, h);
-          // Bright top cap
-          ctx.fillStyle = _c.bar + '0.7)'; ctx.fillRect(bar.x, ry - h, 13, 1.5);
-          // Top glow
-          var tg = ctx.createRadialGradient(bar.x + 6.5, ry - h, 0, bar.x + 6.5, ry - h, 14);
-          tg.addColorStop(0, _c.bar + '0.15)'); tg.addColorStop(1, _c.bar + '0)');
-          ctx.fillStyle = tg; ctx.fillRect(bar.x - 8, ry - h - 14, 29, 28);
-          // Reflection below
-          var rf = ctx.createLinearGradient(bar.x, ry, bar.x, ry + h * 0.35);
-          rf.addColorStop(0, _c.bar + '0.06)'); rf.addColorStop(1, _c.bar + '0)');
-          ctx.fillStyle = rf; ctx.fillRect(bar.x, ry, 13, h * 0.35);
-        }
+      var totalW = trainBars.length * 22;
+      var scrollShift = (t * 55) % totalW;
+      var barW = 13;
+      for (var i = 0; i < trainBars.length; i++) {
+        var bar = trainBars[i];
+        var x = ((bar.offset + scrollShift) % totalW + totalW) % totalW;
+        if (x > W + 20 || x < -20) continue;
+        var h = bar.baseH + Math.sin(t * bar.speed * 60 + bar.phase) * 12;
+        var ry = midRidge(x, t);
+        // Bar body gradient
+        var bg = ctx.createLinearGradient(x, ry - h, x, ry);
+        bg.addColorStop(0, _c.bar + '0.45)'); bg.addColorStop(1, _c.bar + '0.1)');
+        ctx.fillStyle = bg; ctx.fillRect(x, ry - h, barW, h);
+        // Bright top cap
+        ctx.fillStyle = _c.bar + '0.7)'; ctx.fillRect(x, ry - h, barW, 1.5);
+        // Top glow
+        var tg = ctx.createRadialGradient(x + 6.5, ry - h, 0, x + 6.5, ry - h, 14);
+        tg.addColorStop(0, _c.bar + '0.15)'); tg.addColorStop(1, _c.bar + '0)');
+        ctx.fillStyle = tg; ctx.fillRect(x - 8, ry - h - 14, 29, 28);
+        // Reflection below
+        var rf = ctx.createLinearGradient(x, ry, x, ry + h * 0.35);
+        rf.addColorStop(0, _c.bar + '0.06)'); rf.addColorStop(1, _c.bar + '0)');
+        ctx.fillStyle = rf; ctx.fillRect(x, ry, barW, h * 0.35);
       }
     }
 
-    // ====== DRAW: DECISION TREE ======
+    // ====== DRAW: DECISION TREE (equalizer bounce) ======
     function drawTree(t) {
-      // Edges
+      // Pre-compute bounced positions for each node
+      var bounced = [];
+      for (var i = 0; i < treeNodes.length; i++) {
+        var n = treeNodes[i];
+        // Deeper nodes bounce more (like equalizer bars)
+        var amp = 3 + n.depth * 5;
+        var freq = 2.8 + n.depth * 0.6;
+        var by = n.y + Math.sin(t * freq + n.depth * 1.8 + i * 0.7) * amp;
+        bounced.push({ x: n.x, y: by, r: n.r, depth: n.depth });
+      }
+      // Edges (connect bounced positions)
       for (var i = 0; i < treeEdges.length; i++) {
-        var e = treeEdges[i], a = treeNodes[e.from], b = treeNodes[e.to];
+        var e = treeEdges[i], a = bounced[e.from], b = bounced[e.to];
         var al = 0.2 + Math.sin(t * 1.5 + i * 0.5) * 0.08;
-        // Edge glow
         ctx.lineWidth = 4; ctx.strokeStyle = _c.tree + (al * 0.15) + ')';
         ctx.beginPath(); ctx.moveTo(a.x, a.y); ctx.lineTo(b.x, b.y); ctx.stroke();
-        // Edge core
         ctx.lineWidth = 1.2; ctx.strokeStyle = _c.tree + al + ')';
         ctx.beginPath(); ctx.moveTo(a.x, a.y); ctx.lineTo(b.x, b.y); ctx.stroke();
       }
-      // Nodes
-      for (var i = 0; i < treeNodes.length; i++) {
-        var n = treeNodes[i], pl = 0.4 + Math.sin(t * 2 + n.depth * 1.2) * 0.15;
-        var ng = ctx.createRadialGradient(n.x, n.y, 0, n.x, n.y, n.r * 5);
+      // Nodes (at bounced positions, pulsing size)
+      for (var i = 0; i < bounced.length; i++) {
+        var n = bounced[i];
+        var pl = 0.4 + Math.sin(t * 2 + n.depth * 1.2) * 0.15;
+        var pulse = 1 + Math.sin(t * 3.5 + i * 0.9) * 0.25;
+        var rr = n.r * pulse;
+        var ng = ctx.createRadialGradient(n.x, n.y, 0, n.x, n.y, rr * 5);
         ng.addColorStop(0, _c.tree + (pl * 0.25) + ')'); ng.addColorStop(1, _c.tree + '0)');
-        ctx.fillStyle = ng; ctx.fillRect(n.x - n.r * 5, n.y - n.r * 5, n.r * 10, n.r * 10);
-        ctx.beginPath(); ctx.arc(n.x, n.y, n.r, 0, Math.PI * 2);
+        ctx.fillStyle = ng; ctx.fillRect(n.x - rr * 5, n.y - rr * 5, rr * 10, rr * 10);
+        ctx.beginPath(); ctx.arc(n.x, n.y, rr, 0, Math.PI * 2);
         ctx.fillStyle = _c.tree + pl + ')'; ctx.fill();
       }
       // Leaf labels
       ctx.font = '700 8px monospace';
       var lb = ['T','F'], li = 0;
-      for (var i = 0; i < treeNodes.length; i++) {
-        if (treeNodes[i].depth === 4) {
+      for (var i = 0; i < bounced.length; i++) {
+        if (bounced[i].depth === 4) {
           var a = 0.25 + Math.sin(t * 1.5 + i) * 0.1;
           ctx.fillStyle = _c.tree + a + ')';
-          ctx.fillText(lb[li % 2], treeNodes[i].x - 3, treeNodes[i].y - 8); li++;
+          ctx.fillText(lb[li % 2], bounced[i].x - 3, bounced[i].y - 8); li++;
         }
       }
     }
@@ -4009,7 +4006,7 @@
     function animate() {
       if (!isActive) { requestAnimationFrame(animate); return; }
       frame++;
-      var t = frame * 0.01;
+      var t = frame * 0.018;
       _c = col();
       ctx.clearRect(0, 0, W, H);
 
