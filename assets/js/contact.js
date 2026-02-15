@@ -1,25 +1,25 @@
 document.addEventListener('DOMContentLoaded', function () {
 
   // Form validation and email opening
-  const form = document.querySelector('.contact-form form');
+  var form = document.querySelector('form.contact-form');
   if (!form) return;
 
   form.addEventListener('submit', function (event) {
     event.preventDefault();
 
-    const name = form.name.value.trim();
-    const email = form.email.value.trim();
-    const message = form.message.value.trim();
+    var name = form.querySelector('#name').value.trim();
+    var email = form.querySelector('#email').value.trim();
+    var subjectVal = form.querySelector('#subject').value.trim();
+    var message = form.querySelector('#message').value.trim();
 
-    if (name && email && message) {
-      const receiverEmail = 'saipratyushagorapalli@gmail.com';
+    if (name && email && subjectVal && message) {
+      var receiverEmail = 'saipratyushagorapalli@gmail.com';
 
-      const subject = encodeURIComponent('Portfolio Contact from ' + name);
-      const body = encodeURIComponent(
+      var subject = encodeURIComponent(subjectVal + ' - from ' + name);
+      var body = encodeURIComponent(
         'Name: ' + name + '\n' +
         'Email: ' + email + '\n\n' +
-        'Message:\n' + message + '\n\n' +
-        '---\nSent from portfolio contact form'
+        message
       );
 
       window.location.href = 'mailto:' + receiverEmail + '?subject=' + subject + '&body=' + body;
