@@ -1,0 +1,77 @@
+[
+  {
+    "id": "about",
+    "content": "I'm Sai Pratyusha Gorapalli, a data scientist and analytics professional based in St. Louis, Missouri. My path wasn't linear -- started with a B.Tech in Electrical Engineering, pivoted through an MBA in Technology Management, and now I'm finishing my M.S. in Data Analytics at Webster University (expected May 2026). I've spent 3+ years building ML pipelines, predictive models, and analytics dashboards across five different industries: healthcare, finance, marketing, IoT, and cybersecurity. I'm currently open to full-time data science and analytics roles -- remote, hybrid, or on-site.",
+    "metadata": { "topic": "background" }
+  },
+  {
+    "id": "education",
+    "content": "My education spans three degrees across two countries. B.Tech in Electrical & Electronics Engineering from Osmania University in Hyderabad, India (2016-2020) -- gave me the math and systems thinking foundation. MBA in Technology Management from the same university (2020-2022) -- bridged the gap between technical work and business strategy. Currently pursuing M.S. in Data Analytics at Webster University in St. Louis (Aug 2023 - May 2026). The engineering background gives me the quantitative rigor, the MBA gives me stakeholder communication skills, and the M.S. ties it together with modern data science methods.",
+    "metadata": { "topic": "education" }
+  },
+  {
+    "id": "experience",
+    "content": "Work experience: Graduate Research Assistant at Osmania University (Jan-Dec 2022) focusing on cybersecurity and data analytics research. Independent Data Analyst (Jan 2021 - Feb 2022) building Power BI dashboards, SQL pipelines, and KPI reporting systems for clients. Data Analyst Intern at Smart Bridge in partnership with IBM (May-Jun 2019) working on IoT security systems with RFID data collection using C/C++. Across these roles I've processed datasets with 622K+ records, built end-to-end ML pipelines, and delivered insights to both technical and non-technical stakeholders.",
+    "metadata": { "topic": "experience" }
+  },
+  {
+    "id": "skills-programming",
+    "content": "Primary programming languages: Python (92% proficiency -- my go-to for ML pipelines with scikit-learn, pandas, TensorFlow, PyTorch), SQL (90% -- everything from basic queries to complex ETL workflows with MySQL, PostgreSQL, Azure SQL, MS SQL Server), and R (85% -- statistical analysis, time series forecasting with forecast/ggplot2/Shiny). Also comfortable with Java and C/C++ from earlier work in full-stack development and embedded systems.",
+    "metadata": { "topic": "skills" }
+  },
+  {
+    "id": "skills-ml",
+    "content": "Machine learning and AI skills: supervised learning (Random Forest, XGBoost, LightGBM, Logistic Regression), deep learning (CNNs, RNNs, Transformers with TensorFlow/PyTorch/Keras), NLP (BERT, RoBERTa, NLTK, SpaCy), time series forecasting (ETS, TBATS, ARIMA, STL decomposition). Strong in feature engineering, PCA for dimensionality reduction, and model evaluation (AUC-ROC, R-squared, confusion matrices). Currently expanding into LLMs, agentic AI workflows, generative AI, and MLOps.",
+    "metadata": { "topic": "skills" }
+  },
+  {
+    "id": "skills-tools",
+    "content": "Cloud and tools stack: Azure ML, Azure SQL, Blob Storage, Azure DevOps for cloud-based ML workflows. Databricks and Apache Spark for large-scale data processing. Visualization with Power BI (DAX, Power Query, data modeling), Tableau, Matplotlib, Seaborn, Plotly. Infrastructure: Docker, REST APIs, Airflow for orchestration, CI/CD pipelines. Day-to-day: Git/GitHub, Jupyter Notebooks, VS Code, RStudio. Microsoft Certified Azure Data Scientist Associate (DP-100) as of January 2026.",
+    "metadata": { "topic": "skills" }
+  },
+  {
+    "id": "project-timeseries",
+    "content": "Applied Time Series Analytics & Forecasting: Built 8+ statistical forecasting models in R including ETS, TBATS, STL decomposition, and ARIMA variants. Analyzed patterns across retail sales, energy consumption, and economic indicator datasets. Focused on seasonal decomposition, trend extraction, and forecast accuracy measurement. This project showcased the breadth of classical time series methods and their practical applications across different domains.",
+    "metadata": { "topic": "projects" }
+  },
+  {
+    "id": "project-covid",
+    "content": "COVID-19 Mortality Prediction & Analysis: End-to-end ML pipeline in Python processing 622K+ records. Used Random Forest regression with comprehensive feature engineering and importance analysis to identify key mortality predictors. The goal was translating raw pandemic data into actionable insights for public health policy. Included extensive EDA, missing data handling, and feature selection to build a robust predictive model.",
+    "metadata": { "topic": "projects" }
+  },
+  {
+    "id": "project-mortgage",
+    "content": "Mortgage Payback Analytics: Analyzed 622K+ loan-month records to predict mortgage payoff behavior using Python. Combined logistic regression and Random Forest models with macroeconomic features. Key finding: lower loan-to-value ratios combined with rising housing prices significantly increase payoff probability. The project supports liquidity planning, refinancing strategy, and risk management decisions for financial institutions.",
+    "metadata": { "topic": "projects" }
+  },
+  {
+    "id": "project-mailing",
+    "content": "Software Mailing Response Analytics: Ranked 50K+ customers into response deciles using logistic regression in R. Achieved an AUC of 0.902 -- my best model performance across all projects. Applied PCA for dimensionality reduction and built targeting recommendations to optimize direct mail campaign ROI. The decile-based ranking system helped prioritize high-value customers and allocate marketing budget efficiently.",
+    "metadata": { "topic": "projects" }
+  },
+  {
+    "id": "project-smartphone",
+    "content": "Smartphone Resale Price Prediction: Built regression and classification models in R to predict used device prices from 3,400+ listings. Regression model achieved R-squared of 0.78, classification model hit 86% accuracy for pricing tiers. Combined multiple feature engineering techniques including device age calculation, brand encoding, and condition scoring to capture the key value drivers in the secondary smartphone market.",
+    "metadata": { "topic": "projects" }
+  },
+  {
+    "id": "certifications",
+    "content": "Professional certifications: Microsoft Certified Azure Data Scientist Associate (DP-100) earned January 2026 -- covers designing and implementing ML solutions on Azure. Python for Data Science & Machine Learning Bootcamp (Udemy, Oct 2024). Java Full Stack Development (Sathya Technologies, May 2023). Research Skills: Statistical Tests for Research (HCDC, Jun 2023). Embedded Systems Development for IoT Applications (Smart Bridge/IBM, Jun 2019).",
+    "metadata": { "topic": "certifications" }
+  },
+  {
+    "id": "learning",
+    "content": "Currently learning and expanding into: Large Language Models and transformer architectures, MLOps and model deployment pipelines, cloud architecture on AWS (adding to my Azure foundation), generative AI and agentic workflows, Apache Spark and Databricks for large-scale distributed computing. Building side projects to get hands-on with these -- including this RAG system which runs vector search and optional LLM inference entirely in the browser.",
+    "metadata": { "topic": "learning" }
+  },
+  {
+    "id": "contact",
+    "content": "Best ways to reach me: email at sgorapalli@webster.edu, LinkedIn at linkedin.com/in/pratyusha-g-a92915229, or through the contact form on my portfolio site. GitHub: github.com/Pratyusha108, Kaggle: kaggle.com/saipgorapalli. Based in St. Louis, Missouri. Open to remote, hybrid, and on-site roles. Currently authorized to work in the United States.",
+    "metadata": { "topic": "contact" }
+  },
+  {
+    "id": "rag-meta",
+    "content": "This RAG (Retrieval-Augmented Generation) system runs entirely in your browser. No API keys, no backend server, no data leaves your device. It uses the all-MiniLM-L6-v2 model (~23MB) via Transformers.js for semantic embeddings, an in-memory vector store with cosine similarity for retrieval, and optionally SmolLM2 via WebGPU for text generation. The knowledge base contains curated chunks about my background, projects, and skills. If your browser doesn't support WebGPU, it falls back to template-based answers constructed directly from retrieved chunks -- which works surprisingly well for a focused knowledge base like this.",
+    "metadata": { "topic": "meta" }
+  }
+]

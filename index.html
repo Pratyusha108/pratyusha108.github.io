@@ -60,6 +60,7 @@
   <link rel="stylesheet" href="assets/css/home.css">
   <link rel="stylesheet" href="assets/css/chatbot.css">
   <link rel="stylesheet" href="assets/css/stats.css">
+  <link rel="stylesheet" href="assets/css/rag.css">
   <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
@@ -433,6 +434,37 @@
       </div>
     </section>
 
+    <!-- RAG Demo Section -->
+    <section class="rag-section fade-in" id="rag-demo">
+      <h2><i class="fas fa-search"></i> Ask My Portfolio</h2>
+      <p class="rag-section-sub">This runs entirely in your browser -- no APIs, no server, no data leaves your device.</p>
+      <p class="rag-section-link">
+        <a href="https://github.com/Pratyusha108/rag0" target="_blank" rel="noopener">
+          <i class="fab fa-github"></i> View source on GitHub &rarr;
+        </a>
+      </p>
+
+      <div id="rag-container"></div>
+
+      <div class="rag-how-it-works">
+        <div class="rag-step">
+          <div class="rag-step-num">1</div>
+          <strong>Embed</strong>
+          <p>Your question gets converted to a vector using MiniLM (runs locally in ONNX)</p>
+        </div>
+        <div class="rag-step">
+          <div class="rag-step-num">2</div>
+          <strong>Retrieve</strong>
+          <p>Vector search finds the most relevant documents from the knowledge base</p>
+        </div>
+        <div class="rag-step">
+          <div class="rag-step-num">3</div>
+          <strong>Generate</strong>
+          <p>A small LLM generates an answer from those documents via WebGPU</p>
+        </div>
+      </div>
+    </section>
+
     <!-- GitHub Activity -->
     <section class="github-activity fade-in">
       <h2><i class="fab fa-github"></i> GitHub Activity</h2>
@@ -646,6 +678,16 @@
     <script src="assets/js/chatbot.js?v=2"></script>
     <script src="assets/js/stats.js?v=2"></script>
     <script src="assets/js/contact.js?v=2"></script>
+
+    <!-- RAG engine -- ES module, lazy-loads models on first interaction -->
+    <script type="module">
+      import { RAGPipeline } from './assets/js/rag/pipeline.js';
+      import { ChatUI } from './assets/js/rag/ui.js';
+      const pipeline = new RAGPipeline({ topK: 3, threshold: 0.25 });
+      new ChatUI('#rag-container', pipeline, {
+        kbPath: 'assets/js/rag/knowledge-base.json'
+      });
+    </script>
 
 </body>
 
