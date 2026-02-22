@@ -82,12 +82,12 @@ export class Generator {
   }
 
   _templateGenerate(question, chunks) {
-    if (chunks.length === 1 || chunks[1].score < 0.35) {
+    if (chunks.length === 1 || chunks[1].score < 0.18) {
       return { answer: chunks[0].document.content, mode: 'template' };
     }
 
     const merged = chunks
-      .filter(c => c.score > 0.3)
+      .filter(c => c.score > 0.15)
       .map(c => c.document.content)
       .join('\n\n');
 

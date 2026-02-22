@@ -55,13 +55,38 @@
     "metadata": { "topic": "projects" }
   },
   {
+    "id": "project-nexus",
+    "content": "NEXUS - Local AI Research Agent: Built a commercial-grade AI research agent in Python that runs entirely on local hardware. Features 35+ commands, 8 expert personas (Scientist, Financial Analyst, Data Scientist, Legal Researcher, etc.), and a 7-phase research pipeline (reasoning, decomposition, search, cross-validation, synthesis, formatting, self-critique). Uses Ollama for local LLM inference, SearXNG for private meta-search across 70+ engines, and ChromaDB for persistent knowledge base with staleness detection. Includes source reliability scoring (1-10 scale), hypothesis testing, contradiction detection, logical fallacy identification, and probabilistic forecasting. Supports MCP protocol for Obsidian/Notion integration and A2A agent-to-agent delegation. Rivals Perplexity Pro and Google Deep Research at zero API cost with full data privacy.",
+    "metadata": { "topic": "projects" }
+  },
+  {
+    "id": "project-rag0",
+    "content": "rag0 - In-Browser RAG Search Engine: Built a complete retrieval-augmented generation pipeline that runs entirely in the browser with zero servers and zero API keys. Uses all-MiniLM-L6-v2 via Transformers.js ONNX runtime for client-side text embedding (~50ms per query). Implements in-memory vector store with cosine similarity search and sessionStorage caching. Integrates SmolLM2-135M for WebGPU-accelerated text generation conditioned on retrieved context. Graceful degradation: WebGPU browsers get full LLM answers, others get template-based retrieval. The entire stack runs in vanilla JavaScript with no frameworks. This is the same technology powering the Ask My Portfolio feature on this site.",
+    "metadata": { "topic": "projects" }
+  },
+  {
+    "id": "project-powerbi",
+    "content": "American Ninja Warrior - Power BI Analytics Dashboard: Built an interactive multi-page Power BI dashboard analyzing obstacle design patterns, competition structure, and geographical distribution across 10 seasons of American Ninja Warrior. Features 4 dashboard pages: Location & Round Analysis, Obstacle Count by Season, Distribution by Round/Stage, and Obstacle Popularity & Frequency. Uses DAX measures for dynamic KPI calculation, Bing Maps for geographical visualization, and interactive drill-down slicers. Key findings: Las Vegas dominates as National Finals host, obstacle count spiked from Season 3 to 4, Warped Wall is the most consistently used obstacle.",
+    "metadata": { "topic": "projects" }
+  },
+  {
+    "id": "project-tableau",
+    "content": "Data Visualization with Tableau: Portfolio of interactive Tableau dashboards for business insight and executive-level reporting. Includes a World Bike Sales Dashboard with global sales performance, regional trends, and product category comparisons using geographic visualizations. Also includes a Sales Performance Dashboard analyzing growth/decline patterns, category-wise performance, and executive summary views. Designed with business storytelling principles, interactive filters, calculated fields, parameters, and KPI cards. Dashboards reflect real-world business reporting scenarios for stakeholder-ready communication.",
+    "metadata": { "topic": "projects" }
+  },
+  {
+    "id": "project-docker",
+    "content": "Multi-Container Docker Application: Containerized full-stack Todo app with Node.js, Express, and MongoDB orchestrated using Docker Compose. Built two deployment configurations: production setup with named volumes for persistent storage, and development setup with bind mounts and Nodemon for live code reloading. Implemented Docker networking with internal DNS resolution, optimized Dockerfiles with cache mounts and non-root user execution. Published container image to Docker Hub (pratyusha108/welcome-to-docker). Gained hands-on experience with container orchestration, port conflicts, build strategies, and the full build-ship workflow.",
+    "metadata": { "topic": "projects" }
+  },
+  {
     "id": "certifications",
     "content": "Professional certifications: Microsoft Certified Azure Data Scientist Associate (DP-100) earned January 2026 -- covers designing and implementing ML solutions on Azure. Python for Data Science & Machine Learning Bootcamp (Udemy, Oct 2024). Java Full Stack Development (Sathya Technologies, May 2023). Research Skills: Statistical Tests for Research (HCDC, Jun 2023). Embedded Systems Development for IoT Applications (Smart Bridge/IBM, Jun 2019).",
     "metadata": { "topic": "certifications" }
   },
   {
     "id": "learning",
-    "content": "Currently learning and expanding into: Large Language Models and transformer architectures, MLOps and model deployment pipelines, cloud architecture on AWS (adding to my Azure foundation), generative AI and agentic workflows, Apache Spark and Databricks for large-scale distributed computing. Building side projects to get hands-on with these -- including this RAG system which runs vector search and optional LLM inference entirely in the browser.",
+    "content": "Currently learning and expanding into: Large Language Models and transformer architectures, MLOps and model deployment pipelines, cloud architecture on AWS (adding to my Azure foundation), generative AI and agentic workflows, Apache Spark and Databricks for large-scale distributed computing. Recent hands-on projects include NEXUS (a full local AI research agent with 35+ commands), rag0 (this in-browser RAG search engine powering Ask My Portfolio), Docker multi-container deployments, and interactive Power BI and Tableau dashboards.",
     "metadata": { "topic": "learning" }
   },
   {

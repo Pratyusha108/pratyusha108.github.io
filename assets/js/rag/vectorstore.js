@@ -38,8 +38,8 @@ export class VectorStore {
   }
 
   // top-K retrieval with similarity threshold
-  // 0.25 cutoff keeps garbage out without being too aggressive
-  search(queryEmbedding, topK = 3, threshold = 0.25) {
+  // 0.10 cutoff keeps garbage out without being too aggressive for small KBs
+  search(queryEmbedding, topK = 3, threshold = 0.10) {
     const scored = this.embeddings.map((emb, i) => ({
       document: this.documents[i],
       score: VectorStore.cosine(queryEmbedding, emb)

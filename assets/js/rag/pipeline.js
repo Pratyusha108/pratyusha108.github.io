@@ -11,7 +11,7 @@ export class RAGPipeline {
     this.store = new VectorStore();
     this.generator = new Generator();
     this.topK = config.topK || 3;
-    this.threshold = config.threshold || 0.25;
+    this.threshold = config.threshold || 0.10;
     this.ready = false;
     this.status = 'idle';
   }

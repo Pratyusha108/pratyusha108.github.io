@@ -681,7 +681,7 @@
     <script type="module">
       import { RAGPipeline } from './assets/js/rag/pipeline.js';
       import { ChatUI } from './assets/js/rag/ui.js';
-      const pipeline = new RAGPipeline({ topK: 3, threshold: 0.25 });
+      const pipeline = new RAGPipeline({ topK: 3, threshold: 0.10 });
       new ChatUI('#rag-container', pipeline, {
         kbPath: 'assets/js/rag/knowledge-base.json'
       });
