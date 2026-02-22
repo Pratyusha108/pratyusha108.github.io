@@ -82,13 +82,27 @@ export class Generator {
   }
 
   _templateGenerate(question, chunks) {
-    if (chunks.length === 1 || chunks[1].score < 0.18) {
+    // only return the single best match if there's just one
+    if (chunks.length === 1) {
       return { answer: chunks[0].document.content, mode: 'template' };
     }
 
-    const merged = chunks
-      .filter(c => c.score > 0.15)
-      .map(c => c.document.content)
+    // only merge chunks that share the same topic as the top result
+    // this prevents "experience" from leaking into "projects" answers
+    var topTopic = (chunks[0].document.metadata && chunks[0].document.metadata.topic) || '';
+    var sameTopic = chunks.filter(function (c) {
+      var t = (c.document.metadata && c.document.metadata.topic) || '';
+      return t === topTopic;
+    });
+
+    // if only the top result matches this topic, just return it
+    if (sameTopic.length === 1) {
+      return { answer: sameTopic[0].document.content, mode: 'template' };
+    }
+
+    // merge same-topic chunks
+    var merged = sameTopic
+      .map(function (c) { return c.document.content; })
       .join('\n\n');
 
     return { answer: merged, mode: 'template' };

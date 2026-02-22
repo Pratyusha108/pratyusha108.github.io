@@ -42,6 +42,11 @@ export class ChatUI {
         </div>
         <div class="rag-input-row">
           <input type="text" class="rag-input" id="rag-input" placeholder="Ask about my skills, projects, experience..." autocomplete="off" />
+          <button class="rag-clear" id="rag-clear" aria-label="Clear chat" title="Clear chat">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M18 6L6 18"/><path d="M6 6l12 12"/>
+            </svg>
+          </button>
           <button class="rag-send" id="rag-send" aria-label="Send">
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
               <path d="M22 2L11 13"/><path d="M22 2l-7 20-4-9-9-4 20-7z"/>
@@ -54,12 +59,13 @@ export class ChatUI {
     this.messagesEl = this.el.querySelector('#rag-messages');
     this.inputEl = this.el.querySelector('#rag-input');
     this.sendBtn = this.el.querySelector('#rag-send');
+    this.clearBtn = this.el.querySelector('#rag-clear');
     this.statusEl = this.el.querySelector('#rag-status');
-    this.suggestionsEl = this.el.querySelector('#rag-suggestions');
   }
 
   _bind() {
     this.sendBtn.addEventListener('click', () => this._send());
+    this.clearBtn.addEventListener('click', () => this._clear());
 
     this.inputEl.addEventListener('keydown', (e) => {
       if (e.key === 'Enter' && !e.shiftKey) {
@@ -68,15 +74,19 @@ export class ChatUI {
       }
     });
 
+    this._bindChips();
+
+    // lazy init -- don't download models until someone interacts
+    this.inputEl.addEventListener('focus', () => this._init(), { once: true });
+  }
+
+  _bindChips() {
     this.el.querySelectorAll('.rag-chip').forEach(chip => {
       chip.addEventListener('click', () => {
         this.inputEl.value = chip.textContent;
         this._send();
       });
     });
-
-    // lazy init -- don't download models until someone interacts
-    this.inputEl.addEventListener('focus', () => this._init(), { once: true });
   }
 
   async _init() {
@@ -126,9 +136,8 @@ export class ChatUI {
       if (!this.initialized) return;
     }
 
-    if (this.suggestionsEl) {
-      this.suggestionsEl.style.display = 'none';
-    }
+    // remove any suggestion chips currently showing
+    this._removeSuggestions();
 
     this._addMsg(q, 'user');
     this.inputEl.value = '';
@@ -140,11 +149,53 @@ export class ChatUI {
       const result = await this.pipeline.ask(q);
       this._removeEl(thinkId);
       this._addMsg(result.answer, 'assistant', result);
+      this._appendSuggestions();
     } catch (err) {
       this._removeEl(thinkId);
       this._addMsg('Something went wrong. Try rephrasing your question.', 'assistant');
+      this._appendSuggestions();
       console.error('RAG query error:', err);
     }
+  }
+
+  _removeSuggestions() {
+    this.el.querySelectorAll('.rag-suggestions').forEach(el => el.remove());
+  }
+
+  _appendSuggestions() {
+    const div = document.createElement('div');
+    div.className = 'rag-suggestions';
+    div.innerHTML = this.suggestions.map(s => `<button class="rag-chip">${s}</button>`).join('');
+    this.messagesEl.appendChild(div);
+
+    div.querySelectorAll('.rag-chip').forEach(chip => {
+      chip.addEventListener('click', () => {
+        this.inputEl.value = chip.textContent;
+        this._send();
+      });
+    });
+
+    this.messagesEl.scrollTop = this.messagesEl.scrollHeight;
+  }
+
+  _clear() {
+    this.messagesEl.innerHTML = `
+      <div class="rag-welcome">
+        <div class="rag-welcome-icon">
+          <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+            <circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/>
+          </svg>
+        </div>
+        <p class="rag-welcome-title">Ask my portfolio anything</p>
+        <span class="rag-welcome-sub">Powered by in-browser vector search. No APIs, no server, no data leaves your device.</span>
+      </div>
+      <div class="rag-suggestions" id="rag-suggestions">
+        ${this.suggestions.map(s => `<button class="rag-chip">${s}</button>`).join('')}
+      </div>
+    `;
+    this._bindChips();
+    this.inputEl.value = '';
+    this.inputEl.focus();
   }
 
   _addMsg(text, role, result = null) {

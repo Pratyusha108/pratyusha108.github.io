@@ -360,6 +360,20 @@
   color: #555;
 }
 
+.rag-clear {
+  background: transparent;
+  border: none;
+  color: #555;
+  padding: 14px 8px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.rag-clear:hover {
+  color: #ef4444;
+  transform: scale(1.1);
+}
+
 .rag-send {
   background: transparent;
   border: none;
@@ -484,6 +498,9 @@ body.light-mode .rag-source-text { color: #666; }
 body.light-mode .rag-timing { color: #999; border-bottom-color: rgba(0,0,0,0.06); }
 body.light-mode .rag-sources-btn { color: #999; }
 body.light-mode .rag-sources-btn:hover { color: #e68a00; }
+
+body.light-mode .rag-clear { color: #aaa; }
+body.light-mode .rag-clear:hover { color: #ef4444; }
 
 body.light-mode .rag-step {
   background: rgba(255, 255, 255, 0.7);
