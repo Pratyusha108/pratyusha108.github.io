@@ -100,12 +100,21 @@ export class Generator {
       return { answer: sameTopic[0].document.content, mode: 'template' };
     }
 
-    // merge same-topic chunks
+    // merge same-topic chunks with a topic-aware intro
+    var intros = {
+      projects: 'Here are some of my key projects:\n\n',
+      skills: 'Here is an overview of my technical skills:\n\n',
+      experience: '',
+      education: '',
+      certifications: ''
+    };
+    var intro = intros[topTopic] || '';
+
     var merged = sameTopic
       .map(function (c) { return c.document.content; })
       .join('\n\n');
 
-    return { answer: merged, mode: 'template' };
+    return { answer: intro + merged, mode: 'template' };
   }
 
   async _checkWebGPU() {

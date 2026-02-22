@@ -1,102 +1,102 @@
 [
   {
     "id": "about",
-    "content": "I'm Sai Pratyusha Gorapalli, a data scientist and analytics professional based in St. Louis, Missouri. My path wasn't linear -- started with a B.Tech in Electrical Engineering, pivoted through an MBA in Technology Management, and now I'm finishing my M.S. in Data Analytics at Webster University (expected May 2026). I've spent 3+ years building ML pipelines, predictive models, and analytics dashboards across five different industries: healthcare, finance, marketing, IoT, and cybersecurity. I'm currently open to full-time data science and analytics roles -- remote, hybrid, or on-site.",
+    "content": "**Sai Pratyusha Gorapalli** -- Data Scientist & Analytics Professional\n\nBased in St. Louis, Missouri with 3+ years of experience building ML pipelines, predictive models, and analytics dashboards across 5 industries: healthcare, finance, marketing, IoT, and cybersecurity.\n\nCurrently completing M.S. in Data Analytics at Webster University (expected May 2026).\nOpen to full-time data science and analytics roles -- remote, hybrid, or on-site.",
     "metadata": { "topic": "background" }
   },
   {
     "id": "education",
-    "content": "My education spans three degrees across two countries. B.Tech in Electrical & Electronics Engineering from Osmania University in Hyderabad, India (2016-2020) -- gave me the math and systems thinking foundation. MBA in Technology Management from the same university (2020-2022) -- bridged the gap between technical work and business strategy. Currently pursuing M.S. in Data Analytics at Webster University in St. Louis (Aug 2023 - May 2026). The engineering background gives me the quantitative rigor, the MBA gives me stakeholder communication skills, and the M.S. ties it together with modern data science methods.",
+    "content": "**Education** -- 3 degrees, 2 countries:\n\n**M.S. Data Analytics** -- Webster University, St. Louis (2023-2026)\nMachine learning, statistical modeling, modern data science methods.\n\n**MBA, Technology Management** -- Osmania University, India (2020-2022)\nBusiness strategy, stakeholder communication, tech leadership.\n\n**B.Tech, Electrical & Electronics** -- Osmania University, India (2016-2020)\nMath foundations, systems thinking, quantitative rigor.",
     "metadata": { "topic": "education" }
   },
   {
     "id": "experience",
-    "content": "Work experience: Graduate Research Assistant at Osmania University (Jan-Dec 2022) focusing on cybersecurity and data analytics research. Independent Data Analyst (Jan 2021 - Feb 2022) building Power BI dashboards, SQL pipelines, and KPI reporting systems for clients. Data Analyst Intern at Smart Bridge in partnership with IBM (May-Jun 2019) working on IoT security systems with RFID data collection using C/C++. Across these roles I've processed datasets with 622K+ records, built end-to-end ML pipelines, and delivered insights to both technical and non-technical stakeholders.",
+    "content": "**Work Experience:**\n\n**Graduate Research Assistant** -- Osmania University (Jan-Dec 2022)\nCybersecurity and data analytics research.\n\n**Independent Data Analyst** (Jan 2021 - Feb 2022)\nPower BI dashboards, SQL pipelines, KPI reporting for clients.\n\n**Data Analyst Intern** -- Smart Bridge / IBM (May-Jun 2019)\nIoT security systems, RFID data collection using C/C++.\n\nHighlights: processed 622K+ records, built end-to-end ML pipelines, delivered insights to technical and non-technical stakeholders.",
     "metadata": { "topic": "experience" }
   },
   {
     "id": "skills-programming",
-    "content": "Primary programming languages: Python (92% proficiency -- my go-to for ML pipelines with scikit-learn, pandas, TensorFlow, PyTorch), SQL (90% -- everything from basic queries to complex ETL workflows with MySQL, PostgreSQL, Azure SQL, MS SQL Server), and R (85% -- statistical analysis, time series forecasting with forecast/ggplot2/Shiny). Also comfortable with Java and C/C++ from earlier work in full-stack development and embedded systems.",
+    "content": "**Programming Languages:**\n\n**Python** (92%) -- ML pipelines with scikit-learn, pandas, TensorFlow, PyTorch\n**SQL** (90%) -- Complex ETL with MySQL, PostgreSQL, Azure SQL, MS SQL Server\n**R** (85%) -- Statistical analysis, time series with forecast/ggplot2/Shiny\nAlso comfortable with Java and C/C++ from full-stack and embedded systems work.",
     "metadata": { "topic": "skills" }
   },
   {
     "id": "skills-ml",
-    "content": "Machine learning and AI skills: supervised learning (Random Forest, XGBoost, LightGBM, Logistic Regression), deep learning (CNNs, RNNs, Transformers with TensorFlow/PyTorch/Keras), NLP (BERT, RoBERTa, NLTK, SpaCy), time series forecasting (ETS, TBATS, ARIMA, STL decomposition). Strong in feature engineering, PCA for dimensionality reduction, and model evaluation (AUC-ROC, R-squared, confusion matrices). Currently expanding into LLMs, agentic AI workflows, generative AI, and MLOps.",
+    "content": "**Machine Learning & AI:**\n\nSupervised: Random Forest, XGBoost, LightGBM, Logistic Regression\nDeep Learning: CNNs, RNNs, Transformers (TensorFlow/PyTorch/Keras)\nNLP: BERT, RoBERTa, NLTK, SpaCy\nTime Series: ETS, TBATS, ARIMA, STL decomposition\n\nStrong in feature engineering, PCA, and model evaluation (AUC-ROC, R-squared, confusion matrices). Currently expanding into LLMs, agentic AI, generative AI, and MLOps.",
     "metadata": { "topic": "skills" }
   },
   {
     "id": "skills-tools",
-    "content": "Cloud and tools stack: Azure ML, Azure SQL, Blob Storage, Azure DevOps for cloud-based ML workflows. Databricks and Apache Spark for large-scale data processing. Visualization with Power BI (DAX, Power Query, data modeling), Tableau, Matplotlib, Seaborn, Plotly. Infrastructure: Docker, REST APIs, Airflow for orchestration, CI/CD pipelines. Day-to-day: Git/GitHub, Jupyter Notebooks, VS Code, RStudio. Microsoft Certified Azure Data Scientist Associate (DP-100) as of January 2026.",
+    "content": "**Cloud & Tools:**\n\nCloud: Azure ML, Azure SQL, Blob Storage, Azure DevOps, Databricks, Spark\nVisualization: Power BI (DAX, Power Query), Tableau, Matplotlib, Seaborn, Plotly\nInfrastructure: Docker, REST APIs, Airflow, CI/CD pipelines\nDay-to-day: Git/GitHub, Jupyter Notebooks, VS Code, RStudio\n\nCertified: **Microsoft Azure Data Scientist Associate (DP-100)**, January 2026.",
     "metadata": { "topic": "skills" }
   },
   {
     "id": "project-timeseries",
-    "content": "Applied Time Series Analytics & Forecasting: Built 8+ statistical forecasting models in R including ETS, TBATS, STL decomposition, and ARIMA variants. Analyzed patterns across retail sales, energy consumption, and economic indicator datasets. Focused on seasonal decomposition, trend extraction, and forecast accuracy measurement. This project showcased the breadth of classical time series methods and their practical applications across different domains.",
+    "content": "**Applied Time Series Forecasting**\nBuilt 8+ forecasting models in R (ETS, TBATS, STL, ARIMA). Analyzed retail sales, energy consumption, and economic indicators. Focused on seasonal decomposition, trend extraction, and forecast accuracy.",
     "metadata": { "topic": "projects" }
   },
   {
     "id": "project-covid",
-    "content": "COVID-19 Mortality Prediction & Analysis: End-to-end ML pipeline in Python processing 622K+ records. Used Random Forest regression with comprehensive feature engineering and importance analysis to identify key mortality predictors. The goal was translating raw pandemic data into actionable insights for public health policy. Included extensive EDA, missing data handling, and feature selection to build a robust predictive model.",
+    "content": "**COVID-19 Mortality Prediction**\nEnd-to-end ML pipeline in Python processing 622K+ records. Random Forest regression with feature engineering to identify key mortality predictors. Translated pandemic data into actionable public health insights.",
     "metadata": { "topic": "projects" }
   },
   {
     "id": "project-mortgage",
-    "content": "Mortgage Payback Analytics: Analyzed 622K+ loan-month records to predict mortgage payoff behavior using Python. Combined logistic regression and Random Forest models with macroeconomic features. Key finding: lower loan-to-value ratios combined with rising housing prices significantly increase payoff probability. The project supports liquidity planning, refinancing strategy, and risk management decisions for financial institutions.",
+    "content": "**Mortgage Payback Analytics**\nAnalyzed 622K+ loan-month records to predict mortgage payoff behavior. Combined logistic regression and Random Forest with macroeconomic features. Key finding: lower loan-to-value ratios + rising housing prices significantly increase payoff probability.",
     "metadata": { "topic": "projects" }
   },
   {
     "id": "project-mailing",
-    "content": "Software Mailing Response Analytics: Ranked 50K+ customers into response deciles using logistic regression in R. Achieved an AUC of 0.902 -- my best model performance across all projects. Applied PCA for dimensionality reduction and built targeting recommendations to optimize direct mail campaign ROI. The decile-based ranking system helped prioritize high-value customers and allocate marketing budget efficiently.",
+    "content": "**Software Mailing Response Analytics**\nRanked 50K+ customers into response deciles using logistic regression in R. Achieved AUC of 0.902. Applied PCA for dimensionality reduction and built targeting recommendations to optimize direct mail campaign ROI.",
     "metadata": { "topic": "projects" }
   },
   {
     "id": "project-smartphone",
-    "content": "Smartphone Resale Price Prediction: Built regression and classification models in R to predict used device prices from 3,400+ listings. Regression model achieved R-squared of 0.78, classification model hit 86% accuracy for pricing tiers. Combined multiple feature engineering techniques including device age calculation, brand encoding, and condition scoring to capture the key value drivers in the secondary smartphone market.",
+    "content": "**Smartphone Resale Price Prediction**\nBuilt regression and classification models in R from 3,400+ listings. R-squared of 0.78, classification accuracy of 86%. Feature engineering with device age, brand encoding, and condition scoring.",
     "metadata": { "topic": "projects" }
   },
   {
     "id": "project-nexus",
-    "content": "NEXUS - Local AI Research Agent: Built a commercial-grade AI research agent in Python that runs entirely on local hardware. Features 35+ commands, 8 expert personas (Scientist, Financial Analyst, Data Scientist, Legal Researcher, etc.), and a 7-phase research pipeline (reasoning, decomposition, search, cross-validation, synthesis, formatting, self-critique). Uses Ollama for local LLM inference, SearXNG for private meta-search across 70+ engines, and ChromaDB for persistent knowledge base with staleness detection. Includes source reliability scoring (1-10 scale), hypothesis testing, contradiction detection, logical fallacy identification, and probabilistic forecasting. Supports MCP protocol for Obsidian/Notion integration and A2A agent-to-agent delegation. Rivals Perplexity Pro and Google Deep Research at zero API cost with full data privacy.",
+    "content": "**NEXUS -- Local AI Research Agent**\nCommercial-grade AI research agent in Python running entirely on local hardware. 35+ commands, 8 expert personas, 7-phase research pipeline. Uses Ollama for local LLM inference, SearXNG for private meta-search, ChromaDB for persistent knowledge. Rivals Perplexity Pro at zero API cost with full data privacy.",
     "metadata": { "topic": "projects" }
   },
   {
     "id": "project-rag0",
-    "content": "rag0 - In-Browser RAG Search Engine: Built a complete retrieval-augmented generation pipeline that runs entirely in the browser with zero servers and zero API keys. Uses all-MiniLM-L6-v2 via Transformers.js ONNX runtime for client-side text embedding (~50ms per query). Implements in-memory vector store with cosine similarity search and sessionStorage caching. Integrates SmolLM2-135M for WebGPU-accelerated text generation conditioned on retrieved context. Graceful degradation: WebGPU browsers get full LLM answers, others get template-based retrieval. The entire stack runs in vanilla JavaScript with no frameworks. This is the same technology powering the Ask My Portfolio feature on this site.",
+    "content": "**rag0 -- In-Browser RAG Search Engine**\nComplete retrieval-augmented generation pipeline running entirely in the browser. Uses all-MiniLM-L6-v2 via Transformers.js for embeddings (~50ms/query), in-memory vector store with cosine similarity, and SmolLM2-135M for WebGPU text generation. Zero servers, zero API keys. Powers the Ask My Portfolio feature on this site.",
     "metadata": { "topic": "projects" }
   },
   {
     "id": "project-powerbi",
-    "content": "American Ninja Warrior - Power BI Analytics Dashboard: Built an interactive multi-page Power BI dashboard analyzing obstacle design patterns, competition structure, and geographical distribution across 10 seasons of American Ninja Warrior. Features 4 dashboard pages: Location & Round Analysis, Obstacle Count by Season, Distribution by Round/Stage, and Obstacle Popularity & Frequency. Uses DAX measures for dynamic KPI calculation, Bing Maps for geographical visualization, and interactive drill-down slicers. Key findings: Las Vegas dominates as National Finals host, obstacle count spiked from Season 3 to 4, Warped Wall is the most consistently used obstacle.",
+    "content": "**American Ninja Warrior -- Power BI Dashboard**\nInteractive multi-page dashboard analyzing obstacle patterns, competition structure, and geography across 10 seasons. 4 pages with DAX measures, Bing Maps visualization, and drill-down slicers.",
     "metadata": { "topic": "projects" }
   },
   {
     "id": "project-tableau",
-    "content": "Data Visualization with Tableau: Portfolio of interactive Tableau dashboards for business insight and executive-level reporting. Includes a World Bike Sales Dashboard with global sales performance, regional trends, and product category comparisons using geographic visualizations. Also includes a Sales Performance Dashboard analyzing growth/decline patterns, category-wise performance, and executive summary views. Designed with business storytelling principles, interactive filters, calculated fields, parameters, and KPI cards. Dashboards reflect real-world business reporting scenarios for stakeholder-ready communication.",
+    "content": "**Data Visualization with Tableau**\nPortfolio of interactive dashboards including World Bike Sales (global performance, regional trends) and Sales Performance analysis. Built with business storytelling principles, interactive filters, calculated fields, and KPI cards.",
     "metadata": { "topic": "projects" }
   },
   {
     "id": "project-docker",
-    "content": "Multi-Container Docker Application: Containerized full-stack Todo app with Node.js, Express, and MongoDB orchestrated using Docker Compose. Built two deployment configurations: production setup with named volumes for persistent storage, and development setup with bind mounts and Nodemon for live code reloading. Implemented Docker networking with internal DNS resolution, optimized Dockerfiles with cache mounts and non-root user execution. Published container image to Docker Hub (pratyusha108/welcome-to-docker). Gained hands-on experience with container orchestration, port conflicts, build strategies, and the full build-ship workflow.",
+    "content": "**Multi-Container Docker Application**\nContainerized full-stack Todo app with Node.js, Express, MongoDB via Docker Compose. Production and dev configurations, Docker networking with DNS resolution, optimized Dockerfiles. Published to Docker Hub.",
     "metadata": { "topic": "projects" }
   },
   {
     "id": "certifications",
-    "content": "Professional certifications: Microsoft Certified Azure Data Scientist Associate (DP-100) earned January 2026 -- covers designing and implementing ML solutions on Azure. Python for Data Science & Machine Learning Bootcamp (Udemy, Oct 2024). Java Full Stack Development (Sathya Technologies, May 2023). Research Skills: Statistical Tests for Research (HCDC, Jun 2023). Embedded Systems Development for IoT Applications (Smart Bridge/IBM, Jun 2019).",
+    "content": "**Certifications:**\n\n**Microsoft Azure Data Scientist Associate (DP-100)** -- January 2026\nDesigning and implementing ML solutions on Azure.\n\n**Python for Data Science & ML Bootcamp** -- Udemy, October 2024\n\n**Java Full Stack Development** -- Sathya Technologies, May 2023\n\n**Statistical Tests for Research** -- HCDC, June 2023\n\n**Embedded Systems for IoT** -- Smart Bridge / IBM, June 2019",
     "metadata": { "topic": "certifications" }
   },
   {
     "id": "learning",
-    "content": "Currently learning and expanding into: Large Language Models and transformer architectures, MLOps and model deployment pipelines, cloud architecture on AWS (adding to my Azure foundation), generative AI and agentic workflows, Apache Spark and Databricks for large-scale distributed computing. Recent hands-on projects include NEXUS (a full local AI research agent with 35+ commands), rag0 (this in-browser RAG search engine powering Ask My Portfolio), Docker multi-container deployments, and interactive Power BI and Tableau dashboards.",
+    "content": "**Currently Learning:**\n\nLarge Language Models and transformer architectures\nMLOps and model deployment pipelines\nCloud architecture on AWS (adding to Azure foundation)\nGenerative AI and agentic workflows\nApache Spark and Databricks for distributed computing\n\nRecent hands-on: NEXUS (local AI research agent), rag0 (this in-browser RAG engine), Docker deployments, Power BI and Tableau dashboards.",
     "metadata": { "topic": "learning" }
   },
   {
     "id": "contact",
-    "content": "Best ways to reach me: email at sgorapalli@webster.edu, LinkedIn at linkedin.com/in/pratyusha-g-a92915229, or through the contact form on my portfolio site. GitHub: github.com/Pratyusha108, Kaggle: kaggle.com/saipgorapalli. Based in St. Louis, Missouri. Open to remote, hybrid, and on-site roles. Currently authorized to work in the United States.",
+    "content": "**Contact:**\n\nEmail: sgorapalli@webster.edu\nLinkedIn: linkedin.com/in/pratyusha-g-a92915229\nGitHub: github.com/Pratyusha108\nKaggle: kaggle.com/saipgorapalli\n\nBased in St. Louis, Missouri. Open to remote, hybrid, and on-site roles. Authorized to work in the United States.",
     "metadata": { "topic": "contact" }
   },
   {
     "id": "rag-meta",
-    "content": "This RAG (Retrieval-Augmented Generation) system runs entirely in your browser. No API keys, no backend server, no data leaves your device. It uses the all-MiniLM-L6-v2 model (~23MB) via Transformers.js for semantic embeddings, an in-memory vector store with cosine similarity for retrieval, and optionally SmolLM2 via WebGPU for text generation. The knowledge base contains curated chunks about my background, projects, and skills. If your browser doesn't support WebGPU, it falls back to template-based answers constructed directly from retrieved chunks -- which works surprisingly well for a focused knowledge base like this.",
+    "content": "**How This RAG System Works:**\n\nThis runs entirely in your browser -- no APIs, no servers, no data leaves your device.\n\n**Embedding:** all-MiniLM-L6-v2 model (~23MB) via Transformers.js converts text to vectors.\n**Retrieval:** In-memory vector store with cosine similarity finds the most relevant knowledge chunks.\n**Generation:** If your browser supports WebGPU, SmolLM2 generates natural answers. Otherwise, it returns retrieved content directly.\n\nThe knowledge base contains curated chunks about my background, projects, and skills.",
     "metadata": { "topic": "meta" }
   }
 ]
