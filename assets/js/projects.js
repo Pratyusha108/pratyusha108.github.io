@@ -111,6 +111,101 @@ const modalData = {
     result: "Multiple Linear Regression achieved R\u00B2 \u2248 0.78 with stable validation/test performance; Logistic Regression achieved \u224886% accuracy for High/Low pricing tiers.",
     tags: ["R", "Regression", "Classification", "ML", "Pricing"],
     github: "https://github.com/Pratyusha108/smartphone-resale-price-prediction"
+  },
+
+  nexus: {
+    title: "NEXUS - Local AI Research Agent",
+    img: "assets/images/project-nexus.png",
+    desc: "Commercial-grade AI research agent that runs entirely on local hardware. 35+ commands, 8 expert personas, a 7-phase research pipeline, and persistent knowledge base - all with zero API costs and full data privacy.",
+    tech: "Python, Ollama, SearXNG, ChromaDB, Docker, Click, Rich, Jinja2, MCP/A2A Protocols",
+    approach: `
+      \u2022 Designed a 7-phase research pipeline: reasoning, decomposition, multi-source search, cross-validation, synthesis, formatting, and adversarial self-critique
+      \u2022 Built an intelligent multi-model router that selects optimal LLM size per task type (7B for quick lookups, 70B+ for deep analysis)
+      \u2022 Implemented source reliability scoring on a 1-10 scale across 6 weighted factors, plus contradiction detection and logical fallacy identification
+      \u2022 Created 8 expert personas (Scientist, Financial Analyst, Data Scientist, Legal Researcher, etc.) with domain-specific research behavior
+      \u2022 Integrated persistent knowledge base with ChromaDB for cross-session memory, staleness detection, and semantic deduplication
+      \u2022 Added plugin system with auto-discovery, MCP protocol support for Obsidian/Notion/databases, and A2A agent-to-agent delegation
+      The architecture mirrors enterprise research platforms while maintaining complete local execution and zero telemetry.
+    `,
+    result: "Delivers research quality comparable to commercial tools like Perplexity Pro and Google Deep Research, with 4 adaptive depth levels, hypothesis testing, probabilistic forecasting, and full audit trails - entirely self-hosted.",
+    tags: ["Python", "AI", "LLM", "Docker", "ChromaDB", "RAG"],
+    github: "https://github.com/Pratyusha108/nexus"
+  },
+
+  rag0: {
+    title: "rag0 - In-Browser RAG Search Engine",
+    img: "assets/images/project-rag0.png",
+    desc: "A complete retrieval-augmented generation pipeline running entirely in the browser. Zero API keys, zero servers - embedding, vector search, and text generation all happen client-side.",
+    tech: "JavaScript, Transformers.js, ONNX Runtime, WebGPU, all-MiniLM-L6-v2, SmolLM2-135M, Cosine Similarity",
+    approach: `
+      \u2022 Implemented client-side text embedding using all-MiniLM-L6-v2 via Transformers.js ONNX runtime (~50ms per query after warmup)
+      \u2022 Built an in-memory vector store with cosine similarity search and sessionStorage caching for knowledge base embeddings
+      \u2022 Integrated SmolLM2-135M for WebGPU-accelerated text generation conditioned on retrieved context
+      \u2022 Designed graceful degradation: WebGPU browsers get full LLM-generated answers, others receive template-based retrieval results
+      \u2022 Created a configurable pipeline with adjustable top-K retrieval count and similarity thresholds (default 0.25)
+      \u2022 Zero external dependencies - the entire stack runs in a single browser tab with vanilla JavaScript, no frameworks
+      This project proves that the full RAG pipeline (embed, retrieve, generate) is viable entirely client-side without any cloud infrastructure.
+    `,
+    result: "Successfully demonstrated end-to-end RAG in the browser with sub-50ms embedding, sub-millisecond vector retrieval, and coherent LLM generation - proving that meaningful AI-powered search is possible without servers or API keys.",
+    tags: ["JavaScript", "RAG", "AI", "WebGPU", "NLP", "Transformers.js"],
+    github: "https://github.com/Pratyusha108/rag0"
+  },
+
+  ninjaWarrior: {
+    title: "American Ninja Warrior - Power BI Analytics Dashboard",
+    img: "assets/images/project-ninja-warrior.png",
+    desc: "Interactive multi-page Power BI dashboard analyzing obstacle design patterns, competition structure, and geographical distribution across 10 seasons of American Ninja Warrior.",
+    tech: "Power BI Desktop, DAX Measures, Data Modeling, Bing Maps, KPI Cards, Interactive Drill-Downs",
+    approach: `
+      \u2022 Built 4 interconnected dashboard pages: Location Analysis, Obstacle Count by Season, Distribution by Round, and Popularity & Frequency
+      \u2022 Designed DAX measures for dynamic KPI calculation and cross-filtering across competition stages and seasons
+      \u2022 Mapped geographical distribution using Bing Maps integration, revealing Las Vegas as the dominant National Finals host
+      \u2022 Identified structural patterns in obstacle staging: Stage 1 (~9 obstacles), Stage 2 (~6), Stage 3 (~8), Stage 4 (final climb only)
+      \u2022 Tracked obstacle reuse trends showing Warped Wall as the most consistently used obstacle across all seasons
+      \u2022 Implemented drill-down filtering and interactive slicers for season, round, and location dimensions
+      Demonstrates practical BI skills: turning raw competition data into structured analytical insights through data modeling and visual storytelling.
+    `,
+    result: "Revealed that obstacle count spiked significantly from Season 3 to 4, semi-finals existed only in early seasons, and experimental obstacles increased from Season 5 onward - actionable insights mapping competition evolution.",
+    tags: ["Power BI", "DAX", "Data Visualization", "Analytics"],
+    github: "https://github.com/Pratyusha108/american-ninja-warrior-powerbi-dashboard"
+  },
+
+  tableauDashboards: {
+    title: "Data Visualization with Tableau",
+    img: "assets/images/project-tableau.png",
+    desc: "Portfolio of interactive Tableau dashboards designed for business insight, trend analysis, and executive-level decision support across sales and performance domains.",
+    tech: "Tableau Desktop, Calculated Fields, Parameters, Actions, KPI Cards, Geographic Visualizations",
+    approach: `
+      \u2022 Built a World Bike Sales Dashboard with global sales performance, regional trends, and product category comparisons using geographic visualizations
+      \u2022 Created a Sales Performance Dashboard analyzing growth/decline patterns, category-wise performance, and executive summary views
+      \u2022 Applied time-based aggregations, calculated fields, and KPI cards for dynamic business metric monitoring
+      \u2022 Optimized dashboard layouts for stakeholder readability and non-technical audience consumption
+      \u2022 Designed interactive filters, parameters, and dashboard actions for drill-down exploration at regional and product levels
+      \u2022 Emphasized business storytelling over raw data presentation, focusing on actionable insight delivery
+      These dashboards reflect real-world business reporting scenarios, demonstrating executive-ready communication and visual analytics skills.
+    `,
+    result: "Delivered stakeholder-ready dashboards that transform complex sales datasets into clear visual narratives, enabling data-driven decisions through interactive trend analysis and KPI monitoring.",
+    tags: ["Tableau", "Data Visualization", "Business Intelligence", "Analytics"],
+    github: "https://github.com/Pratyusha108/data-visualization-tableau"
+  },
+
+  dockerApp: {
+    title: "Multi-Container Docker Application",
+    img: "assets/images/project-docker.png",
+    desc: "Containerized full-stack Todo application with Node.js, Express, and MongoDB, orchestrated using Docker Compose. Implements both production deployment and development workflow configurations.",
+    tech: "Docker, Docker Compose, Node.js 19, Express.js, MongoDB 6, Mongoose, EJS, Nodemon, LiveReload",
+    approach: `
+      \u2022 Architected two distinct deployment configurations: production (named volumes for persistence) and development (bind mounts with live reload via Nodemon)
+      \u2022 Implemented Docker networking with internal DNS resolution between services - connection strings reference service names, no hardcoded IPs
+      \u2022 Optimized Dockerfiles with cache mounts on npm ci, non-root user execution (USER node), and layer-ordered builds for maximum cache efficiency
+      \u2022 Built full CRUD operations (create, list, delete) with Mongoose ODM and EJS server-side templating
+      \u2022 Configured named volumes for persistent MongoDB storage independent of container lifecycle, with anonymous volumes preserving node_modules
+      \u2022 Published container image to Docker Hub (pratyusha108/welcome-to-docker), completing the full build-ship workflow
+      Gained hands-on experience debugging real container issues: port conflicts, compose context errors, and image pull vs. local build distinctions.
+    `,
+    result: "Successfully deployed a production-ready multi-service application demonstrating Docker Compose orchestration, persistent storage strategies, development workflows with live reload, and the complete build-to-Docker-Hub pipeline.",
+    tags: ["Docker", "Node.js", "MongoDB", "DevOps", "Express.js"],
+    github: "https://github.com/Pratyusha108/welcome-to-docker"
   }
 };
 

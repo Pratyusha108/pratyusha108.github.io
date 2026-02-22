@@ -2,6 +2,91 @@
   // ====== BLOG POST DATA ======
   var posts = [
     {
+      id: 'how-llms-actually-work',
+      title: 'What Actually Happens Between Your Prompt and the Response',
+      excerpt: 'Everyone says they work with AI. But ask them what happens between the prompt and the response, and you get silence. Here is the real pipeline most people skip over.',
+      tags: ['AI', 'Deep Learning'],
+      date: 'Feb 22, 2026',
+      readTime: '8 min read',
+      image: 'https://images.unsplash.com/photo-1677442136019-21780ecad995?w=600&h=300&fit=crop',
+      content: '<p>Everyone says they "work with AI." But ask them what actually happens between your prompt and the response, and you will get silence. So here is the real pipeline, the one most people skip over.</p>' +
+        '<h3>1. Tokenization Is Not "Splitting Words"</h3>' +
+        '<p>The word "transformers" does not stay as one token. It gets broken into ["transform", "ers"]. The vocabulary is 50K to 100K subword units. Token IDs are arbitrary integers. Token 150 and 151 have zero semantic relationship. This matters because it means the model is not reading words. It is reading fragments.</p>' +
+        '<h3>2. Embeddings Are Where Meaning Lives</h3>' +
+        '<p>Each token maps to a vector of 768 to 4096 dimensions. "Dog" and "wolf" land close together in this space. "Car" is miles away. This is why <em>king - man + woman = queen</em> actually works mathematically. One dimension cannot capture this. You would get contradictions like "rare" and "debt" appearing semantically similar. Hundreds of dimensions solve that.</p>' +
+        '<h3>3. Positional Encoding Is Underrated</h3>' +
+        '<p>Without it, "The dog chased the cat" and "The cat chased the dog" look IDENTICAL to the model. Position vectors get added element-wise to the token embeddings. Simple addition. Massive impact.</p>' +
+        '<h3>4. Attention Is a Fuzzy Dictionary Lookup</h3>' +
+        '<p>Query: "What does \'it\' refer to?" Keys from every previous token get scored. "Cat" scores 8.3. "Mat" scores 4.1. Everything else? Near zero.</p>' +
+        '<p>After softmax: "cat" gets 75% of the attention weight. The model just resolved a pronoun. Not with grammar rules, but with learned vector similarity across 96 layers. Early layers learn grammar. Middle layers learn sentence structure. Deep layers extract abstract meaning. Each layer refines the signal for the next.</p>' +
+        '<h3>5. The Output Is Not Deterministic</h3>' +
+        '<p>The final vector gets compared against every token embedding. Scores get softmaxed into probabilities. Then the model <strong>samples</strong>. It does not pick the top answer. It spins a weighted roulette wheel. "Pizza" at 28.3%, "tacos" at 24.1%. This randomness is the feature, not a bug. It is why the same prompt gives different responses.</p>' +
+        '<h3>6. This Entire Pipeline Runs for EVERY Single Token</h3>' +
+        '<p>Autoregressive generation means each new token requires reprocessing ALL previous tokens. This is why longer contexts equal slower inference and higher cost. And why one bad sample early on ("I love to eat chalk") derails everything downstream.</p>' +
+        '<h3>The Critical Insight Most People Miss</h3>' +
+        '<p>During training, weights update across billions of examples over weeks on thousands of GPUs. During inference, weights are frozen. Your conversation teaches the model nothing. It is pattern matching, not learning.</p>' +
+        '<p>Understanding this distinction is the difference between using AI effectively and treating it like magic.</p>'
+    },
+    {
+      id: 'ai-mental-health-crisis',
+      title: 'AI Chatbots Are Failing People at Their Most Vulnerable',
+      excerpt: 'Brown University studied what happens when people use ChatGPT, Claude, and Llama for mental health support. The findings are deeply concerning, and no regulation exists.',
+      tags: ['AI', 'Ethics'],
+      date: 'Feb 20, 2026',
+      readTime: '5 min read',
+      image: 'https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=600&h=300&fit=crop',
+      content: '<p>AI chatbots are failing people at their most vulnerable. Brown University just published a year-long study on what happens when people use ChatGPT, Claude, and Llama for mental health support.</p>' +
+        '<h3>The Findings</h3>' +
+        '<p>Chatbots reinforced users\' harmful beliefs about themselves. They faked empathy with phrases like "I see you" and "I understand." They showed gender and cultural bias. And they failed to handle crisis situations, including suicide ideation.</p>' +
+        '<p>Here is the part that should alarm everyone: when a human therapist does this, they face licensing boards and malpractice consequences. When an AI does it? Zero accountability. No regulation exists.</p>' +
+        '<h3>Why This Matters Right Now</h3>' +
+        '<p>Millions of people are already using these tools for therapy. They are sharing prompts on TikTok and Reddit. Many mental health apps are just prompted versions of these same models. The barrier between "general chatbot" and "therapy tool" has been erased by users, even if the companies never intended it.</p>' +
+        '<h3>Where I Stand</h3>' +
+        '<p>I am not saying AI has no place in mental health. It absolutely could help with cost, access, and therapist shortages. But we are deploying first and asking questions later. And in mental health, that is a dangerous game.</p>' +
+        '<p>The technology is not the problem. The lack of guardrails is. We need standards for AI in clinical contexts, accountability frameworks when harm occurs, and honest conversations about what these tools can and cannot do. Until then, treating chatbots as therapists is a risk we should not be comfortable with.</p>'
+    },
+    {
+      id: 'ai-coding-accuracy-biomedical',
+      title: 'We Gave 16 LLMs 293 Real Biomedical Coding Tasks. Less Than 40% Accuracy.',
+      excerpt: 'A Nature Biomedical Engineering study tested the most popular AI coding assistants on actual data science tasks from 39 published studies. The results should concern everyone in this space.',
+      tags: ['AI', 'Data Science'],
+      date: 'Feb 18, 2026',
+      readTime: '6 min read',
+      image: 'https://images.unsplash.com/photo-1532187863486-abf9dbad1b69?w=600&h=300&fit=crop',
+      content: '<p>We gave 8 proprietary and 8 open source LLMs 293 real biomedical coding tasks. The result? Less than 40% accuracy. That is not a typo.</p>' +
+        '<p>A new study just published in <strong>Nature Biomedical Engineering</strong> tested the most popular AI coding assistants on actual data science tasks from 39 published biomedical studies across 7 research areas. And the findings should concern everyone in this space.</p>' +
+        '<h3>The Problem Is Worse Than It Looks</h3>' +
+        '<p>Most models could not reliably reproduce even basic data visualizations. The errors were not obvious crashes. They were silent, producing plausible-looking but scientifically wrong outputs. Researchers who blindly trust AI-generated analyses risk publishing incorrect findings.</p>' +
+        '<h3>But Here Is Where It Gets Interesting</h3>' +
+        '<p>The team then built an AI agent that starts by creating and iteratively refining an analysis plan BEFORE writing any code. The result? Accuracy jumped from roughly 40% to <strong>74%</strong>.</p>' +
+        '<p>The insight is deceptively simple: do not let AI skip the thinking step.</p>' +
+        '<p>Most people use AI like this: "Here is my data. Give me a visualization." What actually works: "Here is my data. Let us first build a plan for how to analyze it. Now refine that plan. NOW write the code." This mirrors how the best human data scientists work. They do not jump to code. They think first.</p>' +
+        '<h3>Three Takeaways for Anyone Using AI for Data Analysis</h3>' +
+        '<p><strong>Never blindly trust AI-generated code, especially for scientific work.</strong> The outputs look right. They often are not.</p>' +
+        '<p><strong>The plan-then-code approach is not just a nice idea.</strong> It nearly doubled accuracy in this study.</p>' +
+        '<p><strong>The gap between "impressive demo" and "reliable tool" is still massive.</strong> We are closing it, but we are not there yet.</p>' +
+        '<h3>The Bottom Line</h3>' +
+        '<p>The hype says AI will replace data scientists. The research says AI still needs data scientists. The truth? The best results come from human-AI collaboration, not autopilot.</p>'
+    },
+    {
+      id: 'docker-build-ship-deploy',
+      title: 'From "Works on My Machine" to Docker Hub: What Shipping Containers Taught Me',
+      excerpt: 'I built a full-stack app with Node.js and MongoDB, orchestrated it with Docker Compose, debugged real container issues, and published my first image to Docker Hub.',
+      tags: ['DevOps', 'Docker'],
+      date: 'Feb 15, 2026',
+      readTime: '5 min read',
+      image: 'https://images.unsplash.com/photo-1605745341112-85968b19335b?w=600&h=300&fit=crop',
+      content: '<p>This week I went from "works on my machine" to building, debugging, and publishing a multi-container application with Docker.</p>' +
+        '<p>I built a full-stack Todo app (Node.js + MongoDB), orchestrated it with Docker Compose, and worked through the kinds of problems that only show up in real container environments.</p>' +
+        '<h3>What I Actually Built</h3>' +
+        '<p>The application runs two distinct deployment configurations. The production setup uses named volumes for persistent MongoDB storage, so data survives container restarts. The development setup uses bind mounts with Nodemon for live code reloading, so every file save reflects instantly without rebuilding the image. Both are orchestrated through Docker Compose with internal DNS resolution between services.</p>' +
+        '<h3>The Problems That Taught Me the Most</h3>' +
+        '<p>Debugging wrong directory paths that silently broke builds. Resolving port conflicts across multiple services. Understanding the difference between pulling a pre-built image and building from a local Dockerfile. Setting up non-root user execution and cache mounts for faster rebuilds. These are the kinds of problems you never encounter in tutorials, but they are everywhere in real container environments.</p>' +
+        '<h3>Why Infrastructure Matters</h3>' +
+        '<p>The more I work with infrastructure, the more I see it as the gap between building something and actually shipping it. Understanding how code gets deployed matters just as much as writing it. Data pipelines, ML models, APIs - none of it delivers value until it runs reliably somewhere other than your laptop.</p>' +
+        '<p>I published my first container image to Docker Hub: <code>docker pull pratyusha108/welcome-to-docker</code>. It completes the full build-ship workflow. And now I understand what happens under the hood when teams talk about containerization, orchestration, and deployment strategies.</p>'
+    },
+    {
       id: 'neural-network-from-scratch',
       title: 'I Built a Neural Network That Trains in Your Browser - Here Is What I Learned',
       excerpt: 'Real backpropagation, real gradient descent, real learning - all running in vanilla JavaScript. No TensorFlow, no PyTorch, just math.',

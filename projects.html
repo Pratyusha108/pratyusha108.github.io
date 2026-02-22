@@ -64,22 +64,22 @@
     <div class="project-stats-banner">
       <div class="project-stat-card">
         <i class="fas fa-diagram-project"></i>
-        <div class="project-stat-number" data-target="6">0</div>
+        <div class="project-stat-number" data-target="11">0</div>
         <div class="project-stat-label">Projects</div>
       </div>
       <div class="project-stat-card">
         <i class="fas fa-code"></i>
-        <div class="project-stat-number" data-target="4">0</div>
+        <div class="project-stat-number" data-target="7">0</div>
         <div class="project-stat-label">Languages</div>
       </div>
       <div class="project-stat-card">
         <i class="fas fa-layer-group"></i>
-        <div class="project-stat-number" data-target="5">0</div>
+        <div class="project-stat-number" data-target="9">0</div>
         <div class="project-stat-label">Domains</div>
       </div>
       <div class="project-stat-card">
         <i class="fas fa-robot"></i>
-        <div class="project-stat-number" data-target="3">0</div>
+        <div class="project-stat-number" data-target="8">0</div>
         <div class="project-stat-label">ML Models</div>
       </div>
     </div>
@@ -98,6 +98,9 @@
         <button class="filter-btn" data-filter="python">Python</button>
         <button class="filter-btn" data-filter="r">R</button>
         <button class="filter-btn" data-filter="ml">ML</button>
+        <button class="filter-btn" data-filter="ai">AI</button>
+        <button class="filter-btn" data-filter="dataviz">Data Viz</button>
+        <button class="filter-btn" data-filter="devops">DevOps</button>
         <button class="filter-btn" data-filter="finance">Finance</button>
       </div>
       <div class="view-toggle">
@@ -206,6 +209,81 @@
         <div class="project-footer">
           <span class="project-link" onclick="openModal('predictiveViability')"><i class="fab fa-github"></i> View
             Project</span>
+        </div>
+      </div>
+
+      <!-- NEXUS - Local AI Research Agent -->
+      <div class="project-card" data-categories="python ai ml">
+        <img src="assets/images/project-nexus.png" loading="lazy">
+        <div class="project-content">
+          <h3>NEXUS - Local AI Research Agent</h3>
+          <p>Built a fully local AI research agent rivaling commercial tools like Perplexity Pro. Features 35+ commands, 8 expert personas, a 7-phase research pipeline with source reliability scoring, hypothesis testing, and a persistent ChromaDB knowledge base - all at zero API cost with complete data privacy.</p>
+          <div class="project-tags">
+            <span>Python</span><span>AI</span><span>LLM</span><span>Docker</span><span>ChromaDB</span><span>RAG</span>
+          </div>
+        </div>
+        <div class="project-footer">
+          <span class="project-link" onclick="openModal('nexus')"><i class="fab fa-github"></i> View Project</span>
+        </div>
+      </div>
+
+      <!-- rag0 - In-Browser RAG Search Engine -->
+      <div class="project-card" data-categories="ai ml">
+        <img src="assets/images/project-rag0.png" loading="lazy">
+        <div class="project-content">
+          <h3>rag0 - In-Browser RAG Search Engine</h3>
+          <p>A complete retrieval-augmented generation pipeline that runs entirely in the browser. Embeds queries with MiniLM via Transformers.js, performs cosine similarity vector search, and generates answers with SmolLM2 on WebGPU - zero servers, zero API keys, zero external dependencies.</p>
+          <div class="project-tags">
+            <span>JavaScript</span><span>RAG</span><span>AI</span><span>WebGPU</span><span>NLP</span><span>Transformers.js</span>
+          </div>
+        </div>
+        <div class="project-footer">
+          <span class="project-link" onclick="openModal('rag0')"><i class="fab fa-github"></i> View Project</span>
+        </div>
+      </div>
+
+      <!-- American Ninja Warrior - Power BI Dashboard -->
+      <div class="project-card" data-categories="dataviz">
+        <img src="assets/images/project-ninja-warrior.png" loading="lazy">
+        <div class="project-content">
+          <h3>American Ninja Warrior - Power BI Dashboard</h3>
+          <p>Interactive 4-page Power BI analytics dashboard analyzing obstacle design patterns, competition structure, and geographical distribution across 10 seasons. Built with DAX measures, Bing Maps, interactive drill-downs, and KPI cards for data-driven storytelling.</p>
+          <div class="project-tags">
+            <span>Power BI</span><span>DAX</span><span>Data Visualization</span><span>Analytics</span>
+          </div>
+        </div>
+        <div class="project-footer">
+          <span class="project-link" onclick="openModal('ninjaWarrior')"><i class="fab fa-github"></i> View Project</span>
+        </div>
+      </div>
+
+      <!-- Data Visualization with Tableau -->
+      <div class="project-card" data-categories="dataviz">
+        <img src="assets/images/project-tableau.png" loading="lazy">
+        <div class="project-content">
+          <h3>Data Visualization with Tableau</h3>
+          <p>Interactive Tableau dashboards for business insight and executive reporting. Includes a World Bike Sales Dashboard with geographic analysis and a Sales Performance Dashboard with trend identification, KPI monitoring, and category-level drill-downs.</p>
+          <div class="project-tags">
+            <span>Tableau</span><span>Data Visualization</span><span>Business Intelligence</span><span>Analytics</span>
+          </div>
+        </div>
+        <div class="project-footer">
+          <span class="project-link" onclick="openModal('tableauDashboards')"><i class="fab fa-github"></i> View Project</span>
+        </div>
+      </div>
+
+      <!-- Multi-Container Docker Application -->
+      <div class="project-card" data-categories="devops">
+        <img src="assets/images/project-docker.png" loading="lazy">
+        <div class="project-content">
+          <h3>Multi-Container Docker Application</h3>
+          <p>Containerized full-stack application with Node.js, Express, and MongoDB orchestrated via Docker Compose. Implements production deployment with named volumes and a development workflow with bind mounts and live reload. Published to Docker Hub.</p>
+          <div class="project-tags">
+            <span>Docker</span><span>Node.js</span><span>MongoDB</span><span>DevOps</span><span>Express.js</span>
+          </div>
+        </div>
+        <div class="project-footer">
+          <span class="project-link" onclick="openModal('dockerApp')"><i class="fab fa-github"></i> View Project</span>
         </div>
       </div>
     </div>
