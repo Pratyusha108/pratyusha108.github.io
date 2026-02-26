@@ -157,6 +157,15 @@ footer a:hover {
   background: #D44638;
 }
 
+.floating-social .leetcode {
+  background: #1A1A1A;
+}
+
+.floating-social .huggingface {
+  background: #FFD21E;
+  color: #1A1A1A;
+}
+
 .floating-social .icon:hover {
   transform: translateX(4px);
   background: #ff9f00;

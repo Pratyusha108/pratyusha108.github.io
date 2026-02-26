@@ -263,6 +263,38 @@
   color: #fff !important;
 }
 
+.leetcode-icon {
+  background: rgba(255, 161, 22, 0.1);
+}
+
+.leetcode-icon i {
+  color: #FFA116 !important;
+}
+
+.contact-card:hover .leetcode-icon {
+  background: #FFA116;
+}
+
+.contact-card:hover .leetcode-icon i {
+  color: #fff !important;
+}
+
+.huggingface-icon {
+  background: rgba(255, 210, 30, 0.1);
+}
+
+.huggingface-icon i {
+  color: #FFD21E !important;
+}
+
+.contact-card:hover .huggingface-icon {
+  background: #FFD21E;
+}
+
+.contact-card:hover .huggingface-icon i {
+  color: #1A1A1A !important;
+}
+
 .location-icon {
   background: rgba(255, 107, 107, 0.1);
 }
@@ -575,6 +607,14 @@ body.light-mode .github-icon i {
 
 body.light-mode .kaggle-icon {
   background: rgba(32, 190, 255, 0.08);
+}
+
+body.light-mode .leetcode-icon {
+  background: rgba(255, 161, 22, 0.08);
+}
+
+body.light-mode .huggingface-icon {
+  background: rgba(255, 210, 30, 0.08);
 }
 
 body.light-mode .location-icon {
