@@ -38,6 +38,7 @@
       { id: 10, name: 'IoT Access Control Analytics', domain: 'Machine Learning', tech: 'C, Python', year: 2019, auc: null }
     ],
     experience: [
+      { role: 'Data Science Intern (AI/ML)', company: 'Titan Cloud Software', start_year: 2026, end_year: 2026, type: 'Internship' },
       { role: 'Graduate Research Assistant', company: 'Osmania University', start_year: 2022, end_year: 2022, type: 'Research' },
       { role: 'Data Analyst', company: 'Independent Engagements', start_year: 2021, end_year: 2022, type: 'Analytics' },
       { role: 'Data Analyst Intern (IoT)', company: 'Smart Bridge - IBM', start_year: 2019, end_year: 2019, type: 'Internship' }

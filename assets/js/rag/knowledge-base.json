@@ -11,7 +11,7 @@
   },
   {
     "id": "experience",
-    "content": "**Work Experience:**\n\n**Graduate Research Assistant** -- Osmania University (Jan-Dec 2022)\nCybersecurity and data analytics research.\n\n**Independent Data Analyst** (Jan 2021 - Feb 2022)\nPower BI dashboards, SQL pipelines, KPI reporting for clients.\n\n**Data Analyst Intern** -- Smart Bridge / IBM (May-Jun 2019)\nIoT security systems, RFID data collection using C/C++.\n\nHighlights: processed 622K+ records, built end-to-end ML pipelines, delivered insights to technical and non-technical stakeholders.",
+    "content": "**Work Experience:**\n\n**Data Science Intern (AI/ML)** -- Titan Cloud Software, Franklin TN / Remote (Mar-May 2026)\nBuilt an autonomous, multi-agent AI Analyst for an oil & gas platform using Hugging Face Agents, Model Context Protocol (MCP), LangChain RAG, and YOLO/OpenCV computer vision. Achieved 93% detection accuracy over 1,000+ field reports and 91% RAG retrieval relevance over 5,000+ PDFs; engineered the model's training data from millions of records and migrated the data layer from pandas to Polars.\n\n**Graduate Research Assistant** -- Osmania University (Jan-Dec 2022)\nCybersecurity and data analytics research.\n\n**Independent Data Analyst** (Jan 2021 - Feb 2022)\nPower BI dashboards, SQL pipelines, KPI reporting for clients.\n\n**Data Analyst Intern** -- Smart Bridge / IBM (May-Jun 2019)\nIoT security systems, RFID data collection using C/C++.\n\nHighlights: built agentic AI + RAG systems, processed 622K+ records, delivered insights to technical and non-technical stakeholders.",
     "metadata": { "topic": "experience" }
   },
   {
